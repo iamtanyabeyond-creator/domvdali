@@ -8,7 +8,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Jost:wght@300;400;500&display=swap"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap"/>
 
   <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -28,34 +28,34 @@
 
 :root {
   /* ── Palette ───────────────────────────── */
-  --bg:           #F5F5F5;
-  --bg-soft:      #EBEBEB;
+  --bg:           #F6F6F6;
+  --bg-soft:      #EDEDED;
   --bg-card:      #FFFFFF;
-  --ink:          #031B25;
+  --ink:          #031B25;          /* основной текст */
   --ink-2:        #44515A;
   --ink-3:        #7E8A92;
-  --rule:         #E0E0E0;
-  --rule-strong:  #C5C5C5;
+  --rule:         #E5E5E5;
+  --rule-strong:  #C9C9C9;
 
-  --accent:       #031B25;
+  --accent:       #031B25;          /* interface accent */
   --accent-ink:   #031B25;
-  --accent-soft:  #EAEAEA;
-  --map-accent:   #031B25;
-  --map-accent-soft:#E5E8EA;
+  --accent-soft:  #E7EBED;
+  --map-accent:   #5482FF;          /* map markers */
+  --map-accent-soft:#EAF0FF;
 
-  /* category tints */
-  --tag-rest:     #6B5947;   --tag-rest-bg:  #EDE5D8;
-  --tag-hotel:    #4F5F4E;   --tag-hotel-bg: #DDE2DC;
-  --tag-museum:   #4A5F6E;   --tag-museum-bg:#D8E0E7;
-  --tag-cluster-c:#3D4F6E;   --tag-cluster-bg:#D8DCE8;
-  --tag-shop:     #5C5E4A;   --tag-shop-bg:  #E2E0D0;
+  /* category tints — приглушенные (sand / olive / slate) */
+  --tag-rest:     #8B6F4E;   --tag-rest-bg:  #EFE7D8;
+  --tag-hotel:    #6B7B6A;   --tag-hotel-bg: #E0E2D6;
+  --tag-museum:   #5C6F7E;   --tag-museum-bg:#DBE2E7;
+  --tag-cluster-c:#5468A6;   --tag-cluster-bg:#DDE2F2;
+  --tag-shop:     #757862;   --tag-shop-bg:  #E4E2D0;
 
-  --status-okn:   #6B5947;   --status-okn-bg:#EDE5D8;
-  --status-icgfo: #4A5F6E;   --status-icgfo-bg:#D8E0E7;
+  --status-okn:   #6B5947;   --status-okn-bg:#E9DFC8;
+  --status-icgfo: #5E6E7C;   --status-icgfo-bg:#DCE3E8;
   --status-none:  #7E8A92;   --status-none-bg:#E5E2D8;
 
   /* admin status */
-  --st-new:       #3A5FA0;   --st-new-bg:    #DAE4F2;
+  --st-new:       #3A66E5;   --st-new-bg:    #DDE5FF;
   --st-ok:        #4F6B4A;   --st-ok-bg:     #DDE4D2;
   --st-rej:       #8B3A2D;   --st-rej-bg:    #EFD6CD;
   --st-rev:       #8B6B1E;   --st-rev-bg:    #EFE3C2;
@@ -365,61 +365,61 @@ a { color: inherit; }
   --accent-soft:#E7EBED;
   --map-accent:#5482FF;
   --map-accent-soft:#EAF0FF;
-  --f-sans: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-  --f-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-  --f-mono: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
-  --r-sm:4px;
-  --r:6px;
-  --r-lg:8px;
+  --f-sans: Inter, Graphik, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  --f-serif: Inter, Graphik, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  --f-mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  --r-sm:10px;
+  --r:18px;
+  --r-lg:28px;
   --sh-1:0 1px 2px rgba(3,27,37,.04), 0 8px 28px rgba(3,27,37,.05);
   --sh-2:0 10px 35px rgba(3,27,37,.10);
   --sh-3:0 18px 70px rgba(3,27,37,.18);
   --header-h:72px;
-  --filters-h:53px;
+  --filters-h:76px;
 }
-body{background:var(--bg); color:var(--ink); font-size:15px; letter-spacing:.01em; font-family:var(--f-sans);}
-.hdr{height:var(--header-h); background:#031B25; border-bottom:1px solid rgba(255,255,255,.08);}
+body{background:var(--bg); color:var(--ink); font-size:15px; letter-spacing:-.01em;}
+.hdr{height:var(--header-h); background:rgba(246,246,246,.88); backdrop-filter:blur(18px); border-bottom:1px solid var(--rule);}
 .hdr-inner{padding:0 28px; gap:26px;}
-.brand-mark{font-size:18px; letter-spacing:.06em; text-transform:uppercase; font-weight:700; font-family:var(--f-serif); color:#fff;}
-.brand-sub{font-family:var(--f-sans); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.6); border-left:1px solid rgba(255,255,255,.2);}
-.nav{gap:4px; padding:0; background:transparent; border:none; border-radius:0; box-shadow:none;}
-.nav a{font-size:11px; padding:6px 14px; border-radius:0; border-bottom:1px solid transparent; color:rgba(255,255,255,.7); letter-spacing:.14em; text-transform:uppercase; font-weight:500;}
-.nav a:hover{background:transparent; color:#fff; border-bottom:1px solid rgba(255,255,255,.5);}
-.nav a.is-active{background:transparent; color:#fff; border-bottom:1px solid #fff;}
-.btn{height:42px; border-radius:3px; padding:0 18px; font-weight:500; box-shadow:none; letter-spacing:.1em; text-transform:uppercase; font-size:12px;}
-.btn-primary{background:transparent; color:#fff; box-shadow:none; border:1px solid #fff;}
-.btn-primary:hover{background:rgba(255,255,255,.1); transform:none;}
-.btn-ghost{border-color:var(--rule-strong); background:transparent; color:var(--ink);}
-.btn-ghost:hover{border-color:var(--ink); background:transparent; box-shadow:none;}
+.brand-mark{font-size:18px; letter-spacing:-.02em; text-transform:none; font-weight:700;}
+.brand-sub{font-family:var(--f-sans); font-size:12px; letter-spacing:-.01em; text-transform:none; color:var(--ink-2); border-left:1px solid var(--rule);}
+.nav{gap:10px; padding:5px; background:#fff; border:1px solid var(--rule); border-radius:999px; box-shadow:0 2px 12px rgba(3,27,37,.03);}
+.nav a{font-size:14px; padding:8px 14px; border-radius:999px; border-bottom:0; color:var(--ink-2);}
+.nav a:hover{background:var(--accent-soft); color:var(--ink); border-bottom:0;}
+.nav a.is-active{background:var(--accent); color:#fff; border-bottom:0;}
+.btn{height:42px; border-radius:999px; padding:0 18px; font-weight:600; box-shadow:none;}
+.btn-primary{background:var(--accent); color:#fff; box-shadow:0 10px 26px rgba(84,130,255,.28);}
+.btn-primary:hover{background:var(--accent-ink); transform:translateY(-1px);}
+.btn-ghost{border-color:var(--rule); background:#fff; color:var(--ink);}
+.btn-ghost:hover{border-color:#C9D3DD; background:#fff; box-shadow:var(--sh-1);}
 .btn-quiet{color:var(--ink-2); background:transparent;}
 .btn-sm{height:34px; padding:0 13px; font-size:13px;}
 .btn-lg{height:50px; padding:0 24px;}
-.card{border:1px solid var(--rule); border-radius:4px; box-shadow:0 1px 3px rgba(3,27,37,.06); background:#fff; overflow:hidden;}
-.card:hover{transform:translateY(-2px); box-shadow:0 4px 16px rgba(3,27,37,.10); border-color:#B8B8B8;}
-.input,.textarea,.select{background:#fff; border:none; border-bottom:1px solid var(--rule-strong); border-radius:0; padding:8px 0; transition:border-color .15s;}
-.input:focus,.textarea:focus,.select:focus{border-bottom-color:var(--accent); box-shadow:none;}
-.field>label,.eyebrow{font-family:var(--f-sans); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3); font-weight:500;}
-.h-title{font-family:var(--f-serif); color:var(--ink); letter-spacing:.01em; font-weight:600;}
+.card{border:1px solid var(--rule); border-radius:24px; box-shadow:var(--sh-1); background:#fff; overflow:hidden;}
+.card:hover{transform:translateY(-3px); box-shadow:var(--sh-2); border-color:#D7E0EA;}
+.input,.textarea,.select{background:#fff; border:1px solid var(--rule); border-radius:16px; padding:12px 14px; transition:border-color .15s, box-shadow .15s, background .15s;}
+.input:focus,.textarea:focus,.select:focus{border-color:var(--accent); box-shadow:0 0 0 4px var(--accent-soft);}
+.field>label,.eyebrow{font-family:var(--f-sans); font-size:12px; letter-spacing:-.005em; text-transform:none; color:var(--ink-2); font-weight:600;}
+.h-title{font-family:var(--f-sans); color:var(--ink); letter-spacing:-.035em; font-weight:750;}
 .mono,.num{font-family:var(--f-sans); font-variant-numeric:tabular-nums lining-nums;}
-.tag,.badge{font-family:var(--f-sans); font-size:10px; letter-spacing:.12em; text-transform:uppercase; height:22px; border-radius:3px; font-weight:500;}
+.tag,.badge{font-family:var(--f-sans); font-size:12px; letter-spacing:-.01em; text-transform:none; height:26px; border-radius:999px; font-weight:650;}
 .tag-rest,.tag-hotel,.tag-museum,.tag-cluster,.tag-shop{background:var(--accent-soft); color:var(--accent-ink);}
 .badge-okn,.badge-icgfo,.badge-none{background:#F2F4F7; color:var(--ink-2);}
-.filterbar{background:#F5F5F5!important; border-bottom:1px solid var(--rule)!important; backdrop-filter:none!important;}
-.chip{border-color:var(--rule-strong)!important; background:#fff!important; color:var(--ink)!important; box-shadow:none; font-weight:500!important; height:32px!important; padding:0 12px!important; border-radius:3px!important; font-size:11px!important; letter-spacing:.08em!important; text-transform:uppercase!important;}
+.filterbar{background:rgba(246,246,246,.88)!important; backdrop-filter:blur(18px)!important; border-bottom:1px solid var(--rule)!important;}
+.chip{border-color:var(--rule)!important; background:#fff!important; color:var(--ink)!important; box-shadow:0 1px 3px rgba(3,27,37,.03); font-weight:600!important; height:36px!important; padding:0 14px!important;}
 .chip:hover{border-color:#C9D3DD!important; box-shadow:var(--sh-1);}
 .chip[style*="rgb(3, 27, 37)"], .chip.is-active{background:var(--accent-soft)!important; border-color:var(--accent)!important; color:var(--accent-ink)!important;}
-.obj-card{display:grid; grid-template-columns:220px 1fr; min-height:190px; border-radius:4px;}
+.obj-card{display:grid; grid-template-columns:168px 1fr; min-height:168px; border-radius:24px;}
 .obj-card .ph-img{height:100%; min-height:168px; aspect-ratio:auto!important;}
-.obj-card.is-hl{border-color:var(--ink); box-shadow:0 0 0 2px var(--accent-soft);}
+.obj-card.is-hl{border-color:var(--accent); box-shadow:0 0 0 4px var(--accent-soft), var(--sh-2);}
 .market-card-body{padding:16px 18px!important; display:grid; grid-template-columns:1fr auto; gap:12px; align-items:start;}
 .market-card-meta{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:10px; color:var(--ink-2); font-size:13px;}
-.market-card-score{min-width:60px; border-radius:3px; background:var(--bg-soft); color:var(--ink); padding:8px 10px; text-align:center; font-weight:700; border:1px solid var(--rule);}
+.market-card-score{min-width:68px; border-radius:18px; background:var(--accent-soft); color:var(--accent-ink); padding:10px 12px; text-align:center; font-weight:800;}
 .market-card-score small{display:block; font-size:11px; color:var(--ink-2); font-weight:600; margin-top:2px;}
-.ph-img{border-radius:0; background:#E8E6E0; background-image:linear-gradient(135deg,#EDE9E0,#E0DDD5)!important;}
-.dv-marker{width:32px;height:32px;border-radius:50%;background:#031B25;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(3,27,37,.3);border:2px solid #fff;transition:.15s;}
+.ph-img{border-radius:18px; background:#EEF2F7; background-image:linear-gradient(135deg,#F5F7FA,#E9EEF7)!important;}
+.dv-marker{width:36px;height:36px;border-radius:999px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 25px rgba(84,130,255,.35),0 0 0 5px rgba(84,130,255,.15);border:2px solid #fff;transition:.15s;}
 .dv-marker svg{width:18px;height:18px;}
-.dv-marker.is-active{transform:scale(1.12); background:#fff; color:#031B25; box-shadow:0 4px 12px rgba(3,27,37,.25); border-color:#031B25;}
-.leaflet-popup-content-wrapper{border-radius:4px!important; box-shadow:0 4px 16px rgba(3,27,37,.12)!important; overflow:hidden; border:1px solid var(--rule);}
+.dv-marker.is-active{transform:scale(1.16); background:var(--ink); box-shadow:0 10px 30px rgba(3,27,37,.25),0 0 0 6px var(--accent-soft);}
+.leaflet-popup-content-wrapper{border-radius:22px!important; box-shadow:var(--sh-3)!important; overflow:hidden; border:1px solid var(--rule);}
 .leaflet-popup-content{margin:0!important; min-width:220px;}
 .scroll-y{scrollbar-width:thin; scrollbar-color:#C8D1DA transparent;}
 .scroll-y::-webkit-scrollbar{width:10px;}
@@ -435,41 +435,41 @@ body{background:var(--bg); color:var(--ink); font-size:15px; letter-spacing:.01e
 /* ============================================
    User corrections — May restyle pass
    ============================================ */
-.hdr{background:#031B25!important; color:#fff!important; border-bottom:1px solid rgba(255,255,255,.08)!important;}
+.hdr{background:#031B25!important; color:#fff!important; border-bottom:1px solid rgba(255,255,255,.10)!important;}
 .hdr .brand{color:#fff!important;}
 .hdr .brand img{height:28px!important; width:auto!important; max-width:150px!important; object-fit:contain;}
 .hdr .brand-sub{color:rgba(255,255,255,.72)!important; border-left-color:rgba(255,255,255,.22)!important;}
 .hdr .nav{background:rgba(255,255,255,.08)!important; border-color:rgba(255,255,255,.12)!important;}
 .hdr .nav a{color:rgba(255,255,255,.78)!important;}
-.hdr .nav a:hover{background:transparent!important; color:#fff!important;}
-.hdr .nav a.is-active{background:transparent!important; color:#fff!important; border-bottom:1px solid #fff!important;}
-.hdr .btn-primary{background:transparent!important; color:rgba(255,255,255,.8)!important; border-color:rgba(255,255,255,.3)!important; box-shadow:none!important;}
-.hdr .btn-ghost{background:rgba(255,255,255,.06)!important; color:rgba(255,255,255,.8)!important; border-color:rgba(255,255,255,.2)!important;}
+.hdr .nav a:hover{background:rgba(255,255,255,.12)!important; color:#fff!important;}
+.hdr .nav a.is-active{background:#fff!important; color:#031B25!important;}
+.hdr .btn-primary{background:#fff!important; color:#031B25!important; box-shadow:none!important;}
+.hdr .btn-ghost{background:rgba(255,255,255,.10)!important; color:#fff!important; border-color:rgba(255,255,255,.20)!important;}
 .hdr input{background:rgba(255,255,255,.12)!important; border-color:rgba(255,255,255,.18)!important; color:#fff!important;}
 .hdr input::placeholder{color:rgba(255,255,255,.62)!important;}
-.filterbar{padding-left:0!important;}
-.filterbar .chip{min-height:32px!important; height:32px!important; padding:0 12px!important; white-space:nowrap!important; border-radius:3px!important;}
+.filterbar{padding-left:8px!important;}
+.filterbar .chip{min-height:38px!important; height:auto!important; padding:0 16px!important; white-space:nowrap!important;}
 .filterbar .chip.is-active, .chip.is-active{background:#031B25!important; border-color:#031B25!important; color:#fff!important;}
 .filterbar .chip.is-active svg, .chip.is-active svg{color:#fff!important;}
 .filter-city-btn.is-active{background:#031B25!important; border-color:#031B25!important; color:#fff!important;}
-.sort-select{border:0!important; border-bottom:1px solid var(--rule-strong)!important; border-radius:0!important; background:transparent!important; padding:6px 24px 6px 0!important; box-shadow:none!important; font-size:11px!important; letter-spacing:.08em!important; text-transform:uppercase!important;}
+.sort-select{border:0!important; border-bottom:2px solid #031B25!important; border-radius:0!important; background:transparent!important; padding:6px 24px 6px 0!important; box-shadow:none!important;}
 .view-switch{border-radius:999px!important; padding:3px!important;}
 .view-switch .btn{border-radius:999px!important;}
 .obj-card{grid-template-columns:220px 1fr!important; min-height:190px!important;}
 .obj-card .ph-img{min-height:190px!important;}
 .list-view{padding:28px 40px 44px!important;}
 .list-view .list-view-grid{display:grid!important; grid-template-columns:repeat(3, minmax(0, 1fr))!important; gap:22px!important; max-width:none!important; width:100%!important; margin:0!important;}
-.list-view .obj-card{display:flex!important; flex-direction:column!important; grid-template-columns:none!important; min-height:0!important; border-radius:4px!important; overflow:hidden!important;}
+.list-view .obj-card{display:flex!important; flex-direction:column!important; grid-template-columns:none!important; min-height:0!important; border-radius:22px!important; overflow:hidden!important;}
 .list-view .obj-card > div:first-child{padding:0!important; height:250px!important; position:relative!important; width:100%!important; flex:0 0 auto!important;}
 .list-view .obj-card .ph-img{height:100%!important; min-height:250px!important; width:100%!important; border-radius:0!important;}
 .list-view .market-card-body{padding:22px 24px 24px!important; display:grid!important; grid-template-columns:1fr!important; align-items:start!important; gap:14px!important;}
 .list-view .market-card-body h3{font-size:22px!important; line-height:1.14!important; margin-bottom:10px!important;}
 .list-view .market-card-meta{font-size:15px!important; gap:10px!important; margin-top:16px!important;}
-.list-view .market-card-score{width:max-content!important; min-width:0!important; padding:10px 16px!important; border-radius:3px!important; font-size:28px!important;}
+.list-view .market-card-score{width:max-content!important; min-width:0!important; padding:10px 16px!important; border-radius:16px!important; font-size:28px!important;}
 .list-view .market-card-score small{font-size:13px!important;}
 @media (max-width: 1180px){.list-view .list-view-grid{grid-template-columns:repeat(2, minmax(0, 1fr))!important}.list-view .obj-card > div:first-child{height:240px!important}.list-view .obj-card .ph-img{min-height:240px!important}}
-.dv-marker{background:#031B25!important; box-shadow:0 2px 8px rgba(3,27,37,.3)!important;}
-.dv-marker.is-active{background:#fff!important; color:#031B25!important; box-shadow:0 4px 12px rgba(3,27,37,.25)!important; border-color:#031B25!important;}
+.dv-marker{background:var(--map-accent)!important; box-shadow:0 10px 25px rgba(84,130,255,.35),0 0 0 5px rgba(84,130,255,.15)!important;}
+.dv-marker.is-active{background:#031B25!important; box-shadow:0 10px 30px rgba(3,27,37,.25),0 0 0 6px var(--map-accent-soft)!important;}
 .modal-light-header{background:#F6F6F6!important;}
 @media (max-width: 900px){.obj-card{grid-template-columns:140px 1fr!important; min-height:150px!important}.obj-card .ph-img{min-height:150px!important}.list-view{padding:18px 16px 32px!important}.list-view .list-view-grid{grid-template-columns:1fr!important; gap:18px!important}.list-view .obj-card{display:flex!important; flex-direction:column!important; grid-template-columns:none!important; min-height:0!important}.list-view .obj-card > div:first-child{height:250px!important}.list-view .obj-card .ph-img{min-height:250px!important}.list-view .market-card-body{padding:20px!important; grid-template-columns:1fr!important}.list-view .market-card-score{width:max-content!important; min-width:0!important; margin-top:0!important}}
 
@@ -500,48 +500,48 @@ body{background:var(--bg); color:var(--ink); font-size:15px; letter-spacing:.01e
 }
 .obj-card:hover,
 .obj-card.is-hl{
-  border-color:rgba(3,27,37,.25)!important;
-  box-shadow:0 0 0 4px rgba(3,27,37,.05), var(--sh-2)!important;
+  border-color:rgba(84,130,255,.42)!important;
+  box-shadow:0 0 0 4px rgba(84,130,255,.10), var(--sh-2)!important;
 }
 .obj-card:hover::before,
 .obj-card.is-hl::before{
-  background:#031B25;
+  background:var(--blue-accent);
 }
 
 /* плашка типа объекта: синий icon/accent, но сама плашка остаётся спокойной */
 .tag{
-  border:1px solid rgba(3,27,37,.12)!important;
-  box-shadow:0 6px 18px rgba(3,27,37,.04)!important;
+  border:1px solid rgba(84,130,255,.16)!important;
+  box-shadow:0 6px 18px rgba(84,130,255,.06)!important;
 }
 .tag svg,
 .tag .ic-sm{
-  color:#031B25!important;
-  stroke:#031B25!important;
+  color:var(--blue-accent)!important;
+  stroke:var(--blue-accent)!important;
 }
 .tag-cluster,
 .tag-rest,
 .tag-hotel,
 .tag-museum,
 .tag-shop{
-  background:#EAEAEA!important;
-  color:#031B25!important;
+  background:var(--blue-accent-soft)!important;
+  color:#3159C9!important;
 }
 
 /* адрес, индекс и CTA — больше синего как вторичного акцента */
 .market-card-body > div:first-child > div:first-of-type svg{
-  color:#031B25!important;
-  stroke:#031B25!important;
+  color:var(--blue-accent)!important;
+  stroke:var(--blue-accent)!important;
 }
 .market-card-score{
-  background:#EAEAEA!important;
-  color:#031B25!important;
+  background:var(--blue-accent-soft)!important;
+  color:var(--blue-accent)!important;
 }
 .market-card-score small{
   color:#53636C!important;
 }
 .market-card-body .badge[style*="accent-soft"]{
-  background:#EAEAEA!important;
-  color:#031B25!important;
+  background:var(--blue-accent-soft)!important;
+  color:var(--blue-accent)!important;
 }
 
 /* сортировка/поля: синий focus-ring */
@@ -549,8 +549,8 @@ body{background:var(--bg); color:var(--ink); font-size:15px; letter-spacing:.01e
 .textarea:focus,
 .select:focus,
 .sort-select:focus{
-  border-color:#031B25!important;
-  box-shadow:0 0 0 4px #EAEAEA!important;
+  border-color:var(--blue-accent)!important;
+  box-shadow:0 0 0 4px var(--blue-accent-soft)!important;
 }
 
 /* переключатель режима: активная иконка/состояние чуть более продуктовые */
@@ -558,16 +558,16 @@ body{background:var(--bg); color:var(--ink); font-size:15px; letter-spacing:.01e
   transition:color .15s ease, stroke .15s ease;
 }
 .view-switch .btn:not([style*="rgb(3, 27, 37)"]) svg{
-  color:#031B25!important;
-  stroke:#031B25!important;
+  color:var(--blue-accent)!important;
+  stroke:var(--blue-accent)!important;
 }
 
 /* карта и попапы */
 .leaflet-popup-content-wrapper{
-  border-color:rgba(3,27,37,.15)!important;
+  border-color:rgba(84,130,255,.24)!important;
 }
 .dv-marker{
-  background:#031B25!important;
+  background:var(--blue-accent)!important;
   box-shadow:0 10px 25px rgba(84,130,255,.35),0 0 0 5px rgba(84,130,255,.15)!important;
 }
 
@@ -594,10 +594,10 @@ html, body, #root { width: 100%; overflow-x: hidden; min-width: 0; }
   left: 50% !important;
   transform: translateX(-50%) !important;
   z-index: 8000 !important;
-  height: 46px !important;
+  height: 50px !important;
   padding: 0 28px !important;
-  border-radius: 3px !important;
-  background: #031B25 !important;
+  border-radius: 999px !important;
+  background: var(--accent) !important;
   color: #fff !important;
   font-size: 15px !important;
   font-weight: 600 !important;
@@ -893,215 +893,6 @@ html, body, #root { width: 100%; overflow-x: hidden; min-width: 0; }
   .market-card-body h3 { font-size: 15px !important; }
 }
 
-
-
-/* ============================================
-   Requested corrections: detail card + admin objects
-   ============================================ */
-.admin-object-avatar{
-  width:44px!important;
-  height:44px!important;
-  border-radius:50%!important;
-  background:#DADADA!important;
-  flex-shrink:0!important;
-}
-.objects-tab-row:hover{
-  background:var(--bg)!important;
-}
-.detail-content-grid section{
-  animation:slideUp .18s ease;
-}
-@media (max-width:768px){
-  .objects-tab-row{
-    grid-template-columns:24px 1fr!important;
-    min-width:0!important;
-    padding:18px 14px!important;
-    align-items:flex-start!important;
-  }
-  .objects-tab-row .admin-object-avatar{
-    display:none!important;
-  }
-  .objects-tab-row > span:nth-child(n+4){
-    display:none!important;
-  }
-  .objects-tab-row > div:nth-child(3){
-    min-width:0!important;
-  }
-  .objects-tab-row > div:nth-child(3) > div:first-child{
-    font-size:16px!important;
-    line-height:1.25!important;
-  }
-  .objects-tab-row > div:nth-child(3) > div:nth-child(2){
-    font-size:13px!important;
-    line-height:1.35!important;
-    margin-top:3px!important;
-    max-width:180px!important;
-    overflow-wrap:anywhere!important;
-  }
-  .objects-tab-row .obj-row-details{
-    display:flex!important;
-    flex-wrap:wrap!important;
-    gap:8px 12px!important;
-    margin-top:12px!important;
-  }
-  .objects-tab-row .obj-row-details span{
-    margin-left:0!important;
-  }
-}
-
-/* ============================================
-   TRANSITIONAL STATE (769–1180px)
-   Smooth shrinkage between full and mobile.
-   Goal: image column tapers gracefully, text
-   never overflows or "shifts" the card width.
-   ============================================ */
-
-/* Base safeguards — apply at every width so text in the side-by-side
-   card layout can shrink inside its grid track. Without min-width:0
-   the inner grid items default to min-content and push the score
-   column off the card. */
-.obj-card { min-width: 0 !important; }
-.obj-card > .market-card-body { min-width: 0 !important; }
-.market-card-body > div:first-child { min-width: 0 !important; }
-.market-card-body > div:first-child > * { min-width: 0 !important; }
-.market-card-body h3 {
-  min-width: 0 !important;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-}
-.market-card-body > div:first-child > div:nth-child(2) span {
-  min-width: 0 !important;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-}
-.market-card-meta { min-width: 0 !important; }
-.market-card-meta > span { min-width: 0; }
-
-/* Container queries on the catalog scroll pane: cards adapt to the
-   pane's actual width instead of the viewport, so the transition
-   between full and mobile is smooth regardless of split ratio. */
-.scroll-y { container-type: inline-size; container-name: catpane; }
-
-/* Wide pane — keep the editorial 220px image column. */
-@container catpane (min-width: 560px) {
-  .scroll-y .obj-card {
-    grid-template-columns: 200px 1fr !important;
-    min-height: 180px !important;
-  }
-  .scroll-y .obj-card .ph-img { min-height: 180px !important; }
-  .scroll-y .obj-card .market-card-body {
-    grid-template-columns: 1fr auto !important;
-    padding: 16px 18px !important;
-    gap: 12px !important;
-  }
-}
-
-/* Medium pane — image narrows, score drops below content
-   so the title and address get the full body width. */
-@container catpane (min-width: 420px) and (max-width: 559.98px) {
-  .scroll-y .obj-card {
-    grid-template-columns: clamp(140px, 30cqi, 170px) 1fr !important;
-    min-height: 158px !important;
-  }
-  .scroll-y .obj-card .ph-img { min-height: 158px !important; }
-  .scroll-y .obj-card .market-card-body {
-    grid-template-columns: 1fr !important;
-    padding: 13px 14px !important;
-    gap: 8px !important;
-  }
-  .scroll-y .obj-card .market-card-body h3 {
-    font-size: 16px !important;
-    line-height: 1.2 !important;
-    margin-bottom: 4px !important;
-  }
-  .scroll-y .obj-card .market-card-body > div:first-child > div:nth-of-type(1) {
-    font-size: 13px !important;
-  }
-  .scroll-y .obj-card .market-card-meta {
-    font-size: 12px !important;
-    gap: 4px 8px !important;
-    margin-top: 6px !important;
-  }
-  .scroll-y .obj-card .market-card-score {
-    width: max-content !important;
-    min-width: 0 !important;
-    padding: 6px 12px !important;
-    font-size: 16px !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-    margin-top: 2px !important;
-  }
-  .scroll-y .obj-card .market-card-score small {
-    display: inline !important;
-    margin: 0 0 0 4px !important;
-    font-size: 10px !important;
-  }
-  .scroll-y .obj-card .market-card-body .badge {
-    font-size: 10px !important;
-    height: 22px !important;
-    padding: 0 8px !important;
-    white-space: nowrap !important;
-  }
-}
-
-/* Narrow pane — stack vertically (image on top), same as mobile.
-   This is the cleanest way to keep text from cramping. */
-@container catpane (max-width: 419.98px) {
-  .scroll-y .obj-card {
-    grid-template-columns: 1fr !important;
-    min-height: 0 !important;
-  }
-  .scroll-y .obj-card > div:first-child {
-    height: 160px !important;
-    min-height: 160px !important;
-    width: 100% !important;
-  }
-  .scroll-y .obj-card .ph-img {
-    min-height: 160px !important;
-    width: 100% !important;
-    border-radius: 0 !important;
-  }
-  .scroll-y .obj-card .market-card-body {
-    grid-template-columns: 1fr !important;
-    padding: 14px 14px 16px !important;
-    gap: 8px !important;
-  }
-  .scroll-y .obj-card .market-card-body h3 {
-    font-size: 17px !important;
-    line-height: 1.2 !important;
-  }
-  .scroll-y .obj-card .market-card-meta {
-    font-size: 12px !important;
-    gap: 6px !important;
-    margin-top: 6px !important;
-  }
-  .scroll-y .obj-card .market-card-score {
-    width: max-content !important;
-    min-width: 0 !important;
-    padding: 6px 12px !important;
-    font-size: 16px !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-  }
-  .scroll-y .obj-card .market-card-score small {
-    display: inline !important;
-    margin: 0 0 0 4px !important;
-    font-size: 10px !important;
-  }
-  .scroll-y .obj-card::before { display: none !important; }
-}
-
-/* Lower transitional band for the list (grid) view —
-   tighten typography so text doesn't push past the card edge. */
-@media (min-width: 769px) and (max-width: 900px) {
-  .list-view .market-card-body h3 {
-    font-size: clamp(17px, 2.4vw, 20px) !important;
-    overflow-wrap: anywhere !important;
-  }
-  .list-view .market-card-meta { font-size: 13px !important; }
-}
 </style>
 
   <style>
@@ -1149,13 +940,6 @@ window.DV_DATA = {
   },
 
   cities: ['Москва', 'Санкт-Петербург', 'Нижний Новгород', 'Казань', 'Ярославль', 'Калининград', 'Иркутск'],
-
-  regions: [
-    { id: 'msk',  label: 'Москва и МО',       cities: ['Москва'] },
-    { id: 'spb',  label: 'Северо-Запад',       cities: ['Санкт-Петербург', 'Калининград'] },
-    { id: 'volga',label: 'Поволжье',           cities: ['Нижний Новгород', 'Казань', 'Ярославль'] },
-    { id: 'sib',  label: 'Сибирь и Дальний Восток', cities: ['Иркутск'] },
-  ],
 
   /* ── Объекты ─────────────────────────── */
   objects: [
@@ -1256,7 +1040,7 @@ window.TYPE_ICONS = TYPE_ICONS;
    Catalog — map + list, filters, view switch
    ============================================ */
 /* eslint-disable */
-var { useState, useEffect, useMemo, useRef, useCallback } = React;
+const { useState, useEffect, useMemo, useRef } = React;
 
 /* ── Shared shared pieces ───────────────── */
 function Tag({ t }) {
@@ -1308,9 +1092,9 @@ function ObjectCard({ obj, onOpen, highlighted, onHover }) {
       onMouseEnter={() => onHover && onHover(obj.id)}
       onMouseLeave={() => onHover && onHover(null)}
       style={{ cursor: 'pointer' }}>
-      <div style={{ position: 'relative', overflow: 'hidden', minHeight: 180, flexShrink: 0 }}>
+      <div style={{ position: 'relative', padding: 8 }}>
         <Photo obj={obj} fill />
-        <div style={{ position: 'absolute', top: 12, left: 12 }}>
+        <div style={{ position: 'absolute', top: 18, left: 18 }}>
           <Tag t={obj.type} />
         </div>
       </div>
@@ -1342,104 +1126,6 @@ function ObjectCard({ obj, onOpen, highlighted, onHover }) {
 }
 
 /* ── Filters panel ──────────────────────── */
-function RegionCityFilter({ filters, toggle, cityOpen, setCityOpen }) {
-  const R = window.DV_DATA.regions;
-  const [openRegions, setOpenRegions] = React.useState({});
-  const totalSelected = filters.cities.length;
-
-  const toggleRegion = (rid) => setOpenRegions(s => ({...s, [rid]: !s[rid]}));
-  const regionHasActive = (r) => r.cities.some(c => filters.cities.includes(c));
-
-  return (
-    <div style={{ position: 'relative' }}>
-      <button
-        type="button"
-        onClick={() => setCityOpen(o => !o)}
-        style={{
-          display: 'inline-flex', alignItems: 'center', gap: 6,
-          height: 32, padding: '0 12px', borderRadius: 3,
-          border: `1px solid ${totalSelected ? '#031B25' : 'var(--rule-strong)'}`,
-          background: totalSelected ? '#031B25' : '#fff',
-          color: totalSelected ? '#fff' : 'var(--ink)',
-          fontSize: 11, cursor: 'pointer', letterSpacing: '.08em',
-          textTransform: 'uppercase', fontWeight: 500,
-        }}>
-        <I name="pin" className="ic-sm" />
-        Регион / Город {totalSelected ? `· ${totalSelected}` : ''}
-        <I name={cityOpen ? 'chevron-up' : 'chevron-down'} className="ic-sm" />
-      </button>
-
-      {cityOpen && (
-        <div style={{
-          position: 'absolute', top: 'calc(100% + 6px)', left: 0,
-          background: '#fff', border: '1px solid var(--rule)',
-          borderRadius: 4, boxShadow: '0 4px 20px rgba(3,27,37,.14)',
-          minWidth: 260, zIndex: 60, animation: 'slideUp .15s ease',
-          overflow: 'hidden',
-        }} onMouseLeave={() => setCityOpen(false)}>
-          {/* Clear all */}
-          {totalSelected > 0 && (
-            <div style={{padding:'8px 14px', borderBottom:'1px solid var(--rule)', display:'flex', justifyContent:'space-between', alignItems:'center'}}>
-              <span style={{fontSize:11, color:'var(--ink-3)', letterSpacing:'.08em', textTransform:'uppercase'}}>Выбрано: {totalSelected}</span>
-              <button onClick={()=>R.forEach(r=>r.cities.forEach(c=>filters.cities.includes(c)&&toggle('cities',c)))}
-                style={{fontSize:11, color:'var(--accent)', background:'none', border:'none', cursor:'pointer', letterSpacing:'.06em', textTransform:'uppercase'}}>
-                Сбросить
-              </button>
-            </div>
-          )}
-
-          {/* Regions */}
-          {R.map(r => (
-            <div key={r.id}>
-              {/* Region header */}
-              <div
-                onClick={() => toggleRegion(r.id)}
-                style={{
-                  display:'flex', alignItems:'center', justifyContent:'space-between',
-                  padding:'10px 14px', cursor:'pointer',
-                  background: regionHasActive(r) ? 'rgba(3,27,37,.03)' : 'transparent',
-                  borderBottom: '1px solid var(--rule)',
-                }}>
-                <span style={{
-                  fontSize:12, fontWeight:600, color: regionHasActive(r) ? 'var(--ink)' : 'var(--ink-2)',
-                  letterSpacing:'.04em',
-                  display:'flex', alignItems:'center', gap:6,
-                }}>
-                  {regionHasActive(r) && <span style={{width:6, height:6, borderRadius:'50%', background:'#031B25', display:'inline-block'}}/>}
-                  {r.label}
-                </span>
-                <I name={openRegions[r.id] ? 'chevron-up' : 'chevron-down'} className="ic-sm" style={{color:'var(--ink-3)'}}/>
-              </div>
-
-              {/* Cities inside region */}
-              {openRegions[r.id] && (
-                <div style={{background:'#FAFAFA'}}>
-                  {r.cities.map(c => (
-                    <label key={c} style={{
-                      display:'flex', alignItems:'center', gap:10,
-                      padding:'8px 14px 8px 24px', cursor:'pointer', fontSize:13,
-                      borderBottom:'1px solid var(--rule)',
-                      background: filters.cities.includes(c) ? 'rgba(3,27,37,.04)' : 'transparent',
-                    }}>
-                      <input type="checkbox"
-                        checked={filters.cities.includes(c)}
-                        onChange={() => toggle('cities', c)}
-                        style={{accentColor:'#031B25'}}/>
-                      <span style={{color: filters.cities.includes(c) ? 'var(--ink)' : 'var(--ink-2)', fontWeight: filters.cities.includes(c) ? 500 : 400}}>
-                        {c}
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
 function FilterChip({ active, onClick, children, icon }) {
   return (
     <button
@@ -1464,71 +1150,13 @@ function FilterChip({ active, onClick, children, icon }) {
 
 }
 
-function DropdownItem({ active, onClick, children }) {
-  return (
-    <div onClick={onClick} style={{
-      display: 'flex', alignItems: 'center', gap: 8,
-      padding: '9px 16px', cursor: 'pointer', fontSize: 13,
-      background: active ? 'rgba(3,27,37,.05)' : 'transparent',
-      borderLeft: `2px solid ${active ? '#031B25' : 'transparent'}`,
-      transition: 'all .12s',
-      whiteSpace: 'nowrap',
-    }}
-    onMouseEnter={e => e.currentTarget.style.background = 'rgba(3,27,37,.04)'}
-    onMouseLeave={e => e.currentTarget.style.background = active ? 'rgba(3,27,37,.05)' : 'transparent'}
-    >
-      {active && <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#031B25', flexShrink: 0 }} />}
-      <span style={{ fontWeight: active ? 500 : 400, color: active ? 'var(--ink)' : 'var(--ink-2)' }}>{children}</span>
-    </div>
-  );
-}
-
-function DropdownFilter({ label, count, open, onToggle, onClose, children }) {
-  const ref = React.useRef(null);
-  React.useEffect(() => {
-    if (!open) return;
-    const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) onClose(); };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
-  }, [open, onClose]);
-
-  return (
-    <div ref={ref} style={{ position: 'relative', flexShrink: 0 }}>
-      <button type="button" onClick={onToggle} style={{
-        display: 'inline-flex', alignItems: 'center', gap: 5,
-        height: 32, padding: '0 12px', borderRadius: 3,
-        border: `1px solid ${count > 0 ? '#031B25' : 'var(--rule-strong)'}`,
-        background: count > 0 ? '#031B25' : '#fff',
-        color: count > 0 ? '#fff' : 'var(--ink)',
-        fontSize: 11, cursor: 'pointer', letterSpacing: '.08em',
-        textTransform: 'uppercase', fontWeight: 500,
-        transition: 'all .15s',
-      }}>
-        {label}{count > 0 ? ` · ${count}` : ''}
-        <I name={open ? 'chevron-up' : 'chevron-down'} className="ic-sm" />
-      </button>
-      {open && (
-        <div style={{
-          position: 'absolute', top: 'calc(100% + 6px)', left: 0,
-          background: '#fff', border: '1px solid var(--rule)',
-          borderRadius: 4, boxShadow: '0 6px 24px rgba(3,27,37,.12)',
-          minWidth: 180, zIndex: 80, animation: 'slideUp .12s ease',
-          overflow: 'hidden',
-        }}>
-          {children}
-        </div>
-      )}
-    </div>
-  );
-}
-
 function FilterBar({ filters, setFilters, count, onReset }) {
   const T = window.DV_DATA.types;
   const P = window.DV_DATA.periods;
   const S = window.DV_DATA.statuses;
   const C = window.DV_DATA.cities;
 
-  const [open, setOpen] = useState(null);
+  const [open, setOpen] = useState(true);
   const [cityOpen, setCityOpen] = useState(false);
 
   const toggle = (key, val) => {
@@ -1541,95 +1169,106 @@ function FilterBar({ filters, setFilters, count, onReset }) {
   return (
     <div className="filterbar" style={{
       position: 'sticky', top: 'var(--header-h)', zIndex: 40,
-      background: '#F5F5F5',
-      borderBottom: '1px solid var(--rule)',
+      background: 'rgba(246,246,246,.92)', backdropFilter: 'blur(10px)',
+      borderBottom: '1px solid var(--rule)'
     }}>
-      {/* ── ROW 1: region + type dropdowns + sort + count ── */}
-      <div style={{
-        padding: '10px 28px',
-        display: 'flex', alignItems: 'center', gap: 8,
-        borderBottom: '1px solid var(--rule)',
-        overflowX: 'auto', whiteSpace: 'nowrap',
-      }} className="no-scroll-bar">
-
-        {/* Регион / Город */}
-        <RegionCityFilter filters={filters} toggle={toggle} cityOpen={cityOpen} setCityOpen={setCityOpen} />
-
-        <div style={{ width: 1, height: 20, background: 'var(--rule-strong)', flexShrink: 0 }} />
-
-        {/* Тип — дропдаун */}
-        <DropdownFilter
-          label="Тип"
-          count={filters.types.length}
-          open={open === 'type'}
-          onToggle={() => setOpen(o => o === 'type' ? null : 'type')}
-          onClose={() => setOpen(null)}
-        >
-          {Object.entries(T).map(([k, v]) => (
-            <DropdownItem key={k} active={filters.types.includes(k)} onClick={() => toggle('types', k)}>
-              <I name={TYPE_ICONS[k]} className="ic-sm" />{v.label}
-            </DropdownItem>
-          ))}
-        </DropdownFilter>
-
-        {/* Период — дропдаун */}
-        <DropdownFilter
-          label="Период"
-          count={filters.periods.length}
-          open={open === 'period'}
-          onToggle={() => setOpen(o => o === 'period' ? null : 'period')}
-          onClose={() => setOpen(null)}
-        >
-          {P.map(p => (
-            <DropdownItem key={p.id} active={filters.periods.includes(p.id)} onClick={() => toggle('periods', p.id)}>
-              {p.label}
-            </DropdownItem>
-          ))}
-        </DropdownFilter>
-
-        {/* Статус — дропдаун */}
-        <DropdownFilter
-          label="Статус"
-          count={filters.statuses.length}
-          open={open === 'status'}
-          onToggle={() => setOpen(o => o === 'status' ? null : 'status')}
-          onClose={() => setOpen(null)}
-        >
-          {Object.entries(S).map(([k, v]) => (
-            <DropdownItem key={k} active={filters.statuses.includes(k)} onClick={() => toggle('statuses', k)}>
+      <div style={{ padding: '14px 40px', display: 'flex', alignItems: 'center', gap: 18, flexWrap: 'wrap' }}>
+        {/* Types */}
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
+          <span className="eyebrow" style={{ marginRight: 4 }}>Тип</span>
+          {Object.entries(T).map(([k, v]) =>
+          <FilterChip key={k} active={filters.types.includes(k)} onClick={() => toggle('types', k)} icon={TYPE_ICONS[k]}>
               {v.label}
-            </DropdownItem>
-          ))}
-        </DropdownFilter>
+            </FilterChip>
+          )}
+        </div>
+
+        <span style={{ width: 1, height: 24, background: 'var(--rule-strong)' }} />
+
+        {/* City */}
+        <div style={{ position: 'relative' }}>
+          <button
+            type="button"
+            className={filters.cities.length ? 'filter-city-btn is-active' : 'filter-city-btn'}
+            onClick={() => setCityOpen((o) => !o)}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 6,
+              height: 36, padding: '0 14px',
+              borderRadius: 999,
+              border: `1px solid ${filters.cities.length ? 'var(--accent)' : 'var(--rule)'}`,
+              background: filters.cities.length ? 'var(--accent)' : '#fff',
+              color: filters.cities.length ? '#fff' : 'var(--ink)',
+              fontSize: 13, cursor: 'pointer'
+            }}>
+            <I name="pin" className="ic-sm" />
+            Город {filters.cities.length ? `· ${filters.cities.length}` : ''}
+            <I name="chevron-down" className="ic-sm" />
+          </button>
+          {cityOpen &&
+          <div style={{
+            position: 'absolute', top: 'calc(100% + 6px)', left: 0,
+            background: '#fff', border: '1px solid var(--rule)',
+            borderRadius: 'var(--r)', boxShadow: 'var(--sh-2)',
+            padding: '8px 0', minWidth: 220, zIndex: 60,
+            animation: 'slideUp .15s ease'
+          }} onMouseLeave={() => setCityOpen(false)}>
+              {C.map((c) =>
+            <label key={c} style={{
+              display: 'flex', alignItems: 'center', gap: 10,
+              padding: '8px 14px', cursor: 'pointer', fontSize: 14
+            }}>
+                  <input type="checkbox"
+              checked={filters.cities.includes(c)}
+              onChange={() => toggle('cities', c)}
+              style={{ accentColor: 'var(--accent)' }} />
+                  {c}
+                </label>
+            )}
+            </div>
+          }
+        </div>
+
+        {/* Period */}
+        <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
+          <span className="eyebrow">Период</span>
+          {P.map((p) =>
+          <FilterChip key={p.id} active={filters.periods.includes(p.id)} onClick={() => toggle('periods', p.id)}>
+              {p.label}
+            </FilterChip>
+          )}
+        </div>
+
+        <span style={{ width: 1, height: 24, background: 'var(--rule-strong)' }} />
+
+        {/* Status */}
+        <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
+          <span className="eyebrow">Статус</span>
+          {Object.entries(S).map(([k, v]) =>
+          <FilterChip key={k} active={filters.statuses.includes(k)} onClick={() => toggle('statuses', k)}>
+              {v.label}
+            </FilterChip>
+          )}
+        </div>
 
         <div style={{ flex: 1 }} />
 
-        {/* Count + reset */}
-        <span style={{ fontSize: 12, color: 'var(--ink-3)', whiteSpace: 'nowrap', flexShrink: 0 }}>
-          {count} объектов
-        </span>
-        {(filters.types.length + filters.cities.length + filters.periods.length + filters.statuses.length) > 0 && (
-          <button onClick={onReset} style={{
-            background: 'none', border: 'none', fontSize: 11, cursor: 'pointer',
-            color: 'var(--ink-3)', letterSpacing: '.1em', textTransform: 'uppercase',
-            padding: '0 4px', flexShrink: 0,
-          }}>× Сбросить</button>
-        )}
-
-        <div style={{ width: 1, height: 20, background: 'var(--rule-strong)', flexShrink: 0 }} />
-
-        {/* Сортировка */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
-          <span style={{ fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--ink-3)', whiteSpace: 'nowrap' }}>Сорт.</span>
-          <select
-            className="sort-select"
-            style={{ fontSize: 11, width: 'auto', letterSpacing: '.06em' }}
-            value={filters.sort}
-            onChange={(e) => setFilters((f) => ({ ...f, sort: e.target.value }))}>
-            <option value="pop">По популярности</option>
-            <option value="rev">По выручке</option>
-            <option value="new">По новизне</option>
+        {/* Sort */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span className="eyebrow">Сортировка</span>
+          <select className="select sort-select" style={{ fontSize: 13, width: 'auto' }}
+          value={filters.sort}
+          onChange={(e) => setFilters((f) => ({ ...f, sort: e.target.value }))}>
+            <option value="pop">по популярности</option>
+            <option value="rev">по выручке</option>
+            <option value="new">по новизне</option>
           </select>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14, paddingLeft: 14, borderLeft: '1px solid var(--rule-strong)' }}>
+          <span className="mono" style={{ fontSize: 12, color: 'var(--ink-2)' }}>
+            Найдено: <strong style={{ color: 'var(--ink)' }}>{count}</strong>
+          </span>
+          <button className="btn btn-sm btn-quiet" onClick={onReset} style={{ padding: '0 6px' }}>Сбросить</button>
         </div>
       </div>
     </div>);
@@ -1701,13 +1340,6 @@ function MapPane({ objects, hoverId, setHoverId, onOpen, onBoundsChange }) {
       m.on('mouseover', () => {setHoverId(o.id);m.openPopup();});
       m.on('mouseout', () => {setHoverId(null);});
       m.on('click', () => onOpen(o));
-      m.on('popupopen', () => {
-        const popupEl = m.getPopup()?.getElement();
-        if (popupEl) {
-          popupEl.style.cursor = 'pointer';
-          popupEl.addEventListener('click', () => onOpen(o));
-        }
-      });
       markersRef.current[o.id] = m;
     });
     // always fit to results, with a sane maxZoom
@@ -1788,7 +1420,42 @@ function Catalog({ onOpen, viewMode, setViewMode }) {
         onReset={() => setFilters({ types: [], cities: [], periods: [], statuses: [], sort: 'pop' })} />
       
 
-      <SplitView objects={filtered} hoverId={hoverId} setHoverId={setHoverId} onOpen={onOpen} />
+      {/* View switcher row */}
+      <div style={{
+        padding: '12px 32px',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        borderBottom: '1px solid var(--rule)',
+        background: 'var(--bg)'
+      }}>
+        <div className="eyebrow">
+          Реестр · {filtered.length} объектов · {new Set(filtered.map((o) => o.city)).size} городов
+        </div>
+        <div className="view-switch" style={{ display: 'inline-flex', border: '1px solid var(--rule-strong)', borderRadius: 999, padding: 3, background: '#fff' }}>
+          {[
+          ['split', 'map', 'Карта + список'],
+          ['list', 'grid', 'Только список']].
+          map(([v, ic, label]) =>
+          <button key={v}
+          onClick={() => setViewMode(v)}
+          className="btn btn-sm"
+          style={{
+            height: 30, background: viewMode === v ? 'var(--accent)' : 'transparent',
+            color: viewMode === v ? '#fff' : 'var(--ink-2)',
+            borderRadius: 999,
+            gap: 6, padding: '0 12px'
+          }}>
+              <I name={ic} className="ic-sm" />
+              {label}
+            </button>
+          )}
+        </div>
+      </div>
+
+      {viewMode === 'split' ?
+      <SplitView objects={filtered} hoverId={hoverId} setHoverId={setHoverId} onOpen={onOpen} /> :
+
+      <GridView objects={filtered} onOpen={onOpen} />
+      }
     </div>);
 
 }
@@ -1938,23 +1605,46 @@ const HIST = {
 };
 
 /* Detail body — shared by modal & page */
-function DetailBody({ obj, onClose, savedIds, toggleSaved }) {
+function DetailBody({ obj, onClose }) {
   const T = window.DV_DATA.types[obj.type];
   const revHist = getRevenueHistory(obj);
   const delta = revHist ? Math.round(((revHist[4].v - revHist[3].v) / revHist[3].v) * 100) : null;
   const [tab, setTab] = useState('building');
-  const saved = savedIds ? savedIds.has(obj.id) : false;
-  const setSaved = toggleSaved ? () => toggleSaved(obj.id) : () => {};
+  const [saved, setSaved] = useState(false);
 
   return (
     <div>
+      {/* HERO */}
+      <div className="detail-hero" style={{display:'grid', gridTemplateColumns:'2fr 1fr 1fr', gridTemplateRows:'160px 160px', gap:6, height: 326}}>
+        <div style={{gridRow:'1 / 3', position:'relative'}}>
+          <Photo obj={obj} fill label="PRIMARY"/>
+        </div>
+        <div><Photo obj={{...obj, id: obj.id + '_2'}} fill label="INTERIOR"/></div>
+        <div><Photo obj={{...obj, id: obj.id + '_3'}} fill label="FACADE"/></div>
+        <div><Photo obj={{...obj, id: obj.id + '_4'}} fill label="DETAIL"/></div>
+        <div style={{position:'relative'}}>
+          <Photo obj={{...obj, id: obj.id + '_5'}} fill label="ARCHIVE"/>
+          <div style={{
+            position:'absolute', right:8, bottom:8,
+            background:'rgba(255,255,255,.9)',
+            borderRadius:'var(--r)',
+            padding:'4px 10px',
+            fontFamily:'var(--f-mono)', fontSize:11,
+            display:'flex', alignItems:'center', gap:6,
+          }}>
+            <I name="camera" className="ic-sm"/>
+            +12 фото
+          </div>
+        </div>
+      </div>
+
       {/* TITLE */}
-      <div className="detail-title-bar" style={{padding:'28px 32px 0', display:'flex', gap:24, alignItems:'flex-end'}}>
+      <div className="detail-title-bar" style={{padding:'24px 32px 0', display:'flex', gap:24, alignItems:'flex-end'}}>
         <div style={{flex:1, minWidth:0}}>
           <div style={{display:'flex', alignItems:'center', gap:10, marginBottom:8, flexWrap:'wrap'}}>
             <Tag t={obj.type}/>
             <StatusBadge s={obj.status}/>
-
+            <span className="mono" style={{fontSize:11, color:'var(--ink-3)'}}>· ID {obj.id.toUpperCase()}</span>
           </div>
           <h1 className="h-title" style={{margin:0, fontSize:42, marginBottom:8, overflowWrap:'anywhere'}}>{obj.name}</h1>
           <div style={{display:'flex', alignItems:'center', gap:18, color:'var(--ink-2)', fontSize:14, flexWrap:'wrap'}}>
@@ -1967,19 +1657,12 @@ function DetailBody({ obj, onClose, savedIds, toggleSaved }) {
           </div>
         </div>
         <div style={{display:'flex', gap:10}}>
-          <button className="btn btn-ghost btn-sm" onClick={()=>setSaved()}>
+          <button className="btn btn-ghost btn-sm" onClick={()=>setSaved(s=>!s)}>
             <I name="heart" className="ic-sm" fill={saved ? 'var(--accent)' : 'none'} stroke={saved ? 'var(--accent)' : 'currentColor'}/>
             {saved ? 'Сохранено' : 'Сохранить'}
           </button>
           <button className="btn btn-ghost btn-sm"><I name="share" className="ic-sm"/>Поделиться</button>
         </div>
-      </div>
-
-      {/* HERO PHOTOS */}
-      <div style={{display:'grid', gridTemplateColumns:'2fr 1fr 1fr', gap:4, height:280, margin:'24px 0 0', overflow:'hidden'}}>
-        <Photo obj={obj} fill label={obj.name}/>
-        <Photo obj={{...obj, id:obj.id+'_2'}} fill label=""/>
-        <Photo obj={{...obj, id:obj.id+'_3'}} fill label=""/>
       </div>
 
       {/* TABS */}
@@ -1988,6 +1671,7 @@ function DetailBody({ obj, onClose, savedIds, toggleSaved }) {
           ['building','Здание'],
           ['business','Бизнес'],
           ['finance', 'Финансы'],
+          ['contact', 'Контакты'],
         ].map(([k,l])=>(
           <button key={k}
             onClick={()=>setTab(k)}
@@ -2005,72 +1689,74 @@ function DetailBody({ obj, onClose, savedIds, toggleSaved }) {
       {/* BLOCKS */}
       <div className="detail-content-grid" style={{padding:'28px 32px 32px', display:'grid', gridTemplateColumns:'1.5fr 1fr', gap:32}}>
         <div style={{display:'flex', flexDirection:'column', gap:36}}>
-          {tab === 'building' && (
-            <section data-tab="building">
-              <SectionHeader icon="building" eyebrow="01" title="Об историческом здании"/>
-              <div style={{display:'grid', gridTemplateColumns:'auto 1fr', gap:'14px 24px', marginTop:18, fontSize:14}}>
-                <span className="eyebrow" style={{paddingTop:2}}>Период</span>
-                <span><strong className="serif" style={{fontWeight:500, fontSize:16}}>{obj.built}</strong>{obj.year && <span style={{color:'var(--ink-2)', marginLeft:8}}>· {labelForPeriod(obj.period)}</span>}</span>
 
-                <span className="eyebrow" style={{paddingTop:2}}>Статус</span>
-                <span style={{display:'flex', alignItems:'center', gap:10}}>
-                  <StatusBadge s={obj.status}/>
-                  <span style={{color:'var(--ink-2)', fontSize:13}}>{window.DV_DATA.statuses[obj.status].full}</span>
-                </span>
+          {/* BUILDING */}
+          <section data-tab="building" style={{opacity: tab==='building' ? 1 : .35, transition:'opacity .2s'}}>
+            <SectionHeader icon="building" eyebrow="01" title="Об историческом здании"/>
+            <div style={{display:'grid', gridTemplateColumns:'auto 1fr', gap:'14px 24px', marginTop:18, fontSize:14}}>
+              <span className="eyebrow" style={{paddingTop:2}}>Период</span>
+              <span><strong className="serif" style={{fontWeight:500, fontSize:16}}>{obj.built}</strong>{obj.year && <span style={{color:'var(--ink-2)', marginLeft:8}}>· {labelForPeriod(obj.period)}</span>}</span>
 
-                <span className="eyebrow" style={{paddingTop:2}}>Справка</span>
-                <p className="serif" style={{margin:0, fontSize:15, lineHeight:1.6, color:'var(--ink-2)'}}>
-                  {HIST[obj.id] || 'Историческая справка по объекту готовится.'}
-                </p>
-              </div>
-            </section>
-          )}
+              <span className="eyebrow" style={{paddingTop:2}}>Статус</span>
+              <span style={{display:'flex', alignItems:'center', gap:10}}>
+                <StatusBadge s={obj.status}/>
+                <span style={{color:'var(--ink-2)', fontSize:13}}>{window.DV_DATA.statuses[obj.status].full}</span>
+              </span>
 
-          {tab === 'business' && (
-            <section>
-              <SectionHeader icon={TYPE_ICONS[obj.type]} eyebrow="02" title="О бизнесе"/>
-              <div style={{display:'grid', gridTemplateColumns:'auto 1fr', gap:'14px 24px', marginTop:18, fontSize:14}}>
-                <span className="eyebrow" style={{paddingTop:2}}>Тип</span>
-                <span><strong style={{fontWeight:500}}>{T.label}</strong></span>
+              <span className="eyebrow" style={{paddingTop:2}}>Справка</span>
+              <p className="serif" style={{margin:0, fontSize:15, lineHeight:1.6, color:'var(--ink-2)'}}>
+                {HIST[obj.id] || 'Историческая справка по объекту готовится.'}
+              </p>
+            </div>
+          </section>
 
-                <span className="eyebrow" style={{paddingTop:2}}>В здании с</span>
-                <span className="mono" style={{fontSize:14}}>{2000 + (obj.year % 25)} г.</span>
+          {/* BUSINESS */}
+          <section style={{opacity: tab==='business' ? 1 : .35, transition:'opacity .2s'}}>
+            <SectionHeader icon={TYPE_ICONS[obj.type]} eyebrow="02" title="О бизнесе"/>
+            <div style={{display:'grid', gridTemplateColumns:'auto 1fr', gap:'14px 24px', marginTop:18, fontSize:14}}>
+              <span className="eyebrow" style={{paddingTop:2}}>Тип</span>
+              <span><strong style={{fontWeight:500}}>{T.label}</strong></span>
 
-                {obj.group && obj.group !== '—' && (
-                  <>
-                    <span className="eyebrow" style={{paddingTop:2}}>Группа</span>
-                    <span>{obj.group}</span>
-                  </>
-                )}
+              <span className="eyebrow" style={{paddingTop:2}}>В здании с</span>
+              <span className="mono" style={{fontSize:14}}>{2000 + (obj.year % 25)} г.</span>
 
-                <span className="eyebrow" style={{paddingTop:2}}>Описание</span>
-                <p style={{margin:0, fontSize:14, color:'var(--ink-2)', lineHeight:1.6}}>
-                  Действующий {T.label.toLowerCase()} в историческом здании. Сохранены исторические интерьеры, работа ведётся в режиме «бережной интеграции» — все капитальные работы согласованы с органами охраны памятников.
-                </p>
-              </div>
-            </section>
-          )}
+              {obj.group && obj.group !== '—' && (
+                <>
+                  <span className="eyebrow" style={{paddingTop:2}}>Группа</span>
+                  <span>{obj.group}</span>
+                </>
+              )}
 
-          {tab === 'finance' && (
-            <section>
+              <span className="eyebrow" style={{paddingTop:2}}>Описание</span>
+              <p style={{margin:0, fontSize:14, color:'var(--ink-2)', lineHeight:1.6}}>
+                Действующий {T.label.toLowerCase()} в историческом здании. Сохранены исторические интерьеры, работа ведётся в режиме «бережной интеграции» — все капитальные работы согласованы с органами охраны памятников.
+              </p>
+            </div>
+          </section>
+
+          {/* FINANCE */}
+          {revHist && (
+            <section style={{opacity: tab==='finance' ? 1 : .35, transition:'opacity .2s'}}>
               <SectionHeader icon="arrow-up" eyebrow="03" title="Финансы"/>
-              {revHist ? (
-                <div style={{marginTop:18}}>
-                  <div style={{display:'flex', alignItems:'flex-end', gap:24, marginBottom:8}}>
-                    <div><div className="eyebrow">Выручка по годам (млн ₽)</div></div>
-                    <div style={{flex:1}}/>
-                    <div style={{display:'inline-flex', alignItems:'center', gap:6, fontFamily:'var(--f-mono)', fontSize:13, color: delta >= 0 ? 'var(--st-ok)' : 'var(--st-rej)'}}>
-                      <I name="arrow-up" className="ic-sm" style={{transform: delta < 0 ? 'rotate(180deg)' : 'none'}}/>
-                      {delta >= 0 ? '+' : ''}{delta}% за год
-                    </div>
+              <div style={{marginTop:18}}>
+                <div style={{display:'flex', alignItems:'flex-end', gap:24, marginBottom:8}}>
+                  <div>
+                    <div className="eyebrow">Выручка по годам (млн ₽)</div>
                   </div>
-                  <div style={{borderTop:'1px solid var(--rule)', borderBottom:'1px solid var(--rule)', padding:'12px 0'}}>
-                    <RevenueChart years={revHist}/>
+                  <div style={{flex:1}}/>
+                  <div style={{
+                    display:'inline-flex', alignItems:'center', gap:6,
+                    fontFamily:'var(--f-mono)', fontSize:13,
+                    color: delta >= 0 ? 'var(--st-ok)' : 'var(--st-rej)',
+                  }}>
+                    <I name={delta >= 0 ? 'arrow-up' : 'arrow-up'} className="ic-sm" style={{transform: delta < 0 ? 'rotate(180deg)' : 'none'}}/>
+                    {delta >= 0 ? '+' : ''}{delta}% за год
                   </div>
                 </div>
-              ) : (
-                <p style={{margin:'18px 0 0', color:'var(--ink-2)', lineHeight:1.6}}>Финансовые показатели для этого объекта пока не добавлены.</p>
-              )}
+                <div style={{borderTop:'1px solid var(--rule)', borderBottom:'1px solid var(--rule)', padding:'12px 0'}}>
+                  <RevenueChart years={revHist}/>
+                </div>
+              </div>
             </section>
           )}
         </div>
@@ -2095,11 +1781,8 @@ function DetailBody({ obj, onClose, savedIds, toggleSaved }) {
               <ContactRow icon="globe" label={`${obj.id}.example.ru`}/>
               <ContactRow icon="phone" label={`+7 (495) 555-${(2000 + obj.year % 8000).toString().padStart(4,'0')}`}/>
               <ContactRow icon="mail"  label={`info@${obj.id}.ru`}/>
-              {obj.tg && <ContactRow icon="tg" label={obj.tg}/>}
-              {obj.vk && <ContactRow icon="globe" label={obj.vk}/>}
-              {!obj.tg && <ContactRow icon="tg" label={`t.me/${obj.id}`}/>}
             </div>
-            <button className="btn" style={{marginTop:18, width:'100%', background:'#031B25', color:'#fff', border:'1px solid #031B25', borderRadius:3}}>
+            <button className="btn btn-primary" style={{marginTop:18, width:'100%'}}>
               <I name="send" className="ic-sm"/>Связаться
             </button>
           </div>
@@ -2136,15 +1819,17 @@ function SectionHeader({ eyebrow, title, icon }) {
   return (
     <div style={{display:'flex', alignItems:'center', gap:14, borderBottom:'1px solid var(--rule)', paddingBottom:14}}>
       <div style={{
-        width:36, height:36, borderRadius:'50%',
+        width:38, height:38, borderRadius:'50%',
         border:'1px solid var(--rule-strong)',
         display:'flex', alignItems:'center', justifyContent:'center',
         color:'var(--ink-2)',
-        flexShrink:0,
       }}>
         <I name={icon} className="ic-sm"/>
       </div>
-      <h2 className="h-title" style={{margin:0, fontSize:22}}>{title}</h2>
+      <div style={{display:'flex', flexDirection:'column'}}>
+        <span className="mono" style={{fontSize:10, letterSpacing:'.18em', color:'var(--ink-3)'}}>{eyebrow}</span>
+        <h2 className="h-title" style={{margin:0, fontSize:22}}>{title}</h2>
+      </div>
     </div>
   );
 }
@@ -2160,7 +1845,7 @@ function ContactRow({ icon, label }) {
 }
 
 /* ── Modal wrapper ──────────────────────── */
-function DetailModal({ obj, onClose, savedIds, toggleSaved }) {
+function DetailModal({ obj, onClose }) {
   useEffect(() => {
     const h = (e) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', h);
@@ -2193,12 +1878,12 @@ function DetailModal({ obj, onClose, savedIds, toggleSaved }) {
           borderBottom:'1px solid var(--rule)',
           display:'flex', alignItems:'center', justifyContent:'space-between',
         }}>
-          <span></span>
+          <span className="eyebrow">Детальная карточка объекта</span>
           <button onClick={onClose} className="btn btn-ghost btn-sm" style={{height:30}}>
             <I name="close" className="ic-sm"/>Закрыть
           </button>
         </div>
-        <DetailBody obj={obj} savedIds={savedIds} toggleSaved={toggleSaved}/>
+        <DetailBody obj={obj}/>
       </div>
     </div>
   );
@@ -2216,10 +1901,9 @@ Object.assign(window, { DetailModal, DetailBody });
 function AddObjectForm({ onClose }) {
   const [step, setStep] = useState(1);
   const [data, setData] = useState({
-    name: '', type: '', addr: '', desc: '', openDate: '',
+    name: '', type: '', addr: '', desc: '',
     period: '', status: '', history: '', photos: [],
     site: '', phone: '', email: '', revenue: '', consent: false,
-    vk: '', tg: '', social: '',
   });
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
@@ -2229,14 +1913,13 @@ function AddObjectForm({ onClose }) {
   const validate = (s) => {
     const e = {};
     if (s === 1) {
-      if (!data.name)     e.name = 'Укажите название';
-      if (!data.type)     e.type = 'Выберите тип';
-      if (!data.addr)     e.addr = 'Укажите адрес';
-      if (!data.desc)     e.desc = 'Добавьте описание';
-      if (!data.openDate) e.openDate = 'Укажите дату открытия';
-      else if (data.openDate > new Date().toISOString().slice(0,7)) e.openDate = 'Объект должен уже работать';
+      if (!data.name)  e.name = 'Укажите название';
+      if (!data.type)  e.type = 'Выберите тип';
+      if (!data.addr)  e.addr = 'Укажите адрес';
+      if (!data.desc)  e.desc = 'Добавьте описание';
     }
     if (s === 2) {
+      if (!data.period) e.period = 'Выберите период';
       if (!data.status) e.status = 'Выберите статус';
     }
     if (s === 3) {
@@ -2255,7 +1938,12 @@ function AddObjectForm({ onClose }) {
 
   return (
     <div style={{maxWidth:680, margin:'0 auto', padding:'40px 24px 80px'}}>
-
+      <header style={{marginBottom:32}}>
+        <div className="eyebrow">Добавить объект в реестр</div>
+        <h1 className="h-title" style={{margin:'8px 0 0', fontSize:36}}>
+          Расскажите о вашем бизнесе в&nbsp;историческом здании
+        </h1>
+      </header>
 
       {/* Progress */}
       <div style={{display:'flex', alignItems:'center', gap:0, marginBottom:40}}>
@@ -2278,6 +1966,9 @@ function AddObjectForm({ onClose }) {
               </div>
               <div>
                 <div className="mono" style={{fontSize:10, color:'var(--ink-3)', letterSpacing:'.14em'}}>ШАГ {s}</div>
+                <div style={{fontSize:13, fontWeight: s===step?500:300}}>
+                  {['Основное','Здание','Контакты'][i]}
+                </div>
               </div>
             </div>
             {i < 2 && (
@@ -2304,23 +1995,11 @@ function AddObjectForm({ onClose }) {
           {step === 1 ? 'Отмена' : 'Назад'}
         </button>
         {step < 3 ? (
-          <button onClick={next} style={{
-            display:'inline-flex', alignItems:'center', gap:8,
-            height:42, padding:'0 24px', borderRadius:3,
-            background:'#031B25', color:'#fff', border:'1px solid #031B25',
-            fontSize:12, letterSpacing:'.1em', textTransform:'uppercase',
-            fontFamily:'var(--f-sans)', fontWeight:500, cursor:'pointer',
-          }}>
+          <button className="btn btn-primary" onClick={next}>
             Далее<I name="chevron-right" className="ic-sm"/>
           </button>
         ) : (
-          <button onClick={submit} style={{
-            display:'inline-flex', alignItems:'center', gap:8,
-            height:42, padding:'0 24px', borderRadius:3,
-            background:'#031B25', color:'#fff', border:'1px solid #031B25',
-            fontSize:12, letterSpacing:'.1em', textTransform:'uppercase',
-            fontFamily:'var(--f-sans)', fontWeight:500, cursor:'pointer',
-          }}>
+          <button className="btn btn-primary" onClick={submit}>
             <I name="send" className="ic-sm"/>Отправить заявку
           </button>
         )}
@@ -2386,13 +2065,6 @@ function Step1({ data, set, errors }) {
             value={data.addr} onChange={e=>set('addr', e.target.value)}/>
         </FormField>
 
-        <FormField label="Дата открытия бизнеса" required error={errors.openDate} hint="Объект должен уже работать">
-          <input className="input" type="month"
-            value={data.openDate} onChange={e=>set('openDate', e.target.value)}
-            max={new Date().toISOString().slice(0,7)}
-          />
-        </FormField>
-
         <FormField label="Описание" required error={errors.desc} hint={`${data.desc.length}/500`}>
           <textarea className="textarea" rows={4} maxLength={500}
             placeholder="Расскажите о бизнесе и здании в нескольких предложениях"
@@ -2410,7 +2082,7 @@ function Step2({ data, set, errors }) {
     <div>
       <SectionHeader eyebrow="02" title="Об историческом здании" icon="building"/>
       <div style={{marginTop:28}}>
-        <FormField label="Период / год постройки" error={errors.period}>
+        <FormField label="Период / год постройки" required error={errors.period}>
           <div style={{display:'flex', gap:8, flexWrap:'wrap', marginTop:8}}>
             {window.DV_DATA.periods.map(p => (
               <button key={p.id} type="button"
@@ -2517,19 +2189,7 @@ function Step3({ data, set, errors }) {
             <input className="input" placeholder="+7 (___) ___-__-__"
               value={data.phone} onChange={e=>set('phone', e.target.value)}/>
           </FormField>
-          <FormField label="ВКонтакте">
-            <input className="input" placeholder="https://vk.com/"
-              value={data.vk||''} onChange={e=>set('vk', e.target.value)}/>
-          </FormField>
-          <FormField label="Telegram">
-            <input className="input" placeholder="https://t.me/"
-              value={data.tg||''} onChange={e=>set('tg', e.target.value)}/>
-          </FormField>
         </div>
-        <FormField label="Другая соцсеть">
-          <input className="input" placeholder="https://"
-            value={data.social||''} onChange={e=>set('social', e.target.value)}/>
-        </FormField>
         <FormField label="Email" required error={errors.email}>
           <input className="input" type="email" placeholder="info@example.ru"
             value={data.email} onChange={e=>set('email', e.target.value)}/>
@@ -2635,180 +2295,6 @@ function StPill({ s }) {
     </span>
   );
 }
-
-
-function EditModal({ obj, onClose, onSave }) {
-  const [data, setData] = React.useState({
-    name: obj.name, addr: obj.addr, city: obj.city,
-    type: obj.type, year: obj.year, status: obj.status,
-    rating: obj.rating, revenue: obj.revenue,
-  });
-  const set = (k, v) => setData(d => ({...d, [k]: v}));
-  const save = () => { onSave(obj.id, data); onClose(); };
-  return (
-    <div style={{position:'fixed', inset:0, zIndex:9500, background:'rgba(3,27,37,.4)', display:'flex', justifyContent:'flex-end', animation:'fadeIn .15s'}} onClick={onClose}>
-      <div style={{width:'min(560px, 96vw)', height:'100vh', background:'#fff', boxShadow:'var(--sh-3)', overflowY:'auto', animation:'slideRight .2s ease'}} onClick={e=>e.stopPropagation()}>
-        <div style={{padding:'16px 24px', borderBottom:'1px solid var(--rule)', position:'sticky', top:0, background:'#fff', zIndex:5, display:'flex', alignItems:'center', justifyContent:'space-between'}}>
-          <h2 className="h-title" style={{margin:0, fontSize:20}}>Редактирование объекта</h2>
-          <button onClick={onClose} className="btn btn-ghost btn-sm"><I name="close" className="ic-sm"/></button>
-        </div>
-        <div style={{padding:'24px'}}>
-          <div style={{display:'flex', flexDirection:'column', gap:20}}>
-            <div className="field"><label>Название</label><input className="input" value={data.name} onChange={e=>set('name',e.target.value)}/></div>
-            <div className="field"><label>Адрес</label><input className="input" value={data.addr} onChange={e=>set('addr',e.target.value)}/></div>
-            <div className="field"><label>Город</label><input className="input" value={data.city} onChange={e=>set('city',e.target.value)}/></div>
-            <div className="field">
-              <label>Тип</label>
-              <div style={{display:'flex', gap:6, flexWrap:'wrap', marginTop:8}}>
-                {Object.entries(window.DV_DATA.types).map(([k,v])=>(
-                  <button key={k} type="button" onClick={()=>set('type',k)} style={{height:30, padding:'0 12px', borderRadius:3, border:`1px solid ${data.type===k?'#031B25':'var(--rule-strong)'}`, background:data.type===k?'#031B25':'transparent', color:data.type===k?'#fff':'var(--ink)', fontSize:12, cursor:'pointer', letterSpacing:'.06em', textTransform:'uppercase'}}>{v.label}</button>
-                ))}
-              </div>
-            </div>
-            <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:16}}>
-              <div className="field"><label>Год постройки</label><input className="input" type="number" value={data.year} onChange={e=>set('year',parseInt(e.target.value))}/></div>
-              <div className="field"><label>Рейтинг (0–10)</label><input className="input" type="number" min="0" max="10" step="0.1" value={data.rating} onChange={e=>set('rating',parseFloat(e.target.value))}/></div>
-            </div>
-            <div className="field">
-              <label>Охранный статус</label>
-              <div style={{display:'flex', gap:6, flexWrap:'wrap', marginTop:8}}>
-                {Object.entries(window.DV_DATA.statuses).map(([k,v])=>(
-                  <button key={k} type="button" onClick={()=>set('status',k)} style={{height:30, padding:'0 12px', borderRadius:3, border:`1px solid ${data.status===k?'#031B25':'var(--rule-strong)'}`, background:data.status===k?'#031B25':'transparent', color:data.status===k?'#fff':'var(--ink)', fontSize:12, cursor:'pointer', letterSpacing:'.06em', textTransform:'uppercase'}}>{v.label}</button>
-                ))}
-              </div>
-            </div>
-            <div className="field"><label>Выручка</label><input className="input" value={data.revenue} onChange={e=>set('revenue',e.target.value)}/></div>
-          </div>
-        </div>
-        <div style={{position:'sticky', bottom:0, background:'#fff', padding:'14px 24px', borderTop:'1px solid var(--rule)', display:'flex', gap:10, justifyContent:'flex-end'}}>
-          <button className="btn btn-ghost btn-sm" onClick={onClose}>Отмена</button>
-          <button className="btn btn-sm" style={{background:'#031B25', color:'#fff', border:'1px solid #031B25'}} onClick={save}><I name="check" className="ic-sm"/>Сохранить</button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-
-function ObjectsTab() {
-  const [items, setItems] = useState(window.DV_DATA.objects);
-  const [search, setSearch] = useState('');
-  const [dragIdx, setDragIdx] = useState(null);
-  const [selectedObj, setSelectedObj] = useState(null);
-  const [editObj, setEditObj] = useState(null);
-  const saveEdit = (id, patch) => {
-    setItems(xs => xs.map(o => o.id === id ? {...o, ...patch} : o));
-    setEditObj(null);
-  };
-
-  const filtered = items.filter(o => {
-    const q = search.toLowerCase();
-    return !q || o.name.toLowerCase().includes(q) || o.city.toLowerCase().includes(q);
-  });
-
-  const onDragStart = (i) => setDragIdx(i);
-  const onDragOver  = (e, i) => {
-    e.preventDefault();
-    if (dragIdx === null || dragIdx === i) return;
-    setItems(xs => {
-      const next = xs.slice();
-      const [moved] = next.splice(dragIdx, 1);
-      next.splice(i, 0, moved);
-      setDragIdx(i);
-      return next;
-    });
-  };
-  const onDragEnd = () => setDragIdx(null);
-
-  return (
-    <div className="objects-tab-container" style={{padding:'24px 32px'}}>
-      <div className="objects-tab-toolbar" style={{display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:18}}>
-        <div style={{position:'relative', minWidth:0, flex:'1 1 auto'}}>
-          <I name="search" className="ic-sm" style={{position:'absolute', left:10, top:9, color:'var(--ink-3)'}}/>
-          <input
-            value={search} onChange={e=>setSearch(e.target.value)}
-            style={{
-              height:32, paddingLeft:30, paddingRight:14,
-              border:'1px solid var(--rule)',
-              borderRadius:'var(--r-sm)', background:'#fff',
-              fontSize:13, width:280, maxWidth:'100%',
-            }} placeholder="Поиск по названию или городу"/>
-        </div>
-        <button className="btn btn-primary btn-sm" style={{whiteSpace:'nowrap', flexShrink:0}}>
-          <I name="plus" className="ic-sm"/>Добавить вручную
-        </button>
-      </div>
-
-      <div style={{border:'1px solid var(--rule)', borderRadius:'var(--r)', overflow:'hidden', overflowX:'auto'}}>
-        <div className="objects-tab-grid-header" style={{
-          display:'grid', gridTemplateColumns:'40px 60px 1fr 180px 130px 100px 90px 80px',
-          padding:'10px 16px', background:'var(--bg-soft)',
-          fontFamily:'var(--f-mono)', fontSize:10, letterSpacing:'.14em',
-          textTransform:'uppercase', color:'var(--ink-3)',
-          borderBottom:'1px solid var(--rule)',
-          minWidth:760,
-        }}>
-          <span/><span/><span>Название / адрес</span><span>Город</span><span>Тип</span><span>Год</span><span>Статус</span><span style={{textAlign:'right'}}>Рейтинг</span>
-        </div>
-        {filtered.map((o, i) => (
-          <div key={o.id}
-            draggable
-            onDragStart={()=>onDragStart(i)}
-            onDragOver={(e)=>onDragOver(e, i)}
-            onDragEnd={onDragEnd}
-            onClick={()=> dragIdx === null && setSelectedObj(o)}
-            className="objects-tab-row"
-            style={{
-              display:'grid', gridTemplateColumns:'40px 60px 1fr 180px 130px 100px 90px 80px',
-              padding:'10px 16px', alignItems:'center',
-              borderBottom:'1px solid var(--rule)', fontSize:14,
-              background: dragIdx === i ? 'var(--bg-soft)' : '#fff',
-              opacity: dragIdx === i ? .7 : 1,
-              cursor:'pointer',
-              transition:'background .15s',
-              minWidth:760,
-            }}
-            onMouseEnter={e=> dragIdx === null && (e.currentTarget.style.background='var(--bg)')}
-            onMouseLeave={e=> dragIdx === null && (e.currentTarget.style.background='#fff')}>
-            <span style={{color:'var(--ink-3)'}}><I name="drag" className="ic-sm"/></span>
-            <div className="admin-object-avatar" aria-hidden="true"></div>
-            <div>
-              <div style={{fontWeight:400}}>{o.name}</div>
-              <div style={{fontSize:12, color:'var(--ink-3)'}}>{o.addr}</div>
-              <div className="obj-row-details" style={{display:'none', marginTop:10, color:'var(--ink-2)', fontSize:12}}>
-                <span>{o.city}</span>
-                <span style={{display:'inline-flex', alignItems:'center', gap:4, marginLeft:12}}><I name={TYPE_ICONS[o.type]} className="ic-sm"/>{window.DV_DATA.types[o.type].label}</span>
-                <span style={{marginLeft:12}}>{o.year}</span>
-                <span style={{marginLeft:12, color:'var(--ink)'}}>{o.rating.toFixed(1)}</span>
-              </div>
-            </div>
-            <span style={{color:'var(--ink-2)'}}>{o.city}</span>
-            <span style={{color:'var(--ink-2)', display:'inline-flex', alignItems:'center', gap:6, fontSize:13}}>
-              <I name={TYPE_ICONS[o.type]} className="ic-sm"/>
-              {window.DV_DATA.types[o.type].label}
-            </span>
-            <span className="mono" style={{fontSize:13, color:'var(--ink-2)'}}>{o.year}</span>
-            <StatusBadge s={o.status}/>
-            <div style={{textAlign:'right', display:'flex', justifyContent:'flex-end', alignItems:'center', gap:8}}>
-              <span className="mono" style={{fontSize:13}}>{o.rating.toFixed(1)}</span>
-              <button onClick={(e)=>{e.stopPropagation(); setEditObj(o);}} style={{background:'none', border:'none', cursor:'pointer', color:'var(--ink-3)', padding:4}}>
-                <I name="edit" className="ic-sm"/>
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-      <p style={{marginTop:14, fontSize:12, color:'var(--ink-3)'}}>
-        <I name="drag" className="ic-sm" style={{verticalAlign:'middle', marginRight:4}}/>
-        Перетащите строки для изменения порядка отображения в каталоге. Нажмите на объект, чтобы открыть детальную карточку.
-      </p>
-      {selectedObj && <DetailModal obj={selectedObj} onClose={()=>setSelectedObj(null)}/>}
-      {editObj && <EditModal obj={editObj} onClose={()=>setEditObj(null)} onSave={saveEdit}/>}
-    </div>
-  );
-}
-
-
 
 function AdminPanel({ onClose }) {
   const [tab, setTab] = useState('apps');
@@ -3061,25 +2547,16 @@ function AppDrawer({ app, onClose, update }) {
         <div className="app-drawer-actions" style={{
           position:'sticky', bottom:0, background:'#fff',
           padding:'14px 24px', borderTop:'1px solid var(--rule)',
-          display:'flex', gap:10, justifyContent:'flex-end', flexWrap:'wrap',
+          display:'flex', gap:10, justifyContent:'flex-end',
           paddingBottom:'calc(14px + env(safe-area-inset-bottom, 0px))',
         }}>
-          <button className="btn btn-ghost btn-sm" style={{color:'var(--st-rej)', marginRight:'auto'}} onClick={()=>update(app.id,{status:'rej'})}>
+          <button className="btn btn-ghost btn-sm" style={{color:'var(--st-rej)'}} onClick={()=>update(app.id,{status:'rej'})}>
             <I name="close" className="ic-sm"/>Отклонить
           </button>
           <button className="btn btn-ghost btn-sm" onClick={()=>update(app.id,{status:'rev'})}>
             На доработку
           </button>
-          <button className="btn btn-ghost btn-sm" onClick={()=>update(app.id,{status:'rev'})}>
-            <I name="edit" className="ic-sm"/>Редактировать
-          </button>
-          <button style={{
-            display:'inline-flex', alignItems:'center', gap:6,
-            height:34, padding:'0 14px', borderRadius:3,
-            background:'#031B25', color:'#fff', border:'1px solid #031B25',
-            fontSize:12, letterSpacing:'.08em', textTransform:'uppercase',
-            fontFamily:'var(--f-sans)', fontWeight:500, cursor:'pointer',
-          }} onClick={()=>update(app.id,{status:'ok'})}>
+          <button className="btn btn-primary btn-sm" onClick={()=>update(app.id,{status:'ok'})}>
             <I name="check" className="ic-sm"/>Одобрить
           </button>
         </div>
@@ -3088,6 +2565,110 @@ function AppDrawer({ app, onClose, update }) {
   );
 }
 
+function ObjectsTab() {
+  const [items, setItems] = useState(window.DV_DATA.objects);
+  const [search, setSearch] = useState('');
+  const [dragIdx, setDragIdx] = useState(null);
+
+  const filtered = items.filter(o => {
+    const q = search.toLowerCase();
+    return !q || o.name.toLowerCase().includes(q) || o.city.toLowerCase().includes(q);
+  });
+
+  const onDragStart = (i) => setDragIdx(i);
+  const onDragOver  = (e, i) => {
+    e.preventDefault();
+    if (dragIdx === null || dragIdx === i) return;
+    setItems(xs => {
+      const next = xs.slice();
+      const [moved] = next.splice(dragIdx, 1);
+      next.splice(i, 0, moved);
+      setDragIdx(i);
+      return next;
+    });
+  };
+  const onDragEnd = () => setDragIdx(null);
+
+  return (
+    <div className="objects-tab-container" style={{padding:'24px 32px'}}>
+      <div className="objects-tab-toolbar" style={{display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:18}}>
+        <div style={{position:'relative', minWidth:0, flex:'1 1 auto'}}>
+          <I name="search" className="ic-sm" style={{position:'absolute', left:10, top:9, color:'var(--ink-3)'}}/>
+          <input
+            value={search} onChange={e=>setSearch(e.target.value)}
+            style={{
+              height:32, paddingLeft:30, paddingRight:14,
+              border:'1px solid var(--rule)',
+              borderRadius:'var(--r-sm)', background:'#fff',
+              fontSize:13, width:280, maxWidth:'100%',
+            }} placeholder="Поиск по названию или городу"/>
+        </div>
+        <button className="btn btn-primary btn-sm" style={{whiteSpace:'nowrap', flexShrink:0}}>
+          <I name="plus" className="ic-sm"/>Добавить вручную
+        </button>
+      </div>
+
+      <div style={{border:'1px solid var(--rule)', borderRadius:'var(--r)', overflow:'hidden', overflowX:'auto'}}>
+        <div className="objects-tab-grid-header" style={{
+          display:'grid', gridTemplateColumns:'40px 60px 1fr 180px 130px 100px 90px 80px',
+          padding:'10px 16px', background:'var(--bg-soft)',
+          fontFamily:'var(--f-mono)', fontSize:10, letterSpacing:'.14em',
+          textTransform:'uppercase', color:'var(--ink-3)',
+          borderBottom:'1px solid var(--rule)',
+          minWidth:760,
+        }}>
+          <span/><span/><span>Название / адрес</span><span>Город</span><span>Тип</span><span>Год</span><span>Статус</span><span style={{textAlign:'right'}}>Рейтинг</span>
+        </div>
+        {filtered.map((o, i) => (
+          <div key={o.id}
+            draggable
+            onDragStart={()=>onDragStart(i)}
+            onDragOver={(e)=>onDragOver(e, i)}
+            onDragEnd={onDragEnd}
+            className="objects-tab-row"
+            style={{
+              display:'grid', gridTemplateColumns:'40px 60px 1fr 180px 130px 100px 90px 80px',
+              padding:'10px 16px', alignItems:'center',
+              borderBottom:'1px solid var(--rule)', fontSize:14,
+              background: dragIdx === i ? 'var(--bg-soft)' : '#fff',
+              opacity: dragIdx === i ? .7 : 1,
+              cursor:'grab',
+              transition:'background .15s',
+              minWidth:760,
+            }}
+            onMouseEnter={e=> dragIdx === null && (e.currentTarget.style.background='var(--bg)')}
+            onMouseLeave={e=> dragIdx === null && (e.currentTarget.style.background='#fff')}>
+            <span style={{color:'var(--ink-3)'}}><I name="drag" className="ic-sm"/></span>
+            <div style={{width:44, height:32, borderRadius:4, overflow:'hidden'}}>
+              <Photo obj={o} ratio="44/32" label=""/>
+            </div>
+            <div>
+              <div style={{fontWeight:400}}>{o.name}</div>
+              <div style={{fontSize:12, color:'var(--ink-3)'}}>{o.addr}</div>
+            </div>
+            <span style={{color:'var(--ink-2)'}}>{o.city}</span>
+            <span style={{color:'var(--ink-2)', display:'inline-flex', alignItems:'center', gap:6, fontSize:13}}>
+              <I name={TYPE_ICONS[o.type]} className="ic-sm"/>
+              {window.DV_DATA.types[o.type].label}
+            </span>
+            <span className="mono" style={{fontSize:13, color:'var(--ink-2)'}}>{o.year}</span>
+            <StatusBadge s={o.status}/>
+            <div style={{textAlign:'right', display:'flex', justifyContent:'flex-end', alignItems:'center', gap:8}}>
+              <span className="mono" style={{fontSize:13}}>{o.rating.toFixed(1)}</span>
+              <button style={{background:'none', border:'none', cursor:'pointer', color:'var(--ink-3)', padding:4}}>
+                <I name="edit" className="ic-sm"/>
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p style={{marginTop:14, fontSize:12, color:'var(--ink-3)'}}>
+        <I name="drag" className="ic-sm" style={{verticalAlign:'middle', marginRight:4}}/>
+        Перетащите строки для изменения порядка отображения в каталоге.
+      </p>
+    </div>
+  );
+}
 
 Object.assign(window, { AdminPanel, AppDrawer, StPill });
 
@@ -3328,8 +2909,9 @@ Object.assign(window, { DesignSystemPage });
    App shell — header, routing, mobile detect
    ============================================ */
 /* eslint-disable */
+const { useState, useEffect, useMemo, useRef, useCallback } = React;
 
-function Header({ route, setRoute, onAdd, mobileMenuOpen, setMobileMenuOpen, savedCount, onSavedOpen }) {
+function Header({ route, setRoute, onAdd, mobileMenuOpen, setMobileMenuOpen }) {
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
   return (
     <header className="hdr">
@@ -3359,13 +2941,7 @@ function Header({ route, setRoute, onAdd, mobileMenuOpen, setMobileMenuOpen, sav
             }} placeholder="Поиск по реестру" />
             </div>
           }
-          {!isMobile && onSavedOpen &&
-          <button className="btn btn-sm" onClick={onSavedOpen} style={{border:'1px solid rgba(255,255,255,.3)', color:'rgba(255,255,255,.8)', background:'transparent', borderRadius:3}}>
-            <I name="heart" className="ic-sm" fill={savedCount > 0 ? '#fff' : 'none'} stroke="#fff"/>
-            {savedCount > 0 ? savedCount : 'Сохранённые'}
-          </button>
-        }
-        <a href="https://t.me/domvdalybot" target="_blank" rel="noopener" className="btn btn-sm" style={{border:'1px solid rgba(255,255,255,.3)', color:'rgba(255,255,255,.8)', background:'transparent', borderRadius:3}}>
+          <a href="https://t.me/domvdalybot" target="_blank" rel="noopener" className="btn btn-primary btn-sm" style={{ backgroundColor: "rgb(3, 27, 37)" }}>
             <I name="tg" className="ic-sm" />Telegram
           </a>
           {isMobile &&
@@ -3649,136 +3225,48 @@ function FilterGroup({ title, children }) {
 /* ============================================
    App root
    ============================================ */
+function App() {
+  const [route, setRoute] = useState(() => {
+    const h = location.hash.replace('#', '');
+    return ['catalog', 'admin', 'ds'].includes(h) ? h : 'catalog';
+  });
+  const [openObj, setOpenObj] = useState(null);
+  const [addOpen, setAddOpen] = useState(false);
+  const [viewMode, setViewMode] = useState('split');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 768px)').matches);
 
-/* ============================================
-   Saved objects panel (личный кабинет)
-   ============================================ */
-function SavedPanel({ savedIds, objects, onClose, onOpen }) {
-  const saved = objects.filter(o => savedIds.has(o.id));
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.matchMedia('(max-width: 768px)').matches);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  useEffect(() => {location.hash = route;}, [route]);
+
   return (
-    <div style={{position:'fixed', inset:0, zIndex:9000, background:'rgba(3,27,37,.32)', backdropFilter:'blur(4px)', display:'flex', justifyContent:'flex-end', animation:'fadeIn .2s'}} onClick={onClose}>
-      <div style={{width:'min(480px, 96vw)', height:'100vh', background:'var(--bg)', boxShadow:'var(--sh-3)', overflowY:'auto', animation:'slideRight .25s ease'}} onClick={e=>e.stopPropagation()}>
-        <div style={{position:'sticky', top:0, zIndex:5, padding:'16px 20px', background:'var(--bg)', borderBottom:'1px solid var(--rule)', display:'flex', alignItems:'center', justifyContent:'space-between'}}>
-          <div>
-            <div className="eyebrow" style={{marginBottom:4}}>Личный кабинет</div>
-            <h2 className="h-title" style={{margin:0, fontSize:22}}>Сохранённые объекты</h2>
-          </div>
-          <button onClick={onClose} className="btn btn-ghost btn-sm"><I name="close" className="ic-sm"/>Закрыть</button>
-        </div>
-        <div style={{padding:'20px'}}>
-          {saved.length === 0 ? (
-            <div style={{textAlign:'center', padding:'60px 20px', color:'var(--ink-3)'}}>
-              <I name="heart" style={{width:40, height:40, strokeWidth:1, margin:'0 auto 16px', display:'block', color:'var(--rule-strong)'}}/>
-              <div style={{fontSize:16, marginBottom:8}}>Нет сохранённых объектов</div>
-              <div style={{fontSize:13}}>Нажмите «Сохранить» на карточке объекта</div>
-            </div>
-          ) : (
-            <div style={{display:'flex', flexDirection:'column', gap:12}}>
-              {saved.map(o => (
-                <div key={o.id} className="card" onClick={()=>{onOpen(o);onClose();}} style={{cursor:'pointer', display:'grid', gridTemplateColumns:'80px 1fr', minHeight:80}}>
-                  <Photo obj={o} fill/>
-                  <div style={{padding:'10px 12px'}}>
-                    <div style={{fontSize:13, fontFamily:'var(--f-serif)', fontWeight:600, marginBottom:4}}>{o.name}</div>
-                    <div style={{fontSize:12, color:'var(--ink-2)'}}>{o.city} · {o.built}</div>
-                    <Tag t={o.type}/>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
+    <div data-screen-label={`Дом вдали · ${route}`}>
+      <Header route={route} setRoute={setRoute}
+      onAdd={() => setAddOpen(true)}
+      mobileMenuOpen={mobileMenuOpen}
+      setMobileMenuOpen={setMobileMenuOpen} />
+
+      <MobileMenu open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)}
+      route={route} setRoute={setRoute} onAdd={() => setAddOpen(true)} />
+
+      {route === 'catalog' && (
+      isMobile ?
+      <MobileCatalog onOpen={setOpenObj} /> :
+      <Catalog onOpen={setOpenObj} viewMode={viewMode} setViewMode={setViewMode} />)
+      }
+      {route === 'admin' && <AdminPanel />}
+      {route === 'ds' && <DesignSystemPage />}
+
+      {openObj && <DetailModal obj={openObj} onClose={() => setOpenObj(null)} />}
+      {addOpen && <AddObjectModal onClose={() => setAddOpen(false)} />}
+    </div>);
+
 }
-
-/* ============================================
-   Landing page
-   ============================================ */
-function LandingPage({ onEnter, onAdd }) {
-  return (
-    <div style={{
-      minHeight:'100vh', background:'#031B25',
-      display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
-      position:'relative', overflow:'hidden',
-      backgroundImage:'radial-gradient(ellipse at 30% 60%, rgba(255,255,255,.03) 0%, transparent 60%), radial-gradient(ellipse at 70% 20%, rgba(255,255,255,.02) 0%, transparent 50%)',
-    }}>
-      {/* Decorative grid lines */}
-      <div style={{position:'absolute', inset:0, backgroundImage:'linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px)', backgroundSize:'80px 80px', pointerEvents:'none'}}/>
-
-      <div style={{position:'relative', textAlign:'center', padding:'40px 24px', maxWidth:680}}>
-        {/* Logo frame */}
-        <div style={{
-          display:'inline-block', border:'1px solid rgba(255,255,255,.3)',
-          padding:'20px 40px', marginBottom:48, position:'relative',
-        }}>
-          <div style={{position:'absolute', top:-1, left:-1, width:12, height:12, borderTop:'2px solid rgba(255,255,255,.6)', borderLeft:'2px solid rgba(255,255,255,.6)'}}/>
-          <div style={{position:'absolute', top:-1, right:-1, width:12, height:12, borderTop:'2px solid rgba(255,255,255,.6)', borderRight:'2px solid rgba(255,255,255,.6)'}}/>
-          <div style={{position:'absolute', bottom:-1, left:-1, width:12, height:12, borderBottom:'2px solid rgba(255,255,255,.6)', borderLeft:'2px solid rgba(255,255,255,.6)'}}/>
-          <div style={{position:'absolute', bottom:-1, right:-1, width:12, height:12, borderBottom:'2px solid rgba(255,255,255,.6)', borderRight:'2px solid rgba(255,255,255,.6)'}}/>
-          <div style={{fontFamily:'var(--f-serif)', fontSize:52, fontWeight:600, color:'#fff', letterSpacing:'.06em', lineHeight:1.1}}>ДОМ<br/>ВДАЛИ</div>
-        </div>
-
-        <p style={{
-          fontFamily:'var(--f-sans)', fontSize:11, letterSpacing:'.22em', textTransform:'uppercase',
-          color:'rgba(255,255,255,.5)', marginBottom:16,
-        }}>Медиапроект команды «Даль»</p>
-
-        <h1 style={{
-          fontFamily:'var(--f-serif)', fontSize:'clamp(22px, 4vw, 34px)', fontWeight:400,
-          color:'rgba(255,255,255,.9)', margin:'0 0 16px', lineHeight:1.4, letterSpacing:'.02em',
-        }}>
-          Реестр бизнесов в исторических зданиях России
-        </h1>
-
-        <p style={{
-          fontFamily:'var(--f-sans)', fontSize:14, color:'rgba(255,255,255,.55)',
-          margin:'0 0 52px', lineHeight:1.7, maxWidth:460, marginLeft:'auto', marginRight:'auto',
-        }}>
-          Собираем объекты, где историческая архитектура стала основой для современного бизнеса — рестораны, отели, кластеры, музеи и магазины.
-        </p>
-
-        <div style={{display:'flex', gap:16, justifyContent:'center', flexWrap:'wrap'}}>
-          <button onClick={onEnter} style={{
-            height:46, padding:'0 36px', borderRadius:3,
-            border:'1px solid rgba(255,255,255,.7)', background:'transparent',
-            color:'#fff', fontSize:11, letterSpacing:'.18em', textTransform:'uppercase',
-            fontFamily:'var(--f-sans)', fontWeight:500, cursor:'pointer',
-            transition:'all .2s',
-          }}
-          onMouseEnter={e=>{e.target.style.background='rgba(255,255,255,.1)';}}
-          onMouseLeave={e=>{e.target.style.background='transparent';}}
-          >
-            Смотреть реестр
-          </button>
-          <button onClick={onAdd} style={{
-            height:46, padding:'0 36px', borderRadius:3,
-            border:'1px solid rgba(255,255,255,.25)', background:'transparent',
-            color:'rgba(255,255,255,.7)', fontSize:11, letterSpacing:'.18em', textTransform:'uppercase',
-            fontFamily:'var(--f-sans)', fontWeight:500, cursor:'pointer',
-            transition:'all .2s',
-          }}
-          onMouseEnter={e=>{e.target.style.borderColor='rgba(255,255,255,.6)';e.target.style.color='#fff';}}
-          onMouseLeave={e=>{e.target.style.borderColor='rgba(255,255,255,.25)';e.target.style.color='rgba(255,255,255,.7)';}}
-          >
-            Добавить объект
-          </button>
-        </div>
-
-        <div style={{marginTop:64, display:'flex', justifyContent:'center', gap:48, flexWrap:'wrap'}}>
-          {[['18', 'объектов'], ['7', 'городов'], ['5', 'категорий']].map(([n, l]) => (
-            <div key={l} style={{textAlign:'center'}}>
-              <div style={{fontFamily:'var(--f-serif)', fontSize:36, color:'rgba(255,255,255,.9)', fontWeight:600, lineHeight:1}}>{n}</div>
-              <div style={{fontFamily:'var(--f-sans)', fontSize:10, letterSpacing:'.18em', textTransform:'uppercase', color:'rgba(255,255,255,.4)', marginTop:6}}>{l}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-
 
 function AddObjectModal({ onClose }) {
   useEffect(() => {
@@ -3800,69 +3288,13 @@ function AddObjectModal({ onClose }) {
           borderBottom: '1px solid var(--rule)',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between'
         }}>
-          <span></span>
+          <span className="eyebrow">Заявка на добавление</span>
           <button onClick={onClose} className="btn btn-ghost btn-sm" style={{ height: 30 }}>
             <I name="close" className="ic-sm" />Закрыть
           </button>
         </div>
         <AddObjectForm onClose={onClose} />
       </div>
-    </div>);
-
-}
-
-
-
-function App() {
-  const [route, setRoute] = useState(() => {
-    const h = location.hash.replace('#', '');
-    return ['catalog', 'admin', 'ds'].includes(h) ? h : 'catalog';
-  });
-  const [showLanding, setShowLanding] = useState(true);
-  const [openObj, setOpenObj] = useState(null);
-  const [addOpen, setAddOpen] = useState(false);
-  const [viewMode, setViewMode] = useState('split');
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 768px)').matches);
-  const [savedIds, setSavedIds] = useState(new Set());
-  const [savedOpen, setSavedOpen] = useState(false);
-  const toggleSaved = (id) => setSavedIds(s => { const n = new Set(s); n.has(id) ? n.delete(id) : n.add(id); return n; });
-
-  useEffect(() => {
-    const onResize = () => setIsMobile(window.matchMedia('(max-width: 768px)').matches);
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-  }, []);
-
-  useEffect(() => {location.hash = route;}, [route]);
-
-  if (showLanding) {
-    return <LandingPage onEnter={() => setShowLanding(false)} onAdd={() => { setShowLanding(false); setAddOpen(true); }} />;
-  }
-
-  return (
-    <div data-screen-label={`Дом вдали · ${route}`}>
-      <Header route={route} setRoute={setRoute}
-      onAdd={() => setAddOpen(true)}
-      mobileMenuOpen={mobileMenuOpen}
-      setMobileMenuOpen={setMobileMenuOpen}
-      savedCount={savedIds.size}
-      onSavedOpen={() => setSavedOpen(true)} />
-
-      <MobileMenu open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)}
-      route={route} setRoute={setRoute} onAdd={() => setAddOpen(true)} />
-
-      {route === 'catalog' && (
-      isMobile ?
-      <MobileCatalog onOpen={setOpenObj} /> :
-      <Catalog onOpen={setOpenObj} viewMode={viewMode} setViewMode={setViewMode} />)
-      }
-      {route === 'admin' && <AdminPanel />}
-      {route === 'ds' && <DesignSystemPage />}
-
-      {openObj && <DetailModal obj={openObj} onClose={() => setOpenObj(null)} savedIds={savedIds} toggleSaved={toggleSaved} />}
-      {addOpen && <AddObjectModal onClose={() => setAddOpen(false)} />}
-      {savedOpen && <SavedPanel savedIds={savedIds} objects={window.DV_DATA.objects} onClose={() => setSavedOpen(false)} onOpen={setOpenObj} />}
     </div>);
 
 }
