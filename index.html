@@ -1391,32 +1391,22 @@ const SUPABASE_KEY = 'sb_publishable_2GSfQhJa9q_xBLRK92JQZQ_hQYpaV9E';
 window._sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ============================================
-// АВТОРИЗАЦИЯ — следим за сессией
+// АДМИН-ДОСТУП — простой пароль
 // ============================================
-window._adminUser = null;
+const ADMIN_PASSWORD = 'domvdali2026'; // ← можно сменить
+const ADMIN_KEY = 'dv_admin_ok';
 
-window._sb.auth.getSession().then(({ data }) => {
-  if (data.session) {
-    window._adminUser = data.session.user;
-    // Проверяем роль
-    window._sb.from('profiles').select('role').eq('id', data.session.user.id).single()
-      .then(({ data: p }) => {
-        if (p && (p.role === 'admin' || p.role === 'editor')) {
-          window._adminUser = { ...data.session.user, role: p.role };
-        } else {
-          window._adminUser = null;
-        }
-        if (window._reactRefresh) window._reactRefresh();
-      });
+window._isAdmin = () => localStorage.getItem(ADMIN_KEY) === 'yes';
+window._adminLogin = (pwd) => {
+  if (pwd === ADMIN_PASSWORD) {
+    localStorage.setItem(ADMIN_KEY, 'yes');
+    return true;
   }
-});
-
-window._sb.auth.onAuthStateChange((event, session) => {
-  if (event === 'SIGNED_OUT' || !session) {
-    window._adminUser = null;
-    if (window._reactRefresh) window._reactRefresh();
-  }
-});
+  return false;
+};
+window._adminLogout = () => {
+  localStorage.removeItem(ADMIN_KEY);
+};
 
 window._loadObjectsFromSupabase = async function() {
   try {
@@ -2211,7 +2201,7 @@ function DetailBody({ obj, onClose }) {
   const activeTab = tabs.some(([k]) => k === tab) ? tab : 'building';
 
   // Редактирование
-  const isAdmin = window._adminUser && (window._adminUser.role === 'admin' || window._adminUser.role === 'editor');
+  const isAdmin = window._isAdmin();
   const [editing, setEditing] = useState(false);
   const [editData, setEditData] = useState({});
   const [saving, setSaving] = useState(false);
@@ -3622,35 +3612,113 @@ const { FilterChip, RegionPicker, MoreFilters } = window;
 // ============================================
 // ФОРМА ВХОДА ДЛЯ АДМИНА
 // ============================================
-function LoginModal({ onClose }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+// Форма ввода пароля для #admin
+function AdminLoginScreen({ onSuccess }) {
+  const [pwd, setPwd] = useState('');
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
 
-  const handleLogin = async () => {
-    setLoading(true);
-    setError('');
-    const { error: e } = await window._sb.auth.signInWithPassword({ email, password });
-    if (e) {
-      setError('Неверный email или пароль');
-      setLoading(false);
-      return;
+  const handleSubmit = () => {
+    if (window._adminLogin(pwd)) {
+      onSuccess();
+    } else {
+      setError('Неверный пароль');
+      setPwd('');
     }
-    // Проверяем роль
-    const { data: { session } } = await window._sb.auth.getSession();
-    if (session) {
-      const { data: p } = await window._sb.from('profiles').select('role').eq('id', session.user.id).single();
-      if (p && (p.role === 'admin' || p.role === 'editor')) {
-        window._adminUser = { ...session.user, role: p.role };
-        if (window._reactRefresh) window._reactRefresh();
-        onClose();
-      } else {
-        await window._sb.auth.signOut();
-        setError('У вас нет прав администратора');
-      }
-    }
-    setLoading(false);
+  };
+
+  return (
+    <div style={{
+      minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center',
+      background:'#f5f4f0',
+    }}>
+      <div style={{
+        background:'#fff', borderRadius:12, padding:40, width:360,
+        boxShadow:'0 4px 24px rgba(0,0,0,.10)',
+      }}>
+        <h2 style={{margin:'0 0 8px', fontSize:22, fontWeight:500, color:'#031B25'}}>
+          Административная панель
+        </h2>
+        <p style={{margin:'0 0 28px', fontSize:14, color:'#6B7A87'}}>Дом вдали</p>
+        <div style={{display:'flex', flexDirection:'column', gap:14}}>
+          <div>
+            <div style={{fontSize:11, fontWeight:500, letterSpacing:'.08em', textTransform:'uppercase', color:'#6B7A87', marginBottom:6}}>Пароль</div>
+            <input
+              type="password"
+              value={pwd}
+              onChange={e => setPwd(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && handleSubmit()}
+              autoFocus
+              style={{
+                display:'block', width:'100%', boxSizing:'border-box',
+                padding:'10px 12px', border:'1px solid #C9D3DD',
+                borderRadius:6, fontSize:15, fontFamily:'inherit',
+                background:'#fff', color:'#031B25', outline:'none',
+              }}
+              placeholder="••••••••"
+            />
+          </div>
+          {error && <div style={{color:'#D94F3B', fontSize:13}}>{error}</div>}
+          <button
+            onClick={handleSubmit}
+            style={{
+              padding:'10px 0', background:'#031B25', color:'#fff',
+              border:'none', borderRadius:6, fontSize:14, fontFamily:'inherit',
+              cursor:'pointer', fontWeight:500,
+            }}
+          >
+            Войти
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Header({ route, setRoute, onAdd, mobileMenuOpen, setMobileMenuOpen }) {
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  const isAdmin = window._isAdmin();
+
+  const handleLogout = () => {
+    window._adminLogout();
+    setRoute('catalog');
+    if (window._reactRefresh) window._reactRefresh();
+  };
+
+  return (
+    <header className="hdr">
+      <div className="hdr-inner" style={isMobile ? { padding: '0 16px', gap: 14 } : {}}>
+        <a className="brand" onClick={() => setRoute('catalog')} style={{ cursor: 'pointer' }}>
+          <img src={(window.__resources && window.__resources.logoMain) || "assets/logo.svg"} alt="Дом вдали" style={{ height: 28, display: 'block' }} />
+        </a>
+
+        {!isMobile &&
+        <nav className="nav">
+            <a onClick={() => setRoute('catalog')} className={route === 'catalog' ? 'is-active' : ''} style={{ cursor: 'pointer' }}>Каталог</a>
+            <a onClick={onAdd} style={{ cursor: 'pointer' }}>Добавить объект</a>
+            {isAdmin && <a onClick={() => setRoute('admin')} className={route === 'admin' ? 'is-active' : ''} style={{ cursor: 'pointer' }}>Админ</a>}
+          </nav>
+        }
+
+        <div className="hdr-right">
+          <a href="https://t.me/domvdalybot" target="_blank" rel="noopener" className="btn btn-primary btn-sm" style={{ backgroundColor: "rgb(3, 27, 37)" }}>
+            <I name="send" className="ic-sm" />Связаться с нами
+          </a>
+          {isAdmin && (
+            <button className="btn btn-ghost btn-sm" onClick={handleLogout}>
+              <I name="user" className="ic-sm" />Выйти
+            </button>
+          )}
+          {isMobile &&
+          <button className="btn btn-ghost btn-sm" style={{ padding: '0 8px' }} onClick={() => setMobileMenuOpen(true)}>
+              <I name="menu" className="ic" />
+            </button>
+          }
+        </div>
+      </div>
+    </header>);
+
+}
+
   };
 
   return (
@@ -3719,56 +3787,7 @@ function LoginModal({ onClose }) {
   );
 }
 
-function Header({ route, setRoute, onAdd, mobileMenuOpen, setMobileMenuOpen }) {
-  const isMobile = window.matchMedia('(max-width: 768px)').matches;
-  const [showLogin, setShowLogin] = useState(false);
-  const adminUser = window._adminUser;
 
-  const handleLogout = async () => {
-    await window._sb.auth.signOut();
-    window._adminUser = null;
-    if (window._reactRefresh) window._reactRefresh();
-  };
-
-  return (
-    <header className="hdr">
-      {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
-      <div className="hdr-inner" style={isMobile ? { padding: '0 16px', gap: 14 } : {}}>
-        <a className="brand" onClick={() => setRoute('catalog')} style={{ cursor: 'pointer' }}>
-          <img src={(window.__resources && window.__resources.logoMain) || "assets/logo.svg"} alt="Дом вдали" style={{ height: 28, display: 'block' }} />
-        </a>
-
-        {!isMobile &&
-        <nav className="nav">
-            <a onClick={() => setRoute('catalog')} className={route === 'catalog' ? 'is-active' : ''} style={{ cursor: 'pointer' }}>Каталог</a>
-            <a onClick={onAdd} style={{ cursor: 'pointer' }}>Добавить объект</a>
-            <a onClick={() => setRoute('admin')} className={route === 'admin' ? 'is-active' : ''} style={{ cursor: 'pointer' }}>Админ</a>
-          </nav>
-        }
-
-        <div className="hdr-right">
-          <a href="https://t.me/domvdalybot" target="_blank" rel="noopener" className="btn btn-primary btn-sm" style={{ backgroundColor: "rgb(3, 27, 37)" }}>
-            <I name="send" className="ic-sm" />Связаться с нами
-          </a>
-          {adminUser ? (
-            <button className="btn btn-ghost btn-sm" onClick={handleLogout} title={adminUser.email}>
-              <I name="user" className="ic-sm" />Выйти
-            </button>
-          ) : (
-            <button className="btn btn-ghost btn-sm" onClick={() => setShowLogin(true)}>
-              <I name="user" className="ic-sm" />Войти
-            </button>
-          )}
-          {isMobile &&
-          <button className="btn btn-ghost btn-sm" style={{ padding: '0 8px' }} onClick={() => setMobileMenuOpen(true)}>
-              <I name="menu" className="ic" />
-            </button>
-          }
-        </div>
-      </div>
-    </header>);
-
-}
 
 function MobileMenu({ open, onClose, route, setRoute, onAdd }) {
   if (!open) return null;
@@ -3788,7 +3807,7 @@ function MobileMenu({ open, onClose, route, setRoute, onAdd }) {
           {[
           ['catalog', 'Каталог', 'list'],
           ['add', 'Добавить объект', 'plus'],
-          ['admin', 'Админ', 'building']
+          ...(window._isAdmin() ? [['admin', 'Админ', 'building']] : [])
           ]. map(([r, l, ic]) =>
           <button key={r}
           onClick={() => r === 'add' ? (onAdd(), onClose()) : go(r)}
@@ -4032,6 +4051,11 @@ function App() {
   }, []);
 
   useEffect(() => {location.hash = route;}, [route]);
+
+  // Если пытаемся зайти в /admin без пароля — показываем экран входа
+  if (route === 'admin' && !window._isAdmin()) {
+    return <AdminLoginScreen onSuccess={() => setDataVersion(v => v + 1)} />;
+  }
 
   return (
     <div data-screen-label={`Дом вдали · ${route}`}>
