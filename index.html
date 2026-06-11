@@ -1397,6 +1397,7 @@ window._loadObjectsFromSupabase = async function() {
       .select(`
         id, name, type, city, address, region,
         year, period, built, url, lat, lng, status,
+        group_name, revenue_2022, revenue_2023, revenue_growth, revenue_total,
         photos ( url, is_cover, sort_order )
       `)
       .eq('status', 'published')
@@ -1406,21 +1407,25 @@ window._loadObjectsFromSupabase = async function() {
     if (!data || data.length === 0) return;
 
     window.DV_DATA.objects = data.map(o => ({
-      id:      o.id,
-      name:    o.name,
-      type:    o.type,
-      city:    o.city    || '',
-      addr:    o.address || '',
-      region:  o.region  || 'msk',
-      year:    o.year    || 1880,
-      period:  o.period  || '',
-      built:   o.built   || '—',
-      status:  'none',
-      lat:     o.lat,
-      lng:     o.lng,
-      revenue: '—',
-      group:   '—',
-      url:     o.url     || '',
+      id:             o.id,
+      name:           o.name,
+      type:           o.type,
+      city:           o.city          || '',
+      addr:           o.address       || '',
+      region:         o.region        || 'msk',
+      year:           o.year          || 1880,
+      period:         o.period        || '',
+      built:          o.built         || '—',
+      status:         'none',
+      lat:            o.lat,
+      lng:            o.lng,
+      revenue:        '—',
+      group:          o.group_name    || '—',
+      url:            o.url           || '',
+      revenue_2022:   o.revenue_2022  || null,
+      revenue_2023:   o.revenue_2023  || null,
+      revenue_growth: o.revenue_growth|| null,
+      revenue_total:  o.revenue_total || null,
       coverUrl: o.photos
         ? (o.photos.find(p => p.is_cover) || o.photos[0])?.url || null
         : null,
@@ -2191,16 +2196,19 @@ function RatingScale({ value }) {
   );
 }
 
-/* fictional but plausible revenue history per object */
+/* Revenue history — реальные данные из Supabase если есть, иначе null */
 function getRevenueHistory(obj){
-  const seed = obj.id.split('').reduce((a,c)=>a+c.charCodeAt(0),0);
-  const base = revBase(obj.revenue);
-  if (!base) return null;
-  return [2021,2022,2023,2024,2025].map((y,i)=>{
-    const noise = ((seed * (i+1)) % 23) / 100 - 0.1;
-    const trend = 1 + i*0.07 + noise;
-    return { year:y, v: Math.round(base * trend / (1 + 4*0.07)) };
-  });
+  const r22 = parseFloat(obj.revenue_2022);
+  const r23 = parseFloat(obj.revenue_2023);
+  if (!isNaN(r22) && !isNaN(r23) && r22 > 0 && r23 > 0) {
+    return [
+      { year: 2022, v: r22 },
+      { year: 2023, v: r23 },
+    ];
+  }
+  if (!isNaN(r23) && r23 > 0) return [{ year: 2023, v: r23 }];
+  if (!isNaN(r22) && r22 > 0) return [{ year: 2022, v: r22 }];
+  return null;
 }
 function revBase(r){
   if (!r || r === '—') return 0;
@@ -2235,7 +2243,11 @@ const HIST = {
 function DetailBody({ obj, onClose }) {
   const T = window.DV_DATA.types[obj.type];
   const revHist = getRevenueHistory(obj);
-  const delta = revHist ? Math.round(((revHist[4].v - revHist[3].v) / revHist[3].v) * 100) : null;
+  const delta = obj.revenue_growth
+    ? parseFloat(obj.revenue_growth)
+    : (revHist && revHist.length === 2)
+      ? Math.round(((revHist[1].v - revHist[0].v) / revHist[0].v) * 100)
+      : null;
   const [tab, setTab] = useState('building');
   const [saved, setSaved] = useState(false);
   const tabs = [['building', 'Здание'], ['business', 'Бизнес'], ...(revHist ? [['finance', 'Финансы']] : [])];
@@ -2370,18 +2382,26 @@ function DetailBody({ obj, onClose }) {
                     <div className="eyebrow">Выручка по годам (млн ₽)</div>
                   </div>
                   <div style={{flex:1}}/>
-                  <div style={{
-                    display:'inline-flex', alignItems:'center', gap:6,
-                    fontFamily:'var(--f-mono)', fontSize:13,
-                    color: delta >= 0 ? 'var(--st-ok)' : 'var(--st-rej)',
-                  }}>
-                    <I name={delta >= 0 ? 'arrow-up' : 'arrow-up'} className="ic-sm" style={{transform: delta < 0 ? 'rotate(180deg)' : 'none'}}/>
-                    {delta >= 0 ? '+' : ''}{delta}% за год
-                  </div>
+                  {delta !== null && (
+                    <div style={{
+                      display:'inline-flex', alignItems:'center', gap:6,
+                      fontFamily:'var(--f-mono)', fontSize:13,
+                      color: delta >= 0 ? 'var(--st-ok)' : 'var(--st-rej)',
+                    }}>
+                      <I name={delta >= 0 ? 'arrow-up' : 'arrow-up'} className="ic-sm" style={{transform: delta < 0 ? 'rotate(180deg)' : 'none'}}/>
+                      {delta >= 0 ? '+' : ''}{Math.round(delta)}% за год
+                    </div>
+                  )}
                 </div>
                 <div style={{borderTop:'1px solid var(--rule)', borderBottom:'1px solid var(--rule)', padding:'12px 0'}}>
                   <RevenueChart years={revHist}/>
                 </div>
+                {obj.revenue_total && (
+                  <div style={{marginTop:16, display:'grid', gridTemplateColumns:'auto 1fr', gap:'10px 24px', fontSize:14}}>
+                    <span className="eyebrow" style={{paddingTop:2}}>Выручка за 2 года</span>
+                    <span className="mono" style={{fontSize:15}}>{obj.revenue_total} млн ₽</span>
+                  </div>
+                )}
               </div>
             </section>
           )}
