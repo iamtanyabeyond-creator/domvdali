@@ -2099,7 +2099,6 @@ function Catalog({ onOpen, viewMode, setViewMode }) {
       {/* Cards */}
       <div className="catalog-grid-wrap">
         <div className="eyebrow catalog-count">
-          {filtered.length} объектов · {new Set(filtered.map((o) => o.city)).size} городов
         </div>
         {filtered.length === 0 ?
         <div style={{ textAlign: 'center', padding: '64px 12px', color: 'var(--ink-3)', fontFamily: 'var(--f-serif)', fontSize: 17 }}>
@@ -2127,7 +2126,6 @@ function Catalog({ onOpen, viewMode, setViewMode }) {
       {/* Flat map below */}
       <div className="catalog-map-section">
         <div className="catalog-map-head">
-          <span className="eyebrow">На карте</span>
         </div>
         <div className="catalog-map-frame">
           <MapPane objects={filtered} hoverId={hoverId} setHoverId={setHoverId} onOpen={onOpen} />
