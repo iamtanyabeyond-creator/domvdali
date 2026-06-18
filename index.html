@@ -24,9 +24,6 @@
     }
   </style>
 
-  <!-- Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
@@ -631,6 +628,35 @@ html, body, #root { width: 100%; overflow-x: hidden; min-width: 0; }
 }
 .mobile-bottom-btn:active { transform: translateX(-50%) scale(0.96) !important; }
 
+/* -- Desktop hint: jump to map / back to top (Catalog is never rendered on mobile, but hide explicitly for safety) -- */
+.desktop-map-jump-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 40px;
+  z-index: 2000;
+  height: 48px;
+  padding: 0 22px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--f-sans);
+  border: none;
+  box-shadow: 0 6px 20px rgba(98,129,255,.32), 0 0 0 4px rgba(3,27,37,.05);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform .15s ease;
+}
+.desktop-map-jump-btn:hover { transform: translateY(-2px); }
+.desktop-map-jump-btn:active { transform: scale(0.96); }
+@media (max-width: 768px) {
+  .desktop-map-jump-btn { display: none; }
+}
+
 /* -- Map bounds filter chip -- */
 .map-bounds-chip {
   position: absolute !important;
@@ -777,11 +803,11 @@ html, body, #root { width: 100%; overflow-x: hidden; min-width: 0; }
     justify-content: flex-start !important;
   }
   .detail-tabs-bar {
-    padding: 16px 16px 0 !important;
+    padding: 16px 16px 10px !important;
     overflow-x: auto !important;
     white-space: nowrap !important;
     -webkit-overflow-scrolling: touch !important;
-    gap: 16px !important;
+    gap: 8px !important;
   }
   .detail-tabs-bar::-webkit-scrollbar { display: none; }
 
@@ -1041,6 +1067,120 @@ body{ font-family:var(--f-serif); background:var(--bg); color:var(--ink); }
 .more-pop-group:last-child{ margin-bottom:0; }
 .more-pop-head{ margin-bottom:10px; }
 
+/* ── Object detail tabs (Здание / Бизнес / Финансы): filled active state + hover affordance ── */
+.detail-tab-btn{
+  background:none; border:none; padding:9px 16px;
+  font-size:14px; font-family:var(--f-sans); color:var(--ink-3);
+  border-radius:10px 10px 0 0; cursor:pointer;
+  transition:all .15s ease; margin-bottom:-1px; flex-shrink:0;
+}
+.detail-tab-btn:hover{ background:var(--bg-soft); color:var(--ink-2); }
+.detail-tab-btn.is-active{
+  background:var(--accent-soft); color:var(--accent); font-weight:600;
+  box-shadow:inset 0 -2px 0 var(--accent);
+}
+
+/* ── Intro overlay (shown every visit) ── */
+.intro-overlay{
+  position:fixed; inset:0; z-index:9600;
+  background:rgba(3,27,37,.5); backdrop-filter:blur(6px);
+  display:flex; align-items:center; justify-content:center;
+  padding:24px; animation:fadeIn .2s ease;
+}
+.intro-card{
+  position:relative; background:var(--bg-card);
+  width:100%; max-width:560px; max-height:88vh; overflow-y:auto;
+  border-radius:var(--r-lg); border:1px solid var(--rule);
+  box-shadow:var(--sh-3); padding:44px 44px 36px;
+  animation:slideUp .25s ease;
+}
+.intro-close{
+  position:absolute; top:16px; right:16px;
+  width:34px; height:34px; border-radius:50%;
+  border:1px solid var(--rule); background:var(--bg);
+  color:var(--ink-2); display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:.15s;
+}
+.intro-close:hover{ background:var(--bg-soft); color:var(--ink); border-color:var(--rule-strong); }
+.intro-title{ margin:0 0 18px; font-size:26px; padding-right:32px; }
+.intro-body{
+  display:flex; flex-direction:column; gap:16px;
+  font-family:var(--f-serif); font-size:15px; line-height:1.7; color:var(--ink-2);
+}
+.intro-body p{ margin:0; }
+.intro-link{ color:var(--accent); font-weight:600; text-decoration:underline; text-decoration-color:var(--accent-soft); }
+.intro-sign{ color:var(--ink); font-family:var(--f-sans); }
+@media (max-width:480px){
+  .intro-card{ padding:30px 22px 26px; border-radius:var(--r); }
+  .intro-title{ font-size:22px; }
+  .intro-body{ font-size:14px; }
+}
+
+/* ── Detail hero tiles: clickable, with a hover hint that they open a viewer ── */
+.detail-hero-tile{ cursor:pointer; }
+.hero-tile-hint{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  background:rgba(3,27,37,0); opacity:0; transition:all .15s ease; pointer-events:none;
+}
+.detail-hero-tile:hover .hero-tile-hint{ opacity:1; background:rgba(3,27,37,.22); }
+.hero-tile-hint svg{
+  width:36px; height:36px; padding:9px; border-radius:50%;
+  background:rgba(255,255,255,.92); color:var(--ink);
+}
+
+/* ── Lightbox: fullscreen photo viewer ── */
+.lightbox-overlay{
+  position:fixed; inset:0; z-index:9700;
+  background:rgba(3,27,37,.92);
+  display:flex; align-items:center; justify-content:center;
+  padding:24px; animation:fadeIn .15s ease;
+}
+.lightbox-close{
+  position:absolute; top:18px; right:18px;
+  width:40px; height:40px; border-radius:50%;
+  border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.1);
+  color:#fff; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:.15s;
+}
+.lightbox-close:hover{ background:rgba(255,255,255,.2); }
+.lightbox-nav{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:48px; height:48px; border-radius:50%;
+  border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.1);
+  color:#fff; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:.15s;
+}
+.lightbox-nav:hover{ background:rgba(255,255,255,.2); }
+.lightbox-nav--prev{ left:18px; }
+.lightbox-nav--next{ right:18px; }
+.lightbox-figure{
+  margin:0; display:flex; flex-direction:column; align-items:center; gap:14px;
+  max-width:min(1100px, 90vw); max-height:90vh;
+}
+.lightbox-img{
+  max-width:100%; max-height:78vh; object-fit:contain;
+  border-radius:8px; box-shadow:0 24px 60px -16px rgba(0,0,0,.5);
+}
+.lightbox-fallback{
+  width:min(600px, 80vw); height:min(380px, 50vh);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
+  background:rgba(255,255,255,.06); border:1px dashed rgba(255,255,255,.25); border-radius:8px;
+  color:rgba(255,255,255,.6); font-family:var(--f-mono); font-size:12px; letter-spacing:.06em;
+}
+.lightbox-caption{
+  display:flex; align-items:center; gap:14px;
+  font-family:var(--f-mono); font-size:11px; letter-spacing:.1em;
+  text-transform:uppercase; color:rgba(255,255,255,.8);
+}
+.lightbox-counter{ color:rgba(255,255,255,.5); }
+@media (max-width:680px){
+  .lightbox-nav{ width:40px; height:40px; }
+  .lightbox-nav--prev{ left:8px; }
+  .lightbox-nav--next{ right:8px; }
+  .lightbox-close{ top:10px; right:10px; }
+  .lightbox-img{ max-height:68vh; }
+}
+
 /* ── Catalog cards grid ───────────────────── */
 .catalog-grid-wrap{ padding:32px 40px 8px; }
 .catalog-count{ margin-bottom:22px; }
@@ -1061,6 +1201,14 @@ body{ font-family:var(--f-serif); background:var(--bg); color:var(--ink); }
   background:linear-gradient(to top, rgba(18,14,9,.86) 0%, rgba(18,14,9,.5) 30%, rgba(18,14,9,.08) 58%, rgba(18,14,9,0) 100%);
 }
 .estate-card-tag{ position:absolute; top:16px; left:16px; }
+.estate-card-save{
+  position:absolute; top:14px; right:14px; z-index:2;
+  width:34px; height:34px; border-radius:50%;
+  background:rgba(255,255,255,.92); border:none;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:transform .12s ease;
+}
+.estate-card-save:hover{ transform:scale(1.08); }
 .estate-card .tag{ background:rgba(251,248,241,.94)!important; backdrop-filter:blur(4px); }
 .estate-card-cap{ position:absolute; left:20px; right:20px; bottom:18px; color:#F6F1E7; }
 .estate-card-eyebrow{
@@ -1311,6 +1459,8 @@ body {
   background: #dde5ff !important;
   background-image: linear-gradient(135deg, #e8edff, #d0daff) !important;
 }
+.ph-img--photo { background: var(--bg-soft) !important; background-image: none !important; }
+.ph-img--photo::after { display: none; }
 
 /* ── Скролл ──────────────────────────────── */
 .scroll-y { scrollbar-color: #CEDEFF transparent; }
@@ -1383,82 +1533,6 @@ body {
    18 объектов в исторической недвижимости РФ
    ============================================ */
 
-// ============================================
-// SUPABASE — подключение и загрузка данных
-// ============================================
-const SUPABASE_URL = 'https://bzikqlxbamvlhihinugj.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_2GSfQhJa9q_xBLRK92JQZQ_hQYpaV9E';
-window._sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-// ============================================
-// АДМИН-ДОСТУП — простой пароль
-// ============================================
-const ADMIN_PASSWORD = 'domvdali2026'; // ← можно сменить
-const ADMIN_KEY = 'dv_admin_ok';
-
-window._isAdmin = () => localStorage.getItem(ADMIN_KEY) === 'yes';
-window._adminLogin = (pwd) => {
-  if (pwd === ADMIN_PASSWORD) {
-    localStorage.setItem(ADMIN_KEY, 'yes');
-    return true;
-  }
-  return false;
-};
-window._adminLogout = () => {
-  localStorage.removeItem(ADMIN_KEY);
-};
-
-window._loadObjectsFromSupabase = async function() {
-  try {
-    const { data, error } = await window._sb
-      .from('objects')
-      .select(`
-        id, name, type, city, address, region,
-        year, period, built, url, lat, lng, status,
-        group_name, revenue_2022, revenue_2023, revenue_growth, revenue_total,
-        photos ( url, is_cover, sort_order )
-      `)
-      .eq('status', 'published')
-      .order('name');
-
-    if (error) throw error;
-    if (!data || data.length === 0) return;
-
-    window.DV_DATA.objects = data.map(o => ({
-      id:             o.id,
-      name:           o.name,
-      type:           o.type,
-      city:           o.city          || '',
-      addr:           o.address       || '',
-      region:         o.region        || 'msk',
-      year:           o.year          || 1880,
-      period:         o.period        || '',
-      built:          o.built         || '—',
-      status:         'none',
-      lat:            o.lat,
-      lng:            o.lng,
-      revenue:        '—',
-      group:          o.group_name    || '—',
-      url:            o.url           || '',
-      revenue_2022:   o.revenue_2022  || null,
-      revenue_2023:   o.revenue_2023  || null,
-      revenue_growth: o.revenue_growth|| null,
-      revenue_total:  o.revenue_total || null,
-      coverUrl: o.photos
-        ? (o.photos.find(p => p.is_cover) || o.photos[0])?.url || null
-        : null,
-    }));
-
-    if (window._reactRefresh) window._reactRefresh();
-    console.log('[Supabase] загружено объектов:', data.length);
-  } catch (err) {
-    console.warn('[Supabase] ошибка загрузки, используем статические данные:', err.message);
-  }
-};
-
-// ============================================
-// СТАТИЧЕСКИЕ ДАННЫЕ (fallback пока БД пуста)
-// ============================================
 window.DV_DATA = {
   types: {
     rest: { label: "Ресторан", cls: "tag-rest" },
@@ -1527,7 +1601,78 @@ window.DV_DATA = {
     { id: "r7058", name: "Ярославская область", cities: ["Ростов Великий", "Рыбинск", "село Заозерное"] },
   ],
 
-  objects: [], // загружаются из Supabase
+  objects: [
+    { id:"o1", name:"Кухня-бар Прачка", type:"rest", city:"Тамбов", addr:"улица Гоголя, 1/ Набережная 22", region:"r24948", year:1905, period:"e20", built:"Начало ХХ века", status:'none', lat:52.7572, lng:41.4283, revenue:"12 млн ₽/год", group:'—', url:"https://kuhnybarprachka.ru/" },
+    { id:"o2", name:"Фабрикант", type:"rest", city:"Серпухов", addr:"Тульская, 5", region:"msk", year:1850, period:"c19", built:"Конец XIX века", status:'none', lat:54.8786, lng:37.3997, revenue:"15 млн ₽/год", group:'—', url:"https://fabricant.rest/" },
+    { id:"o3", name:"Kitchen-Market", type:"rest", city:"Серпухов", addr:"ул. Ворошилова, 5/22", region:"msk", year:1850, period:"c19", built:"Конец XIX века", status:'none', lat:54.8906, lng:37.3997, revenue:"143 млн ₽/год", group:'—', url:"https://grig-group.ru/restorani/kitchen-market/" },
+    { id:"o4", name:"Родовая башня Цаллаговых", type:"ethno", city:"село Унал", addr:"село Нижний Унал, 63", region:"r91420", year:1880, period:"", built:"—", status:'none', lat:42.788, lng:44.238, revenue:"—", group:'—', url:"" },
+    { id:"o5", name:"Усадьба Степановское-Волосово, Зубцовский район Тверской области", type:"rest", city:"деревня Волосово", addr:"", region:"r24948", year:1750, period:"c18", built:"XVIII век", status:'none', lat:56.2667, lng:34.3713, revenue:"—", group:'—', url:"https://xn----7sbgbanc3bmolcdbabc8agif.xn--p1ai/" },
+    { id:"o6", name:"На Заводе", type:"museum", city:"Сысерть", addr:"ул. Быкова, 29/4", region:"r92357", year:1750, period:"c18", built:"XVIII век", status:'none', lat:56.5128, lng:60.8066, revenue:"—", group:'—', url:"https://nazavode.space/" },
+    { id:"o7", name:"Усадьба Сенницы", type:"rest", city:"село Сенницы-2", addr:"село Сенницы-2, ул. Луговая, д. 63", region:"msk", year:1750, period:"c18", built:"XVIII век", status:'none', lat:54.874, lng:38.588, revenue:"—", group:'—', url:"https://usadba-sennitsy.ru/" },
+    { id:"o8", name:"Терем Асташово", type:"hotel", city:"деревня Осташово", addr:"", region:"r42459", year:1850, period:"c19", built:"Конец ХIХ века", status:'none', lat:58.736, lng:42.688, revenue:"—", group:'—', url:"https://astashovo.com/" },
+    { id:"o9", name:"Отель \"Ида\"", type:"hotel", city:"Таганрог", addr:"Тургеневский переулок, 22", region:"r69324", year:1850, period:"c19", built:"Середина ХIХ века", status:'none', lat:47.2002, lng:38.8969, revenue:"—", group:'—', url:"https://idahotel.ru/" },
+    { id:"o10", name:"Скандинавия", type:"hotel", city:"Сестрорецк", addr:"Сестрорецк, Парковая улица, 16.", region:"r84227", year:1905, period:"e20", built:"Начало ХХ века", status:'none', lat:60.1199, lng:29.9407, revenue:"488 млн ₽/год", group:'—', url:"https://skandinavia.ru/" },
+    { id:"o11", name:"Villa 7", type:"hotel", city:"Ливадия", addr:"", region:"r35729", year:1880, period:"", built:"—", status:'none', lat:44.5038, lng:34.1193, revenue:"—", group:'—', url:"" },
+    { id:"o12", name:"O’27.Silvuplé", type:"hotel", city:"Ростов Великий", addr:"Ростов Великий, Окружная улица, 27", region:"r7058", year:1850, period:"c19", built:"Вторая половина XIX века", status:'none', lat:57.1497, lng:39.4023, revenue:"—", group:'—', url:"https://www.o27silvuple.com/" },
+    { id:"o13", name:"«Птицы»", type:"rest", city:"Уфа", addr:"", region:"r95839", year:1880, period:"", built:"—", status:'none', lat:54.7148, lng:55.9601, revenue:"150 млн ₽/год", group:'—', url:"" },
+    { id:"o14", name:"SketchHotel", type:"hotel", city:"Владимир", addr:"ул. 2-я Никольская, 9/2", region:"r31341", year:1850, period:"c19", built:"Вторая половина XIX века", status:'none', lat:56.117, lng:40.395, revenue:"—", group:'—', url:"https://sketchhotel.ru/" },
+    { id:"o15", name:"Музей русских национальных напитков в Гавриловом Посаде", type:"museum", city:"Гаврилов Посад", addr:"Суздальское шоссе, 13", region:"r68162", year:1880, period:"", built:"—", status:'none', lat:56.5566, lng:40.1066, revenue:"25.5 млн ₽/год", group:'—', url:"https://gavrilovposad.com/museum" },
+    { id:"o16", name:"«ИМПЕРИАЛ»", type:"hotel", city:"Абрау", addr:"", region:"r6459", year:1880, period:"", built:"—", status:'none', lat:44.7109, lng:37.5899, revenue:"—", group:'—', url:"" },
+    { id:"o17", name:"Кельи", type:"hotel", city:"Смоленск", addr:"ул. Маршала Жукова, д. 18", region:"r15562", year:1750, period:"c18", built:"XVIII век", status:'none', lat:54.8058, lng:32.0281, revenue:"—", group:'—', url:"https://vk.com/kellii1770" },
+    { id:"o18", name:"«Темп»", type:"rest", city:"Махачкала", addr:"ул. Буйнакского, 2", region:"r15394", year:1850, period:"c19", built:"Вторая половина XIX века", status:'none', lat:43.0209, lng:47.4927, revenue:"—", group:'—', url:"https://www.instagram.com/temp_mhk/" },
+    { id:"o19", name:"Рихтер", type:"hotel", city:"Москва", addr:"Пятницкая, 42", region:"msk", year:1850, period:"c19", built:"Вторая половина XIX века", status:'none', lat:55.7198, lng:37.6173, revenue:"—", group:'—', url:"https://richterhotel.com/" },
+    { id:"o20", name:"Лофт 1890", type:"cluster", city:"Волгоград", addr:"ул. 10-й Дивизии НКВД, 5а", region:"r26739", year:1850, period:"c19", built:"Вторая половина XIX века", status:'none', lat:48.744, lng:44.4893, revenue:"55 млн ₽/год", group:'—', url:"https://loft1890.ru/" },
+    { id:"o21", name:"Дом Николая Ракицкого", type:"museum", city:"Таруса", addr:"ул. Шмидта, 38", region:"r33580", year:1905, period:"c20", built:"Первая половина ХХ века", status:'none', lat:54.6876, lng:37.1594, revenue:"—", group:'—', url:"https://tarusagarden.ru/" },
+    { id:"o22", name:"Музей марципана", type:"museum", city:"Калининград", addr:"", region:"r2434", year:1880, period:"", built:"—", status:'none', lat:54.6864, lng:20.4402, revenue:"—", group:'—', url:"" },
+    { id:"o23", name:"Переделкино", type:"hotel", city:"ДСК-Мичуринец", addr:"ул. Погодина, 4, корп. 2", region:"msk", year:1905, period:"c20", built:"Первая половина ХХ века", status:'none', lat:55.64, lng:37.33, revenue:"—", group:'—', url:"https://pro-peredelkino.org/" },
+    { id:"o24", name:"Дом русского чаепития", type:"cafe", city:"Суздаль", addr:"ул. Старая, д. 6", region:"r31341", year:1850, period:"c19", built:"XIX век", status:'none', lat:56.4283, lng:40.437, revenue:"250 млн ₽/год", group:'—', url:"https://suzdal-dvor.ru/restorany/dom-russkogo-chaepitiya" },
+    { id:"o25", name:"Зуррахмат", type:"cafe", city:"Уфа", addr:"", region:"r95839", year:1880, period:"", built:"—", status:'none', lat:54.7508, lng:55.9601, revenue:"6 млн ₽/год", group:'—', url:"" },
+    { id:"o26", name:"Сыровар", type:"rest", city:"Кострома", addr:"пр. Мира, 4", region:"r42459", year:1850, period:"c19", built:"XIX век", status:'none', lat:57.7917, lng:40.9145, revenue:"63 млн ₽/год", group:'—', url:"https://syrovar-kostroma.ru/" },
+    { id:"o27", name:"Патефон", type:"cafe", city:"поселок Железнодорожный", addr:"ул. Коммунистическая, 1", region:"r2434", year:1880, period:"", built:"—", status:'none', lat:54.396, lng:21.298, revenue:"7.2 млн ₽/год", group:'—', url:"https://geardhouse.ru/#rec648587570" },
+    { id:"o28", name:"Старая мельница", type:"cafe", city:"поселок Железнодорожный", addr:"ул. Черняховского, 31Б", region:"r2434", year:1905, period:"e20", built:"Начало ХХ века", status:'none', lat:54.324, lng:21.31, revenue:"4.7 млн ₽/год", group:'—', url:"" },
+    { id:"o29", name:"Место", type:"shop", city:"Вологда", addr:"Кремлёвская площадь, 4", region:"r70457", year:1850, period:"c19", built:"XIX век", status:'none', lat:59.1965, lng:39.8915, revenue:"—", group:'—', url:"https://vk.com/mesto.valkeda" },
+    { id:"ox29", name:"Дом с добром", type:"cluster", city:"Вологда", addr:"Кремлёвская площадь, 4", region:"r70457", year:1850, period:"c19", built:"XIX век", status:'none', lat:59.2085, lng:39.9275, revenue:"—", group:'—', url:"https://vk.com/domsdobrom4" },
+    { id:"o30", name:"Станкозавод", type:"cluster", city:"Самара", addr:"ул. Куйбышева, 128/1", region:"r15445", year:1850, period:"c19", built:"XIX век", status:'none', lat:53.1599, lng:50.0882, revenue:"—", group:'—', url:"https://stzv.ru/" },
+    { id:"o31", name:"«Дом77»", type:"cluster", city:"Самара", addr:"", region:"r15445", year:1880, period:"", built:"—", status:'none', lat:53.1719, lng:50.0882, revenue:"—", group:'—', url:"" },
+    { id:"o32", name:"Посольство", type:"bar", city:"Самара", addr:"ул. Фрунзе, 113", region:"r15445", year:1850, period:"c19", built:"XIX век", status:'none', lat:53.1839, lng:50.0882, revenue:"6 млн ₽/год", group:'—', url:"https://posolstvo-bar.ru/" },
+    { id:"o33", name:"Рюмочка", type:"bar", city:"Самара", addr:"", region:"r15445", year:1880, period:"", built:"—", status:'none', lat:53.1959, lng:50.0882, revenue:"106 млн ₽/год", group:'—', url:"" },
+    { id:"o34", name:"Вечно молодой", type:"bar", city:"Самара", addr:"", region:"r15445", year:1880, period:"", built:"—", status:'none', lat:53.2079, lng:50.0882, revenue:"74 млн ₽/год", group:'—', url:"" },
+    { id:"o35", name:"Оффенбахер", type:"hotel", city:"Санкт-Петербург", addr:"", region:"spb", year:1880, period:"", built:"—", status:'none', lat:59.9583, lng:30.3231, revenue:"53 млн ₽/год", group:'—', url:"" },
+    { id:"o36", name:"Дом Ершова", type:"hotel", city:"Гороховец", addr:"", region:"r31341", year:1880, period:"", built:"—", status:'none', lat:56.2377, lng:42.6819, revenue:"—", group:'—', url:"" },
+    { id:"o37", name:"Twelve Reasons", type:"hotel", city:"Москва", addr:"", region:"msk", year:1880, period:"", built:"—", status:'none', lat:55.7198, lng:37.6173, revenue:"—", group:'—', url:"" },
+    { id:"o38", name:"Хутор Старозолотовский", type:"ethno", city:"хутор Старозолотовский", addr:"", region:"r69324", year:1880, period:"", built:"—", status:'none', lat:47.576, lng:41.3, revenue:"—", group:'—', url:"" },
+    { id:"o39", name:"Усадьба Гребнево", type:"rest", city:"", addr:"", region:"msk", year:1880, period:"", built:"—", status:'none', lat:55.95, lng:38.134, revenue:"—", group:'—', url:"" },
+    { id:"o40", name:"офис Брусники", type:"office", city:"Тюмень", addr:"", region:"r48524", year:1880, period:"", built:"—", status:'none', lat:57.129, lng:65.5223, revenue:"271 млн ₽/год", group:'—', url:"" },
+    { id:"o41", name:"Флигель Барышникова", type:"cafe", city:"Тюмень", addr:"", region:"r48524", year:1880, period:"", built:"—", status:'none', lat:57.141, lng:65.5223, revenue:"271 млн ₽/год", group:'—', url:"" },
+    { id:"o42", name:"Дом с Лилиями", type:"shop", city:"Вологда", addr:"", region:"r70457", year:1880, period:"", built:"—", status:'none', lat:59.2205, lng:39.8795, revenue:"—", group:'—', url:"" },
+    { id:"o43", name:"Дом Пановых", type:"shop", city:"Вологда", addr:"", region:"r70457", year:1880, period:"", built:"—", status:'none', lat:59.2325, lng:39.8795, revenue:"—", group:'—', url:"" },
+    { id:"o44", name:"Дом Извощикова", type:"shop", city:"Вологда", addr:"", region:"r70457", year:1880, period:"", built:"—", status:'none', lat:59.2445, lng:39.8795, revenue:"—", group:'—', url:"" },
+    { id:"o45", name:"Бюро", type:"cafe", city:"Вологда", addr:"", region:"r70457", year:1880, period:"", built:"—", status:'none', lat:59.2565, lng:39.8795, revenue:"—", group:'—', url:"" },
+    { id:"o46", name:"Ларец", type:"gallery", city:"Суздаль", addr:"", region:"r31341", year:1880, period:"", built:"—", status:'none', lat:56.3923, lng:40.449, revenue:"12.9 млн ₽/год", group:'—', url:"" },
+    { id:"o47", name:"Мира Центр", type:"gallery", city:"Суздаль", addr:"", region:"r31341", year:1880, period:"", built:"—", status:'none', lat:56.4043, lng:40.449, revenue:"12.9 млн ₽/год", group:'—', url:"" },
+    { id:"o48", name:"ГЭС НА НЕРЛИ", type:"cluster", city:"село Заполицы", addr:"", region:"r31341", year:1880, period:"", built:"—", status:'none', lat:56.238, lng:40.0, revenue:"12.9 млн ₽/год", group:'—', url:"" },
+    { id:"o49", name:"Гостиный двор", type:"hotel", city:"Мичуринск", addr:"", region:"r24948", year:1880, period:"", built:"—", status:'none', lat:52.891, lng:40.5039, revenue:"400 млн ₽/год", group:'—', url:"" },
+    { id:"o50", name:"Усадьба Золотой Лев", type:"event", city:"село Сапроново", addr:"", region:"msk", year:1880, period:"", built:"—", status:'none', lat:55.288, lng:37.888, revenue:"—", group:'—', url:"" },
+    { id:"o51", name:"Усадьба Скорняково-Архангельское", type:"event", city:"село Скорняково", addr:"", region:"r29146", year:1880, period:"", built:"—", status:'none', lat:52.45, lng:38.688, revenue:"7.7 млн ₽/год", group:'—', url:"" },
+    { id:"o52", name:"Кезлев къавеси", type:"cafe", city:"Евпатория", addr:"", region:"r35729", year:1880, period:"", built:"—", status:'none', lat:45.202, lng:33.3549, revenue:"—", group:'—', url:"" },
+    { id:"o53", name:"Джеваль", type:"hotel", city:"Евпатория", addr:"", region:"r35729", year:1880, period:"", built:"—", status:'none', lat:45.214, lng:33.3549, revenue:"—", group:'—', url:"" },
+    { id:"o54", name:"Подворье Рязановых", type:"cafe", city:"станица Старочеркасская", addr:"", region:"r69324", year:1880, period:"", built:"—", status:'none', lat:47.276, lng:40.038, revenue:"—", group:'—', url:"" },
+    { id:"o55", name:"Казачий Дон", type:"ethno", city:"станица Старочеркасская", addr:"", region:"r69324", year:1880, period:"", built:"—", status:'none', lat:47.204, lng:40.05, revenue:"—", group:'—', url:"" },
+    { id:"o56", name:"Заречный квартал 1840", type:"rest", city:"Вологда", addr:"", region:"r70457", year:1880, period:"", built:"—", status:'none', lat:59.1965, lng:39.8915, revenue:"—", group:'—', url:"" },
+    { id:"o57", name:"Усадьба Петрушево", type:"hotel", city:"деревня Петрушово", addr:"", region:"r60598", year:1880, period:"", built:"—", status:'none', lat:54.888, lng:41.3, revenue:"—", group:'—', url:"" },
+    { id:"o58", name:"Дом Легкодумова", type:"museum", city:"деревня Пустынь", addr:"", region:"r42459", year:1880, period:"", built:"—", status:'none', lat:57.8, lng:41.5, revenue:"—", group:'—', url:"" },
+    { id:"o59", name:"Дом Смодора", type:"museum", city:"Галич", addr:"", region:"r42459", year:1880, period:"", built:"—", status:'none', lat:58.3948, lng:42.3486, revenue:"—", group:'—', url:"" },
+    { id:"o60", name:"Дом инженеров", type:"museum", city:"р. п. Измайлово", addr:"", region:"r85535", year:1880, period:"", built:"—", status:'none', lat:53.35, lng:47.188, revenue:"—", group:'—', url:"" },
+    { id:"o61", name:"Дом со щуками", type:"hotel", city:"село Заозерное", addr:"", region:"r7058", year:1880, period:"", built:"—", status:'none', lat:57.512, lng:39.488, revenue:"—", group:'—', url:"" },
+    { id:"o62", name:"Усадьба Иконниковых", type:"cluster", city:"Рыбинск", addr:"", region:"r7058", year:1880, period:"", built:"—", status:'none', lat:58.0686, lng:38.8467, revenue:"—", group:'—', url:"" },
+    { id:"o63", name:"Арт-усадьба Рафаила Астафьева", type:"museum", city:"Вельск", addr:"", region:"r32687", year:1880, period:"", built:"—", status:'none', lat:61.1027, lng:42.088, revenue:"—", group:'—', url:"" },
+    { id:"o64", name:"Усадьба Гридино", type:"cluster", city:"село Пустоша", addr:"", region:"msk", year:1880, period:"", built:"—", status:'none', lat:55.464, lng:39.9, revenue:"—", group:'—', url:"" },
+    { id:"o65", name:"Мельница Червова", type:"cluster", city:"Новоузенск", addr:"", region:"r40150", year:1880, period:"", built:"—", status:'none', lat:50.4346, lng:48.1419, revenue:"—", group:'—', url:"" },
+    { id:"o66", name:"Усадьба Барышниковых", type:"event", city:"село Алексино", addr:"", region:"r15562", year:1880, period:"", built:"—", status:'none', lat:54.738, lng:33.5, revenue:"—", group:'—', url:"" },
+    { id:"o67", name:"Домик на Севере", type:"cluster", city:"", addr:"", region:"r32687", year:1880, period:"", built:"—", status:'none', lat:64.54, lng:40.52, revenue:"—", group:'—', url:"" },
+    { id:"o68", name:"Дворец великого князя Михаила Павловича", type:"edu", city:"Красное село", addr:"", region:"r84227", year:1880, period:"", built:"—", status:'none', lat:59.7453, lng:30.0833, revenue:"8 млн ₽/год", group:'—', url:"" },
+    { id:"o69", name:"Дом с душой", type:"event", city:"Верея", addr:"", region:"msk", year:1880, period:"", built:"—", status:'none', lat:55.3679, lng:36.1819, revenue:"—", group:'—', url:"" },
+  ],
 
   /* ── Заявки для админки ──────────────── */
   applications: [
@@ -1539,6 +1684,270 @@ window.DV_DATA = {
     { id:2842, name:'Шапка-невидимка',         type:'shop', city:'Москва',           date:'08.05.2026', status:'rej',  email:'shapka@example.com', desc:'Магазин головных уборов в типовой новостройке — не подошло по тематике.' },
     { id:2841, name:'Винотека «Подвал»',       city:'Калининград',     type:'shop',    date:'07.05.2026', status:'new',  email:'vino@podval.kld',  desc:'Винотека в подвалах кирхи XIX века.' },
   ],
+};
+
+// ============================================
+// LIVE DATA — Google Sheets CSV
+// Публичный каталог и финансы подтягиваются из опубликованных листов.
+// Если загрузка не удалась, сайт остаётся на встроенных данных выше.
+// ============================================
+window.DV_REMOTE = {
+  objectsCsv: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRoY4nboqc2A9Rz7JriVK1Wk-LvrbF7LYeHUAHvITMFST9LkTiQg1Izp6o141d_kHdU7teNq03DoVp9/pub?gid=917766017&single=true&output=csv',
+  financeCsv: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRoY4nboqc2A9Rz7JriVK1Wk-LvrbF7LYeHUAHvITMFST9LkTiQg1Izp6o141d_kHdU7teNq03DoVp9/pub?gid=1909204435&single=true&output=csv',
+  status: 'idle',
+  loadedAt: null,
+  error: null,
+};
+
+function _csvDelimiter(line) {
+  const commas = (line.match(/,/g) || []).length;
+  const semis = (line.match(/;/g) || []).length;
+  return semis > commas ? ';' : ',';
+}
+
+function _parseCSV(text) {
+  const src = (text || '').replace(/^\uFEFF/, '');
+  const delim = _csvDelimiter(src.split(/\r?\n/, 1)[0] || ',');
+  const rows = [];
+  let row = [], cell = '', q = false;
+  for (let i = 0; i < src.length; i++) {
+    const ch = src[i];
+    if (q) {
+      if (ch === '"') {
+        if (src[i + 1] === '"') { cell += '"'; i++; }
+        else q = false;
+      } else cell += ch;
+    } else {
+      if (ch === '"') q = true;
+      else if (ch === delim) { row.push(cell); cell = ''; }
+      else if (ch === '\n') { row.push(cell); rows.push(row); row = []; cell = ''; }
+      else if (ch !== '\r') cell += ch;
+    }
+  }
+  row.push(cell); rows.push(row);
+  const headers = (rows.shift() || []).map(h => (h || '').trim());
+  return rows
+    .filter(r => r.some(c => String(c || '').trim() !== ''))
+    .map(r => Object.fromEntries(headers.map((h, i) => [h, (r[i] || '').trim()])));
+}
+
+function _num(v) {
+  if (v === null || v === undefined) return null;
+  const n = parseFloat(String(v).replace(',', '.').replace(/[^0-9.\-]/g, ''));
+  return Number.isFinite(n) ? n : null;
+}
+
+function _pick(row, names) {
+  for (const name of names) {
+    if (row[name] !== undefined && row[name] !== '') return row[name];
+  }
+  return '';
+}
+
+function _periodToYear(period, built) {
+  const p = (period || '').trim();
+  if (p === 'pre18') return 1650;
+  if (p === 'c18') return 1750;
+  if (p === 'c19') return 1850;
+  if (p === 'e20') return 1905;
+  if (p === 'c20') return 1950;
+  const m = String(built || '').match(/(1[5-9]\d{2}|20\d{2})/);
+  return m ? Number(m[1]) : 1880;
+}
+
+function _photosFromCell(cell) {
+  return String(cell || '')
+    .split(/[\n,; ]+/)
+    .map(x => x.trim())
+    .filter(Boolean)
+    .map(x => {
+      const m = x.match(/[-\w]{25,}/);
+      return m ? m[0] : x;
+    });
+}
+
+function _driveThumb(idOrUrl, size = 1200) {
+  if (!idOrUrl) return '';
+  if (/^https?:\/\//i.test(idOrUrl) && !idOrUrl.includes('drive.google.com')) return idOrUrl;
+  const m = String(idOrUrl).match(/[-\w]{25,}/);
+  const id = m ? m[0] : idOrUrl;
+  return `https://drive.google.com/thumbnail?id=${encodeURIComponent(id)}&sz=w${size}`;
+}
+window._driveThumb = _driveThumb;
+
+function _mapObjectRow(row) {
+  const id = _pick(row, ['ID', 'id']) || `o-${Math.random().toString(36).slice(2, 8)}`;
+  const typeRaw = (_pick(row, ['Тип', 'type']) || '').trim();
+  const type = window.DV_DATA.types[typeRaw] ? typeRaw : 'cluster';
+  const period = _pick(row, ['Период', 'period']) || '';
+  const built = _pick(row, ['Датировка', 'built']) || '—';
+  const statusRaw = _pick(row, ['ОхранныйСтатус', 'Статус', 'status']) || 'none';
+  const status = window.DV_DATA.statuses[statusRaw] ? statusRaw : 'none';
+  const photos = _photosFromCell(_pick(row, ['Фото', 'photos', 'photo']));
+  const lat = _num(_pick(row, ['Широта', 'lat', 'latitude']));
+  const lng = _num(_pick(row, ['Долгота', 'lng', 'longitude']));
+  return {
+    id,
+    name: _pick(row, ['Название', 'name']) || 'Без названия',
+    type,
+    specialization: _pick(row, ['Специализация', 'specialization']) || '',
+    city: _pick(row, ['Город', 'city']) || '',
+    addr: _pick(row, ['Адрес', 'address', 'addr']) || '',
+    oblast: _pick(row, ['Область', 'regionName']) || '',
+    district: _pick(row, ['Округ', 'district']) || '',
+    region: _pick(row, ['КодРегиона', 'region']) || '',
+    year: _periodToYear(period, built),
+    period,
+    built,
+    status,
+    lat,
+    lng,
+    revenue: '—',
+    group: _pick(row, ['ГруппаКомпаний', 'Группа', 'group']) || '—',
+    url: _pick(row, ['Сайт', 'url']) || '',
+    photos,
+    photo: photos[0] || '',
+    source: _pick(row, ['Источник', 'source']) || '',
+    _editedAt: _pick(row, ['ПоследнееИзменение', '_editedAt']) || '',
+    _editedBy: _pick(row, ['КтоИзменил', '_editedBy']) || '',
+  };
+}
+
+function _attachFinance(objects, financeRows) {
+  const byId = {};
+  financeRows.forEach(row => {
+    const id = _pick(row, ['IDОбъекта', 'ID', 'id']);
+    const year = Number(_pick(row, ['Год', 'year']));
+    const value = _num(_pick(row, ['Выручка', 'revenue', 'value']));
+    if (!id || !year || value === null) return;
+    if (!byId[id]) byId[id] = [];
+    byId[id].push({ year, v: value });
+  });
+  objects.forEach(o => {
+    const hist = (byId[o.id] || []).sort((a, b) => a.year - b.year);
+    if (!hist.length) return;
+    o.revHist = hist;
+    const last = hist[hist.length - 1];
+    o.revenue = `${last.v.toLocaleString('ru-RU')} млн ₽/год`;
+  });
+  window.DV_FINANCE = byId;
+}
+
+window._applyLocalEdits = () => {
+  const edits = window._getLocalEdits ? window._getLocalEdits() : {};
+  window.DV_DATA.objects.forEach(obj => {
+    const patch = edits[obj.id];
+    if (patch) Object.assign(obj, patch);
+  });
+};
+
+window._loadRemoteData = async () => {
+  window.DV_REMOTE.status = 'loading';
+  try {
+    const [objectsText, financeText] = await Promise.all([
+      fetch(window.DV_REMOTE.objectsCsv, { cache: 'no-store' }).then(r => {
+        if (!r.ok) throw new Error(`objects CSV: ${r.status}`);
+        return r.text();
+      }),
+      fetch(window.DV_REMOTE.financeCsv, { cache: 'no-store' }).then(r => {
+        if (!r.ok) throw new Error(`finance CSV: ${r.status}`);
+        return r.text();
+      }),
+    ]);
+    const objects = _parseCSV(objectsText).map(_mapObjectRow).filter(o => o.id && o.name);
+    const financeRows = _parseCSV(financeText);
+    _attachFinance(objects, financeRows);
+    if (objects.length) {
+      window.DV_DATA.objects = objects;
+      window.DV_DATA.cities = [...new Set(objects.map(o => o.city).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'ru'));
+      window._applyLocalEdits();
+      window.DV_REMOTE.status = 'ready';
+      window.DV_REMOTE.loadedAt = new Date().toISOString();
+      window.DV_REMOTE.error = null;
+      window.dispatchEvent(new CustomEvent('dv:data-ready', { detail: { objects: objects.length } }));
+    }
+  } catch (err) {
+    console.warn('[Дом вдали] Не удалось загрузить CSV, используются встроенные данные:', err);
+    window.DV_REMOTE.status = 'fallback';
+    window.DV_REMOTE.error = String(err && err.message || err);
+    window.dispatchEvent(new CustomEvent('dv:data-ready', { detail: { fallback: true } }));
+  }
+};
+
+// ============================================
+// АДМИН-ДОСТУП — простой пароль, без базы данных
+// ============================================
+const ADMIN_PASSWORD = 'domvdali2026'; // ← можно сменить
+const ADMIN_KEY = 'dv_admin_ok';
+const ADMIN_NAME_KEY = 'dv_admin_name';
+
+window._isAdmin = () => localStorage.getItem(ADMIN_KEY) === 'yes';
+window._adminLogin = (pwd) => {
+  if (pwd === ADMIN_PASSWORD) {
+    localStorage.setItem(ADMIN_KEY, 'yes');
+    return true;
+  }
+  return false;
+};
+window._adminLogout = () => {
+  localStorage.removeItem(ADMIN_KEY);
+  localStorage.removeItem(ADMIN_NAME_KEY); // на случай общего устройства — следующий человек укажет своё имя
+};
+
+// Имя редактора — только подпись "кто правил", без проверки личности (пароль общий на всех).
+window._getAdminName = () => localStorage.getItem(ADMIN_NAME_KEY) || '';
+window._setAdminName = (name) => {
+  const trimmed = (name || '').trim();
+  if (trimmed) localStorage.setItem(ADMIN_NAME_KEY, trimmed);
+  return trimmed;
+};
+
+// ============================================
+// ЛОКАЛЬНЫЕ ПРАВКИ — без базы данных
+// Правки сохраняются в localStorage этого браузера и накладываются на объекты при загрузке.
+// Важно: это НЕ общее хранилище — правки видны только на этом устройстве,
+// другие админы и посетители сайта их не увидят, пока вы не перенесёте их в данные вручную.
+// ============================================
+const LOCAL_EDITS_KEY = 'dv_local_edits';
+
+window._getLocalEdits = () => {
+  try { return JSON.parse(localStorage.getItem(LOCAL_EDITS_KEY) || '{}'); }
+  catch (e) { return {}; }
+};
+window._saveLocalEdit = (id, patch) => {
+  const all = window._getLocalEdits();
+  all[id] = {
+    ...(all[id] || {}),
+    ...patch,
+    _editedAt: new Date().toISOString(),
+    _editedBy: window._getAdminName() || null,
+  };
+  localStorage.setItem(LOCAL_EDITS_KEY, JSON.stringify(all));
+  return all[id];
+};
+
+// Накладываем сохранённые локальные правки на исходные данные при старте
+window._applyLocalEdits();
+window._loadRemoteData();
+
+// ============================================
+// «СОХРАНЁННОЕ» — для обычных посетителей, без логина и личного кабинета
+// Просто список id объектов в localStorage этого браузера.
+// ============================================
+const SAVED_KEY = 'dv_saved_objects';
+
+window._getSavedIds = () => {
+  try { return JSON.parse(localStorage.getItem(SAVED_KEY) || '[]'); }
+  catch (e) { return []; }
+};
+window._isSaved = (id) => window._getSavedIds().includes(id);
+window._toggleSaved = (id) => {
+  const ids = window._getSavedIds();
+  const i = ids.indexOf(id);
+  if (i === -1) ids.push(id); else ids.splice(i, 1);
+  localStorage.setItem(SAVED_KEY, JSON.stringify(ids));
+  window.dispatchEvent(new Event('dv:saved-changed')); // чтобы счётчик и список обновились в других местах страницы
+  return ids;
 };
 
   </script>
@@ -1637,16 +2046,66 @@ function StatusBadge({ s }) {
   return <span className={`badge ${def.cls}`}>{def.label}</span>;
 }
 
-/* ── Photo placeholder (varies by id) ───── */
-function Photo({ obj, ratio = '3 / 2', label, fill }) {
-  // Vary stripe color subtly by object id hash
+/* ── Photo: real cover image (same for every object for now), falls back to a generated placeholder ── */
+const COVER_PHOTO_SRC = (window.__resources && window.__resources.coverPhoto) || 'assets/cover.png';
+
+function Photo({ obj, ratio = '3 / 2', label, fill, variant = 'pattern' }) {
+  const [imgFailed, setImgFailed] = useState(false);
+  // Vary stripe color subtly by object id hash (used only by the fallback placeholder below)
   const h = (obj?.id || 'x').split('').reduce((a, c) => a + c.charCodeAt(0), 0) % 360;
-  const tint = `oklch(0.86 0.025 ${h})`;
-  const tint2 = `oklch(0.78 0.035 ${h})`;
   const TI = TYPE_ICONS[obj?.type] || 'building';
   const sizeStyle = fill || ratio === 'auto' ?
   { width: '100%', height: '100%' } :
   { aspectRatio: ratio };
+
+  const photoSrc = obj?.photo ? window._driveThumb(obj.photo) : (obj?.photos && obj.photos[0] ? window._driveThumb(obj.photos[0]) : COVER_PHOTO_SRC);
+
+  if (!imgFailed) {
+    return (
+      <div className="ph-img ph-img--photo" style={{ ...sizeStyle, position: 'relative', overflow: 'hidden' }}>
+        <img
+          src={photoSrc}
+          alt={obj?.name || 'Фото объекта'}
+          loading="lazy"
+          onError={() => setImgFailed(true)}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+        {label &&
+        <span style={{
+          position: 'absolute', top: 8, left: 8,
+          background: 'rgba(255,255,255,.9)', borderRadius: 'var(--r)',
+          padding: '4px 10px', fontFamily: 'var(--f-mono)', fontSize: 10,
+          letterSpacing: '.06em', color: 'var(--ink-2)',
+        }}>{label}</span>}
+      </div>);
+
+  }
+
+  if (variant === 'gradient') {
+    // Test variant: smoother two-tone diagonal gradient, no hatch texture, softer medallion icon
+    const tint = `oklch(0.82 0.05 ${h})`;
+    const tint2 = `oklch(0.62 0.07 ${(h + 28) % 360})`;
+    return (
+      <div className="ph-img ph-img--gradient" style={{
+        ...sizeStyle,
+        background: `linear-gradient(135deg, ${tint}, ${tint2})`
+      }}>
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'radial-gradient(120% 90% at 30% 20%, rgba(255,255,255,.22), transparent 60%)'
+        }} />
+        <div style={{
+          position: 'relative', width: 44, height: 44, borderRadius: '50%',
+          background: 'rgba(255,255,255,.22)', border: '1px solid rgba(255,255,255,.35)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,.92)',
+        }}>
+          <I name={TI} className="ic-sm" />
+        </div>
+      </div>);
+
+  }
+
+  const tint = `oklch(0.86 0.025 ${h})`;
+  const tint2 = `oklch(0.78 0.035 ${h})`;
   return (
     <div className="ph-img" style={{
       ...sizeStyle,
@@ -1667,6 +2126,14 @@ function Photo({ obj, ratio = '3 / 2', label, fill }) {
 /* ── Object Card (right column / grid) ──── */
 function ObjectCard({ obj, onOpen, highlighted, onHover }) {
   const type = window.DV_DATA.types[obj.type]?.label || 'Объект';
+  const [saved, setSaved] = useState(() => window._isSaved(obj.id));
+
+  const toggleSaved = (e) => {
+    e.stopPropagation();
+    window._toggleSaved(obj.id);
+    setSaved(window._isSaved(obj.id));
+  };
+
   return (
     <article
       className={`estate-card${highlighted ? ' is-hl' : ''}`}
@@ -1674,8 +2141,11 @@ function ObjectCard({ obj, onOpen, highlighted, onHover }) {
       onMouseEnter={() => onHover && onHover(obj.id)}
       onMouseLeave={() => onHover && onHover(null)}>
       <div className="estate-card-media">
-        <Photo obj={obj} fill />
+        <Photo obj={obj} fill variant="gradient" />
         <div className="estate-card-scrim" />
+        <button className="estate-card-save" onClick={toggleSaved} aria-label={saved ? 'Убрать из сохранённого' : 'Сохранить'}>
+          <I name="heart" className="ic-sm" fill={saved ? 'var(--accent)' : 'none'} stroke={saved ? 'var(--accent)' : 'var(--ink)'}/>
+        </button>
         <div className="estate-card-tag">
           <Tag t={obj.type} />
         </div>
@@ -1768,7 +2238,7 @@ function RegionPicker({ filters, setFilters }) {
 
 }
 
-function MoreFilters({ filters, setFilters }) {
+function MoreFilters({ filters, setFilters, label = 'Ещё' }) {
   const P = window.DV_DATA.periods;
   const S = window.DV_DATA.statuses;
   const [open, setOpen] = useState(false);
@@ -1783,7 +2253,7 @@ function MoreFilters({ filters, setFilters }) {
     <div style={{ position: 'relative' }}>
       <button type="button" className="more-btn" onClick={() => setOpen((o) => !o)}>
         <I name="filter" className="ic-sm" />
-        Ещё{activeMore > 0 ? ` · ${activeMore}` : ''}
+        {label}{activeMore > 0 ? ` · ${activeMore}` : ''}
       </button>
       {open &&
       <div className="more-pop" onMouseLeave={() => setOpen(false)}>
@@ -1844,10 +2314,10 @@ function FilterBar({ filters, setFilters, count, onReset }) {
         {/* Region + city */}
         <RegionPicker filters={filters} setFilters={setFilters} />
 
-        <div style={{ flex: 1 }} />
+        {/* Period & status — now right next to the other filters, not stranded on the far right */}
+        <MoreFilters filters={filters} setFilters={setFilters} label="Больше фильтров" />
 
-        {/* Period & status — tucked away */}
-        <MoreFilters filters={filters} setFilters={setFilters} />
+        <div style={{ flex: 1 }} />
       </div>
     </div>);
 
@@ -2025,6 +2495,8 @@ function Catalog({ onOpen, viewMode, setViewMode }) {
   const [hoverId, setHoverId] = useState(null);
   const PAGE = 12;
   const [shown, setShown] = useState(PAGE);
+  const mapSectionRef = useRef(null);
+  const [pastMap, setPastMap] = useState(false);
 
   const filtered = useMemo(() => {
     let xs = D.objects.slice();
@@ -2042,7 +2514,27 @@ function Catalog({ onOpen, viewMode, setViewMode }) {
   // reset pagination when the result set changes
   useEffect(() => { setShown(PAGE); }, [filtered.length, filters]);
 
+  // track scroll position to switch the floating hint between "jump to map" and "back to top"
+  useEffect(() => {
+    const onScroll = () => {
+      const el = mapSectionRef.current;
+      if (!el) return;
+      const top = el.getBoundingClientRect().top;
+      setPastMap(top <= window.innerHeight * 0.4);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [filtered.length]);
+
   const visible = filtered.slice(0, shown);
+
+  const jumpToMap = () => {
+    mapSectionRef.current && mapSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+  const jumpToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <div>
@@ -2076,21 +2568,61 @@ function Catalog({ onOpen, viewMode, setViewMode }) {
       </div>
 
       {/* Flat map below */}
-      <div className="catalog-map-section">
+      <div className="catalog-map-section" ref={mapSectionRef}>
         <div className="catalog-map-head">
         </div>
         <div className="catalog-map-frame">
           <MapPane objects={filtered} hoverId={hoverId} setHoverId={setHoverId} onOpen={onOpen} />
         </div>
       </div>
+
+      {/* Desktop-only hint: jump to the map below, or back up once you're there */}
+      <button
+        type="button"
+        className="desktop-map-jump-btn"
+        onClick={pastMap ? jumpToTop : jumpToMap}>
+        <I name={pastMap ? 'arrow-up' : 'chevron-down'} className="ic-sm" />
+        {pastMap ? 'Наверх' : 'Карта объектов'}
+      </button>
     </div>);
 
 }
 
 function revNum(r) {if (!r || r === '—') return 0;const m = r.match(/([\d.]+)\s*(млн|млрд)/);if (!m) return 0;return parseFloat(m[1]) * (m[2] === 'млрд' ? 1000 : 1);}
 
+/* ── «Сохранённое» — для всех посетителей, без логина и личного кабинета ──
+   Список id хранится в localStorage этого браузера (см. window._getSavedIds). */
+function SavedTab({ onOpen }) {
+  const [ids, setIds] = useState(() => window._getSavedIds());
+
+  useEffect(() => {
+    const onChange = () => setIds(window._getSavedIds());
+    window.addEventListener('dv:saved-changed', onChange);
+    return () => window.removeEventListener('dv:saved-changed', onChange);
+  }, []);
+
+  const savedObjects = window.DV_DATA.objects.filter(o => ids.includes(o.id));
+
+  return (
+    <div className="catalog-grid-wrap">
+      <div className="eyebrow catalog-count" style={{marginBottom:22}}>
+        Сохранено · {savedObjects.length}
+      </div>
+      {savedObjects.length === 0 ?
+      <div style={{ textAlign:'center', padding:'64px 12px', color:'var(--ink-3)', fontFamily:'var(--f-serif)', fontSize:17 }}>
+        Пока ничего не сохранено — нажмите на сердечко у объекта, чтобы он появился здесь.
+      </div> :
+      <div className="estate-grid">
+        {savedObjects.map(o =>
+        <ObjectCard key={o.id} obj={o} onOpen={onOpen}/>
+        )}
+      </div>}
+    </div>
+  );
+}
+
 Object.assign(window, {
-  Catalog, ObjectCard, Tag, StatusBadge, Photo,
+  Catalog, ObjectCard, SavedTab, Tag, StatusBadge, Photo,
   FilterChip, RegionPicker, MoreFilters, FilterBar
 });
   </script>
@@ -2100,29 +2632,22 @@ Object.assign(window, {
    ============================================ */
 /* eslint-disable */
 
-function RevenueChart({ years }) {
-  const max = Math.max(...years.map(y=>y.v));
+function FinanceTable({ years }) {
   return (
-    <div style={{display:'flex', alignItems:'flex-end', gap:14, height:140, padding:'8px 0'}}>
+    <div style={{borderTop:'1px solid var(--rule)'}}>
       {years.map((y, i) => {
-        const h = (y.v / max) * 100;
         const isLast = i === years.length - 1;
         return (
-          <div key={y.year} style={{flex:1, display:'flex', flexDirection:'column', alignItems:'center', gap:8, position:'relative'}}>
-            <div className="mono" style={{fontSize:11, color:'var(--ink-2)'}}>
-              {y.v.toLocaleString('ru-RU')}
-            </div>
-            <div style={{
-              width:'100%', maxWidth:48,
-              height:`${h}%`,
-              background: isLast ? 'var(--accent)' : 'var(--ink)',
-              borderRadius:'2px 2px 0 0',
-              minHeight:4,
-              transition:'height .4s ease',
-            }}/>
-            <div className="mono" style={{fontSize:11, color:'var(--ink-3)', letterSpacing:'.04em'}}>
+          <div key={y.year} style={{
+            display:'flex', alignItems:'baseline', justifyContent:'space-between',
+            padding:'12px 2px', borderBottom:'1px solid var(--rule)',
+          }}>
+            <span className="mono" style={{fontSize:13, color: isLast ? 'var(--ink)' : 'var(--ink-3)', letterSpacing:'.04em'}}>
               {y.year}
-            </div>
+            </span>
+            <span className="mono" style={{fontSize:15, fontWeight: isLast ? 600 : 400, color: isLast ? 'var(--accent)' : 'var(--ink-2)'}}>
+              {y.v.toLocaleString('ru-RU')} млн ₽
+            </span>
           </div>
         );
       })}
@@ -2143,19 +2668,17 @@ function RatingScale({ value }) {
   );
 }
 
-/* Revenue history — реальные данные из Supabase если есть, иначе null */
+/* revenue history: реальные строки из листа «Финансы», fallback — старая имитация */
 function getRevenueHistory(obj){
-  const r22 = parseFloat(obj.revenue_2022);
-  const r23 = parseFloat(obj.revenue_2023);
-  if (!isNaN(r22) && !isNaN(r23) && r22 > 0 && r23 > 0) {
-    return [
-      { year: 2022, v: r22 },
-      { year: 2023, v: r23 },
-    ];
-  }
-  if (!isNaN(r23) && r23 > 0) return [{ year: 2023, v: r23 }];
-  if (!isNaN(r22) && r22 > 0) return [{ year: 2022, v: r22 }];
-  return null;
+  if (obj?.revHist && obj.revHist.length) return obj.revHist;
+  const seed = obj.id.split('').reduce((a,c)=>a+c.charCodeAt(0),0);
+  const base = revBase(obj.revenue);
+  if (!base) return null;
+  return [2021,2022,2023,2024,2025].map((y,i)=>{
+    const noise = ((seed * (i+1)) % 23) / 100 - 0.1;
+    const trend = 1 + i*0.07 + noise;
+    return { year:y, v: Math.round(base * trend / (1 + 4*0.07)) };
+  });
 }
 function revBase(r){
   if (!r || r === '—') return 0;
@@ -2190,31 +2713,34 @@ const HIST = {
 function DetailBody({ obj, onClose }) {
   const T = window.DV_DATA.types[obj.type];
   const revHist = getRevenueHistory(obj);
-  const delta = obj.revenue_growth
-    ? parseFloat(obj.revenue_growth)
-    : (revHist && revHist.length === 2)
-      ? Math.round(((revHist[1].v - revHist[0].v) / revHist[0].v) * 100)
-      : null;
+  const delta = (revHist && revHist.length >= 2) ?
+    Math.round(((revHist[revHist.length - 1].v - revHist[revHist.length - 2].v) / revHist[revHist.length - 2].v) * 100) :
+    null;
   const [tab, setTab] = useState('building');
-  const [saved, setSaved] = useState(false);
-  const tabs = [['building', 'Здание'], ['business', 'Бизнес'], ...(revHist ? [['finance', 'Финансы']] : [])];
+  const [saved, setSaved] = useState(() => window._isSaved(obj.id));
+  const [lightboxIndex, setLightboxIndex] = useState(null);
+  const tabs = [['building', 'Здание'], ['business', 'Бизнес'], ['finance', 'Финансы']];
   const activeTab = tabs.some(([k]) => k === tab) ? tab : 'building';
+  // Labels for the 5 hero tiles — all point at the same cover photo for now (see Photo component),
+  // but the gallery/lightbox is already wired up for when real per-object photos exist.
+  const galleryLabels = ['PRIMARY', 'INTERIOR', 'FACADE', 'DETAIL', 'ARCHIVE'];
 
-  // Редактирование
+  // ── Редактирование (локально, без базы данных) ──
+  // Правки сохраняются прямо в объект в памяти + в localStorage (см. window._saveLocalEdit).
+  // Это НЕ общее хранилище: правки видны только в этом браузере.
   const isAdmin = window._isAdmin();
   const [editing, setEditing] = useState(false);
   const [editData, setEditData] = useState({});
-  const [saving, setSaving] = useState(false);
   const [saveMsg, setSaveMsg] = useState('');
 
   const startEdit = () => {
     setEditData({
-      name:    obj.name    || '',
-      city:    obj.city    || '',
-      address: obj.addr    || '',
-      built:   obj.built   || '',
-      url:     obj.url     || '',
-      group_name: obj.group !== '—' ? (obj.group || '') : '',
+      name:  obj.name  || '',
+      city:  obj.city  || '',
+      addr:  obj.addr  || '',
+      built: obj.built || '',
+      url:   obj.url   || '',
+      group: obj.group !== '—' ? (obj.group || '') : '',
     });
     setEditing(true);
     setSaveMsg('');
@@ -2222,47 +2748,30 @@ function DetailBody({ obj, onClose }) {
 
   const cancelEdit = () => { setEditing(false); setSaveMsg(''); };
 
-  const saveEdit = async () => {
-    setSaving(true);
-    setSaveMsg('');
-    const { error } = await window._sb
-      .from('objects')
-      .update({
-        name:       editData.name,
-        city:       editData.city,
-        address:    editData.address,
-        built:      editData.built,
-        url:        editData.url,
-        group_name: editData.group_name,
-        updated_at: new Date().toISOString(),
-      })
-      .eq('id', obj.id);
+  const saveEdit = () => {
+    const patch = {
+      name:  editData.name,
+      city:  editData.city,
+      addr:  editData.addr,
+      built: editData.built,
+      url:   editData.url,
+      group: editData.group || '—',
+    };
+    const saved = window._saveLocalEdit(obj.id, patch); // патч + _editedAt/_editedBy
 
-    if (error) {
-      setSaveMsg('Ошибка сохранения: ' + error.message);
-    } else {
-      // Обновляем данные локально
-      Object.assign(obj, {
-        name:  editData.name,
-        city:  editData.city,
-        addr:  editData.address,
-        built: editData.built,
-        url:   editData.url,
-        group: editData.group_name || '—',
-      });
-      // Обновляем в массиве DV_DATA
-      const idx = window.DV_DATA.objects.findIndex(o => o.id === obj.id);
-      if (idx !== -1) Object.assign(window.DV_DATA.objects[idx], obj);
-      setSaveMsg('✓ Сохранено');
-      setEditing(false);
-      if (window._reactRefresh) window._reactRefresh();
-    }
-    setSaving(false);
+    // Обновляем объект в памяти, чтобы карточка и каталог сразу показали новые данные
+    Object.assign(obj, patch, { _editedAt: saved._editedAt, _editedBy: saved._editedBy });
+    const idx = window.DV_DATA.objects.findIndex(o => o.id === obj.id);
+    if (idx !== -1) Object.assign(window.DV_DATA.objects[idx], obj);
+
+    setSaveMsg('✓ Сохранено в этом браузере');
+    setEditing(false);
   };
 
-  const F = ({ label, field, multiline }) => (
+  // bare=true — не рисовать собственную колонку-подпись (нужно для строк, где подпись уже стоит снаружи)
+  const F = ({ label, field, multiline, bare }) => (
     <>
-      <span className="eyebrow" style={{paddingTop:2}}>{label}</span>
+      {!bare && <span className="eyebrow" style={{paddingTop:2}}>{label}</span>}
       {multiline ? (
         <textarea
           value={editData[field] || ''}
@@ -2292,14 +2801,25 @@ function DetailBody({ obj, onClose }) {
     <div>
       {/* HERO */}
       <div className="detail-hero" style={{display:'grid', gridTemplateColumns:'2fr 1fr 1fr', gridTemplateRows:'160px 160px', gap:6, height: 326}}>
-        <div style={{gridRow:'1 / 3', position:'relative'}}>
+        <div className="detail-hero-tile" style={{gridRow:'1 / 3', position:'relative'}} onClick={()=>setLightboxIndex(0)}>
           <Photo obj={obj} fill label="PRIMARY"/>
+          <span className="hero-tile-hint"><I name="search" className="ic-sm"/></span>
         </div>
-        <div><Photo obj={{...obj, id: obj.id + '_2'}} fill label="INTERIOR"/></div>
-        <div><Photo obj={{...obj, id: obj.id + '_3'}} fill label="FACADE"/></div>
-        <div><Photo obj={{...obj, id: obj.id + '_4'}} fill label="DETAIL"/></div>
-        <div style={{position:'relative'}}>
+        <div className="detail-hero-tile" style={{position:'relative'}} onClick={()=>setLightboxIndex(1)}>
+          <Photo obj={{...obj, id: obj.id + '_2'}} fill label="INTERIOR"/>
+          <span className="hero-tile-hint"><I name="search" className="ic-sm"/></span>
+        </div>
+        <div className="detail-hero-tile" style={{position:'relative'}} onClick={()=>setLightboxIndex(2)}>
+          <Photo obj={{...obj, id: obj.id + '_3'}} fill label="FACADE"/>
+          <span className="hero-tile-hint"><I name="search" className="ic-sm"/></span>
+        </div>
+        <div className="detail-hero-tile" style={{position:'relative'}} onClick={()=>setLightboxIndex(3)}>
+          <Photo obj={{...obj, id: obj.id + '_4'}} fill label="DETAIL"/>
+          <span className="hero-tile-hint"><I name="search" className="ic-sm"/></span>
+        </div>
+        <div className="detail-hero-tile" style={{position:'relative'}} onClick={()=>setLightboxIndex(4)}>
           <Photo obj={{...obj, id: obj.id + '_5'}} fill label="ARCHIVE"/>
+          <span className="hero-tile-hint"><I name="search" className="ic-sm"/></span>
           <div style={{
             position:'absolute', right:8, bottom:8,
             background:'rgba(255,255,255,.9)',
@@ -2333,41 +2853,37 @@ function DetailBody({ obj, onClose }) {
           </div>
         </div>
         <div style={{display:'flex', gap:10}}>
-          <button className="btn btn-ghost btn-sm" onClick={()=>setSaved(s=>!s)}>
+          <button className="btn btn-ghost btn-sm" onClick={()=>{window._toggleSaved(obj.id); setSaved(window._isSaved(obj.id));}}>
             <I name="heart" className="ic-sm" fill={saved ? 'var(--accent)' : 'none'} stroke={saved ? 'var(--accent)' : 'currentColor'}/>
             {saved ? 'Сохранено' : 'Сохранить'}
           </button>
           <button className="btn btn-ghost btn-sm"><I name="share" className="ic-sm"/>Поделиться</button>
-          {isAdmin && !editing && (
-            <button className="btn btn-ghost btn-sm" onClick={startEdit} style={{borderColor:'var(--accent)', color:'var(--accent)'}}>
-              <I name="edit" className="ic-sm"/>Редактировать
-            </button>
-          )}
-          {isAdmin && editing && (
-            <>
-              <button className="btn btn-primary btn-sm" onClick={saveEdit} disabled={saving}>
-                {saving ? 'Сохранение...' : '✓ Сохранить'}
-              </button>
-              <button className="btn btn-ghost btn-sm" onClick={cancelEdit}>Отмена</button>
-            </>
-          )}
-          {saveMsg && <span style={{fontSize:13, color:'var(--st-ok)', alignSelf:'center'}}>{saveMsg}</span>}
+          {isAdmin && !editing &&
+          <button className="btn btn-ghost btn-sm" onClick={startEdit}>
+            <I name="edit" className="ic-sm"/>Редактировать
+          </button>}
+          {isAdmin && editing &&
+          <>
+            <button className="btn btn-primary btn-sm" onClick={saveEdit}>✓ Сохранить</button>
+            <button className="btn btn-ghost btn-sm" onClick={cancelEdit}>Отмена</button>
+          </>}
         </div>
       </div>
 
+      {saveMsg &&
+      <div style={{
+        margin:'14px 32px 0', padding:'10px 16px', borderRadius:'var(--r-sm)',
+        background:'var(--st-ok-bg)', color:'var(--st-ok)', fontSize:13,
+      }}>
+        {saveMsg}
+      </div>}
+
       {/* TABS */}
-      <div className="detail-tabs-bar" style={{padding:'24px 32px 0', borderBottom:'1px solid var(--rule)', display:'flex', gap:24, marginTop:24}}>
+      <div className="detail-tabs-bar" style={{padding:'24px 32px 14px', borderBottom:'1px solid var(--rule)', display:'flex', gap:8, marginTop:24}}>
         {tabs.map(([k,l])=>(
           <button key={k}
-            onClick={()=>setTab(k)}
-            style={{
-              background:'none', border:'none', padding:'10px 0',
-              fontSize:14, color: activeTab===k ? 'var(--ink)' : 'var(--ink-3)',
-              borderBottom: `2px solid ${activeTab===k ? 'var(--accent)' : 'transparent'}`,
-              cursor:'pointer',
-              transition:'all .15s',
-              marginBottom:-1,
-            }}>{l}</button>
+            className={`detail-tab-btn${activeTab===k ? ' is-active' : ''}`}
+            onClick={()=>setTab(k)}>{l}</button>
         ))}
       </div>
 
@@ -2381,9 +2897,8 @@ function DetailBody({ obj, onClose }) {
             <SectionHeader icon="building" title="Об историческом здании"/>
             <div style={{display:'grid', gridTemplateColumns:'auto 1fr', gap:'14px 24px', marginTop:18, fontSize:14}}>
               <span className="eyebrow" style={{paddingTop:2}}>Период</span>
-              {editing ? <F label="" field="built"/> :
-                <span><strong className="serif" style={{fontWeight:500, fontSize:16}}>{obj.built}</strong>{obj.year && <span style={{color:'var(--ink-2)', marginLeft:8}}>· {labelForPeriod(obj.period)}</span>}</span>
-              }
+              {editing ? <F label="" field="built" bare/> :
+              <span><strong className="serif" style={{fontWeight:500, fontSize:16}}>{obj.built}</strong>{obj.year && <span style={{color:'var(--ink-2)', marginLeft:8}}>· {labelForPeriod(obj.period)}</span>}</span>}
 
               <span className="eyebrow" style={{paddingTop:2}}>Статус</span>
               <span style={{display:'flex', alignItems:'center', gap:10}}>
@@ -2403,13 +2918,12 @@ function DetailBody({ obj, onClose }) {
           <section>
             <SectionHeader icon={TYPE_ICONS[obj.type]} title="О бизнесе"/>
             <div style={{display:'grid', gridTemplateColumns:'auto 1fr', gap:'14px 24px', marginTop:18, fontSize:14}}>
-
               {editing ? (
                 <>
                   <F label="Название" field="name"/>
                   <F label="Город" field="city"/>
-                  <F label="Адрес" field="address"/>
-                  <F label="Группа компаний" field="group_name"/>
+                  <F label="Адрес" field="addr"/>
+                  <F label="Группа компаний" field="group"/>
                   <F label="Сайт" field="url"/>
                 </>
               ) : (
@@ -2437,38 +2951,40 @@ function DetailBody({ obj, onClose }) {
           </section>}
 
           {/* FINANCE */}
-          {activeTab==='finance' && revHist && (
+          {activeTab==='finance' &&
             <section>
               <SectionHeader icon="arrow-up" title="Финансы"/>
               <div style={{marginTop:18}}>
-                <div style={{display:'flex', alignItems:'flex-end', gap:24, marginBottom:8}}>
-                  <div>
-                    <div className="eyebrow">Выручка по годам (млн ₽)</div>
-                  </div>
-                  <div style={{flex:1}}/>
-                  {delta !== null && (
+                {revHist && revHist.length ?
+                <>
+                  <div style={{display:'flex', alignItems:'flex-end', gap:24, marginBottom:8}}>
+                    <div>
+                      <div className="eyebrow">Выручка по годам (млн ₽)</div>
+                    </div>
+                    <div style={{flex:1}}/>
+                    {delta !== null &&
                     <div style={{
                       display:'inline-flex', alignItems:'center', gap:6,
                       fontFamily:'var(--f-mono)', fontSize:13,
                       color: delta >= 0 ? 'var(--st-ok)' : 'var(--st-rej)',
                     }}>
-                      <I name={delta >= 0 ? 'arrow-up' : 'arrow-up'} className="ic-sm" style={{transform: delta < 0 ? 'rotate(180deg)' : 'none'}}/>
-                      {delta >= 0 ? '+' : ''}{Math.round(delta)}% за год
-                    </div>
-                  )}
-                </div>
-                <div style={{borderTop:'1px solid var(--rule)', borderBottom:'1px solid var(--rule)', padding:'12px 0'}}>
-                  <RevenueChart years={revHist}/>
-                </div>
-                {obj.revenue_total && (
-                  <div style={{marginTop:16, display:'grid', gridTemplateColumns:'auto 1fr', gap:'10px 24px', fontSize:14}}>
-                    <span className="eyebrow" style={{paddingTop:2}}>Выручка за 2 года</span>
-                    <span className="mono" style={{fontSize:15}}>{obj.revenue_total} млн ₽</span>
+                      <I name="arrow-up" className="ic-sm" style={{transform: delta < 0 ? 'rotate(180deg)' : 'none'}}/>
+                      {delta >= 0 ? '+' : ''}{delta}% за год
+                    </div>}
                   </div>
-                )}
+                  <FinanceTable years={revHist}/>
+                </> :
+                <div style={{
+                  padding:'22px 20px', color:'var(--ink-2)',
+                  fontFamily:'var(--f-serif)', fontSize:14.5, lineHeight:1.65,
+                  background:'var(--bg-soft)', borderRadius:'var(--r)',
+                }}>
+                  На этой странице пока пусто, но мы работаем над её наполнением. Если вы готовы поделиться показателями своего проекта — свяжитесь с нами {' '}
+                  <a href="#feedback" style={{color:'var(--accent)', fontWeight:600, textDecoration:'underline', textDecorationColor:'var(--accent-soft)'}}>через форму обратной связи</a>.
+                </div>
+                }
               </div>
-            </section>
-          )}
+            </section>}
         </div>
 
         {/* RIGHT — meta sidebar */}
@@ -2477,9 +2993,9 @@ function DetailBody({ obj, onClose }) {
           <div>
             <div className="eyebrow" style={{marginBottom:14}}>Контакты</div>
             <div style={{display:'flex', flexDirection:'column', gap:10, fontSize:14}}>
-              <ContactRow icon="globe" label={`${obj.id}.example.ru`}/>
-              <ContactRow icon="phone" label={`+7 (495) 555-${(2000 + obj.year % 8000).toString().padStart(4,'0')}`}/>
-              <ContactRow icon="mail"  label={`info@${obj.id}.ru`}/>
+              {obj.url ?
+              <ContactRow icon="globe" label={obj.url.replace(/^https?:\/\//,'').replace(/\/$/,'')} href={obj.url}/> :
+              <ContactRow icon="globe" label="Ссылка пока не указана"/>}
             </div>
             <button className="btn btn-primary" style={{marginTop:18, width:'100%'}}>
               <I name="send" className="ic-sm"/>Связаться
@@ -2494,24 +3010,92 @@ function DetailBody({ obj, onClose }) {
               <span>КООРДИНАТЫ</span>
               <span style={{color:'var(--ink-2)'}}>{obj.lat.toFixed(4)}, {obj.lng.toFixed(4)}</span>
             </div>
-            <div style={{display:'flex', justifyContent:'space-between', marginBottom:8}}>
-              <span>ВНЕСЕНО</span>
-              <span style={{color:'var(--ink-2)'}}>14.02.2024</span>
-            </div>
-            <div style={{display:'flex', justifyContent:'space-between'}}>
+            <div style={{display:'flex', justifyContent:'space-between', marginBottom: isAdmin ? 8 : 0}}>
               <span>ОБНОВЛЕНО</span>
-              <span style={{color:'var(--ink-2)'}}>02.05.2026</span>
+              <span style={{color:'var(--ink-2)'}}>{formatDateTime(obj._editedAt) || '—'}</span>
             </div>
+            {isAdmin &&
+            <div style={{display:'flex', justifyContent:'space-between'}}>
+              <span>ПРАВИЛ(А)</span>
+              <span style={{color:'var(--ink-2)'}}>{obj._editedBy || '—'}</span>
+            </div>}
           </div>
         </aside>
       </div>
+
+      {lightboxIndex !== null &&
+      <PhotoLightbox
+        labels={galleryLabels}
+        index={lightboxIndex}
+        onClose={()=>setLightboxIndex(null)}
+        onIndexChange={setLightboxIndex}
+      />}
     </div>
   );
+}
+
+function formatDateTime(iso){
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return '';
+  const date = d.toLocaleDateString('ru-RU', { day:'2-digit', month:'2-digit', year:'numeric' });
+  const time = d.toLocaleTimeString('ru-RU', { hour:'2-digit', minute:'2-digit' });
+  return `${date}, ${time}`;
 }
 
 function labelForPeriod(id){
   const p = window.DV_DATA.periods.find(x=>x.id===id);
   return p ? p.label : '';
+}
+
+/* ── Lightbox: fullscreen photo viewer with prev/next ── */
+function PhotoLightbox({ labels, index, onClose, onIndexChange }) {
+  const total = labels.length;
+  const [imgFailed, setImgFailed] = useState(false);
+  const goPrev = () => { setImgFailed(false); onIndexChange((index - 1 + total) % total); };
+  const goNext = () => { setImgFailed(false); onIndexChange((index + 1) % total); };
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowLeft') goPrev();
+      if (e.key === 'ArrowRight') goNext();
+    };
+    window.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [index, total]);
+
+  return (
+    <div className="lightbox-overlay" onClick={onClose}>
+      <button className="lightbox-close" onClick={onClose} aria-label="Закрыть">
+        <I name="close" className="ic-sm"/>
+      </button>
+
+      {total > 1 &&
+      <button className="lightbox-nav lightbox-nav--prev" onClick={(e)=>{e.stopPropagation();goPrev();}} aria-label="Предыдущее фото">
+        <I name="chevron-left" className="ic-lg"/>
+      </button>}
+
+      <figure className="lightbox-figure" onClick={(e)=>e.stopPropagation()}>
+        {imgFailed ?
+        <div className="lightbox-fallback"><I name="camera" className="ic-lg"/><span>Фото скоро появится</span></div> :
+        <img src={COVER_PHOTO_SRC} alt={labels[index]} className="lightbox-img" onError={()=>setImgFailed(true)}/>}
+        <figcaption className="lightbox-caption">
+          <span>{labels[index]}</span>
+          {total > 1 && <span className="lightbox-counter">{index + 1} / {total}</span>}
+        </figcaption>
+      </figure>
+
+      {total > 1 &&
+      <button className="lightbox-nav lightbox-nav--next" onClick={(e)=>{e.stopPropagation();goNext();}} aria-label="Следующее фото">
+        <I name="chevron-right" className="ic-lg"/>
+      </button>}
+    </div>);
+
 }
 
 function SectionHeader({ eyebrow, title, icon }) {
@@ -2531,13 +3115,16 @@ function SectionHeader({ eyebrow, title, icon }) {
     </div>
   );
 }
-function ContactRow({ icon, label }) {
+function ContactRow({ icon, label, href }) {
+  const textStyle = {fontFamily:'var(--f-mono)', fontSize:13, color:'var(--ink-2)', overflowWrap:'anywhere', wordBreak:'break-word', minWidth:0};
   return (
     <div style={{display:'flex', alignItems:'center', gap:10, minWidth:0}}>
       <div style={{width:32, height:32, borderRadius:'50%', border:'1px solid var(--rule)', display:'flex', alignItems:'center', justifyContent:'center', color:'var(--ink-2)', flexShrink:0}}>
         <I name={icon} className="ic-sm"/>
       </div>
-      <span style={{fontFamily:'var(--f-mono)', fontSize:13, color:'var(--ink-2)', overflowWrap:'anywhere', wordBreak:'break-word', minWidth:0}}>{label}</span>
+      {href ?
+      <a href={href} target="_blank" rel="noopener" style={{...textStyle, color:'var(--accent)', textDecoration:'none', borderBottom:'1px dotted var(--accent-soft)'}}>{label}</a> :
+      <span style={textStyle}>{label}</span>}
     </div>
   );
 }
@@ -3606,23 +4193,36 @@ Object.assign(window, { DesignSystemPage });
    App shell — header, routing, mobile detect
    ============================================ */
 /* eslint-disable */
+const { useState, useEffect, useMemo, useRef, useCallback } = React;
 const { FilterChip, RegionPicker, MoreFilters } = window;
 
-// ============================================
-// ФОРМА ВХОДА ДЛЯ АДМИНА
-// ============================================
-// Форма ввода пароля для #admin
+// Форма входа в админку: пароль → (если имя ещё не сохранено на устройстве) имя
 function AdminLoginScreen({ onSuccess }) {
+  const [step, setStep] = useState(window._isAdmin() && !window._getAdminName() ? 'name' : 'password');
   const [pwd, setPwd] = useState('');
+  const [name, setName] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = () => {
+  const handlePasswordSubmit = () => {
     if (window._adminLogin(pwd)) {
-      onSuccess();
+      setError('');
+      if (window._getAdminName()) {
+        onSuccess();
+      } else {
+        setStep('name');
+      }
     } else {
       setError('Неверный пароль');
       setPwd('');
     }
+  };
+
+  const handleNameSubmit = () => {
+    if (!window._setAdminName(name)) {
+      setError('Введите имя');
+      return;
+    }
+    onSuccess();
   };
 
   return (
@@ -3634,40 +4234,83 @@ function AdminLoginScreen({ onSuccess }) {
         background:'#fff', borderRadius:12, padding:40, width:360,
         boxShadow:'0 4px 24px rgba(0,0,0,.10)',
       }}>
-        <h2 style={{margin:'0 0 8px', fontSize:22, fontWeight:500, color:'#031B25'}}>
-          Административная панель
-        </h2>
-        <p style={{margin:'0 0 28px', fontSize:14, color:'#6B7A87'}}>Дом вдали</p>
-        <div style={{display:'flex', flexDirection:'column', gap:14}}>
-          <div>
-            <div style={{fontSize:11, fontWeight:500, letterSpacing:'.08em', textTransform:'uppercase', color:'#6B7A87', marginBottom:6}}>Пароль</div>
-            <input
-              type="password"
-              value={pwd}
-              onChange={e => setPwd(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && handleSubmit()}
-              autoFocus
-              style={{
-                display:'block', width:'100%', boxSizing:'border-box',
-                padding:'10px 12px', border:'1px solid #C9D3DD',
-                borderRadius:6, fontSize:15, fontFamily:'inherit',
-                background:'#fff', color:'#031B25', outline:'none',
-              }}
-              placeholder="••••••••"
-            />
-          </div>
-          {error && <div style={{color:'#D94F3B', fontSize:13}}>{error}</div>}
-          <button
-            onClick={handleSubmit}
-            style={{
-              padding:'10px 0', background:'#031B25', color:'#fff',
-              border:'none', borderRadius:6, fontSize:14, fontFamily:'inherit',
-              cursor:'pointer', fontWeight:500,
-            }}
-          >
-            Войти
-          </button>
-        </div>
+        {step === 'password' ? (
+          <>
+            <h2 style={{margin:'0 0 8px', fontSize:22, fontWeight:500, color:'#031B25'}}>
+              Административная панель
+            </h2>
+            <p style={{margin:'0 0 28px', fontSize:14, color:'#6B7A87'}}>Дом вдали</p>
+            <div style={{display:'flex', flexDirection:'column', gap:14}}>
+              <div>
+                <div style={{fontSize:11, fontWeight:500, letterSpacing:'.08em', textTransform:'uppercase', color:'#6B7A87', marginBottom:6}}>Пароль</div>
+                <input
+                  type="password"
+                  value={pwd}
+                  onChange={e => setPwd(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && handlePasswordSubmit()}
+                  autoFocus
+                  style={{
+                    display:'block', width:'100%', boxSizing:'border-box',
+                    padding:'10px 12px', border:'1px solid #C9D3DD',
+                    borderRadius:6, fontSize:15, fontFamily:'inherit',
+                    background:'#fff', color:'#031B25', outline:'none',
+                  }}
+                  placeholder="••••••••"
+                />
+              </div>
+              {error && <div style={{color:'#D94F3B', fontSize:13}}>{error}</div>}
+              <button
+                onClick={handlePasswordSubmit}
+                style={{
+                  padding:'10px 0', background:'#031B25', color:'#fff',
+                  border:'none', borderRadius:6, fontSize:14, fontFamily:'inherit',
+                  cursor:'pointer', fontWeight:500,
+                }}
+              >
+                Войти
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <h2 style={{margin:'0 0 8px', fontSize:22, fontWeight:500, color:'#031B25'}}>
+              Как вас зовут?
+            </h2>
+            <p style={{margin:'0 0 28px', fontSize:14, color:'#6B7A87'}}>
+              Имя будет видно у правок — чтобы понимать, кто что поменял. Спросим только один раз на этом устройстве.
+            </p>
+            <div style={{display:'flex', flexDirection:'column', gap:14}}>
+              <div>
+                <div style={{fontSize:11, fontWeight:500, letterSpacing:'.08em', textTransform:'uppercase', color:'#6B7A87', marginBottom:6}}>Имя</div>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && handleNameSubmit()}
+                  autoFocus
+                  style={{
+                    display:'block', width:'100%', boxSizing:'border-box',
+                    padding:'10px 12px', border:'1px solid #C9D3DD',
+                    borderRadius:6, fontSize:15, fontFamily:'inherit',
+                    background:'#fff', color:'#031B25', outline:'none',
+                  }}
+                  placeholder="Например, Таня"
+                />
+              </div>
+              {error && <div style={{color:'#D94F3B', fontSize:13}}>{error}</div>}
+              <button
+                onClick={handleNameSubmit}
+                style={{
+                  padding:'10px 0', background:'#031B25', color:'#fff',
+                  border:'none', borderRadius:6, fontSize:14, fontFamily:'inherit',
+                  cursor:'pointer', fontWeight:500,
+                }}
+              >
+                Продолжить
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
@@ -3676,17 +4319,23 @@ function AdminLoginScreen({ onSuccess }) {
 function Header({ route, setRoute, onAdd, mobileMenuOpen, setMobileMenuOpen }) {
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
   const isAdmin = window._isAdmin();
+  const [savedCount, setSavedCount] = useState(() => window._getSavedIds().length);
+
+  useEffect(() => {
+    const onChange = () => setSavedCount(window._getSavedIds().length);
+    window.addEventListener('dv:saved-changed', onChange);
+    return () => window.removeEventListener('dv:saved-changed', onChange);
+  }, []);
 
   const handleLogout = () => {
     window._adminLogout();
     setRoute('catalog');
-    if (window._reactRefresh) window._reactRefresh();
   };
 
   return (
     <header className="hdr">
       <div className="hdr-inner" style={isMobile ? { padding: '0 16px', gap: 14 } : {}}>
-        <a className="brand" onClick={() => setRoute('catalog')} style={{ cursor: 'pointer' }}>
+        <a className="brand" href="https://dom.dal.team/" aria-label="Перейти на сайт ДАЛЬ" style={{ cursor: 'pointer' }}>
           <img src={(window.__resources && window.__resources.logoMain) || "assets/logo.svg"} alt="Дом вдали" style={{ height: 28, display: 'block' }} />
         </a>
 
@@ -3694,19 +4343,31 @@ function Header({ route, setRoute, onAdd, mobileMenuOpen, setMobileMenuOpen }) {
         <nav className="nav">
             <a onClick={() => setRoute('catalog')} className={route === 'catalog' ? 'is-active' : ''} style={{ cursor: 'pointer' }}>Каталог</a>
             <a onClick={onAdd} style={{ cursor: 'pointer' }}>Добавить объект</a>
-            {isAdmin && <a onClick={() => setRoute('admin')} className={route === 'admin' ? 'is-active' : ''} style={{ cursor: 'pointer' }}>Админ</a>}
+            {isAdmin &&
+            <a onClick={() => setRoute('admin')} className={route === 'admin' ? 'is-active' : ''} style={{ cursor: 'pointer' }}>Админ</a>}
           </nav>
         }
 
         <div className="hdr-right">
+          {!isMobile &&
+          <button
+            className="btn btn-ghost btn-sm"
+            onClick={() => setRoute('saved')}
+            style={{ position:'relative' }}
+            aria-label="Сохранённое">
+            <I name="heart" className="ic-sm" fill={route === 'saved' ? '#fff' : 'none'} stroke="#fff"/>
+            {savedCount > 0 &&
+            <span className="mono" style={{ fontSize:11, color:'#fff' }}>{savedCount}</span>}
+          </button>}
           <a href="https://t.me/domvdalybot" target="_blank" rel="noopener" className="btn btn-primary btn-sm" style={{ backgroundColor: "rgb(3, 27, 37)" }}>
             <I name="send" className="ic-sm" />Связаться с нами
           </a>
-          {isAdmin && (
-            <button className="btn btn-ghost btn-sm" onClick={handleLogout}>
-              <I name="user" className="ic-sm" />Выйти
-            </button>
-          )}
+          {isAdmin &&
+          <>
+            {window._getAdminName() &&
+            <span className="mono" style={{ fontSize: 12, color: 'var(--ink-3)' }}>{window._getAdminName()}</span>}
+            <button className="btn btn-ghost btn-sm" onClick={handleLogout}>Выйти</button>
+          </>}
           {isMobile &&
           <button className="btn btn-ghost btn-sm" style={{ padding: '0 8px' }} onClick={() => setMobileMenuOpen(true)}>
               <I name="menu" className="ic" />
@@ -3720,7 +4381,16 @@ function Header({ route, setRoute, onAdd, mobileMenuOpen, setMobileMenuOpen }) {
 
 function MobileMenu({ open, onClose, route, setRoute, onAdd }) {
   if (!open) return null;
+  const isAdmin = window._isAdmin();
+  const savedCount = window._getSavedIds().length;
   const go = (r) => {setRoute(r);onClose();};
+  const handleLogout = () => { window._adminLogout(); go('catalog'); };
+  const items = [
+    ['catalog', 'Каталог', 'list'],
+    ['add', 'Добавить объект', 'plus'],
+    ['saved', savedCount > 0 ? `Сохранённое · ${savedCount}` : 'Сохранённое', 'heart'],
+    ...(isAdmin ? [['admin', 'Админ', 'building']] : []),
+  ];
   return (
     <div style={{ position: 'fixed', inset: 0, zIndex: 9000, background: 'rgba(3,27,37,.32)', animation: 'fadeIn .15s' }} onClick={onClose}>
       <div style={{
@@ -3733,11 +4403,7 @@ function MobileMenu({ open, onClose, route, setRoute, onAdd }) {
           <button onClick={onClose} className="btn btn-quiet"><I name="close" /></button>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-          {[
-          ['catalog', 'Каталог', 'list'],
-          ['add', 'Добавить объект', 'plus'],
-          ...(window._isAdmin() ? [['admin', 'Админ', 'building']] : [])
-          ]. map(([r, l, ic]) =>
+          {items.map(([r, l, ic]) =>
           <button key={r}
           onClick={() => r === 'add' ? (onAdd(), onClose()) : go(r)}
           style={{
@@ -3751,6 +4417,17 @@ function MobileMenu({ open, onClose, route, setRoute, onAdd }) {
               <I name={ic} className="ic-sm" />{l}
             </button>
           )}
+          {isAdmin &&
+          <button onClick={handleLogout}
+          style={{
+            display: 'flex', alignItems: 'center', gap: 12,
+            padding: '14px 12px', background: 'none', border: 'none',
+            borderBottom: '1px solid var(--rule)',
+            cursor: 'pointer', textAlign: 'left',
+            color: 'var(--ink-3)', fontSize: 15
+          }}>
+            {window._getAdminName() ? `Выйти (${window._getAdminName()})` : 'Выйти'}
+          </button>}
         </div>
         <a href="https://t.me/domvdalybot" target="_blank" rel="noopener" className="btn btn-primary" style={{ marginTop: 24, width: '100%' }}>
           <I name="send" className="ic-sm" />Связаться с нами
@@ -3955,23 +4632,26 @@ function FilterGroup({ title, children }) {
    App root
    ============================================ */
 function App() {
+  const [dataVersion, setDataVersion] = useState(0);
+  useEffect(() => {
+    const onReady = () => setDataVersion(v => v + 1);
+    window.addEventListener('dv:data-ready', onReady);
+    return () => window.removeEventListener('dv:data-ready', onReady);
+  }, []);
+
   const [route, setRoute] = useState(() => {
     const h = location.hash.replace('#', '');
-    return ['catalog', 'admin', 'ds'].includes(h) ? h : 'catalog';
+    return ['catalog', 'admin', 'ds', 'saved'].includes(h) ? h : 'catalog';
   });
   const [openObj, setOpenObj] = useState(null);
   const [addOpen, setAddOpen] = useState(false);
   const [viewMode, setViewMode] = useState('split');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 768px)').matches);
-  const [dataVersion, setDataVersion] = useState(0);
-
-  // Загрузка данных из Supabase при старте
-  useEffect(() => {
-    window._reactRefresh = () => setDataVersion(v => v + 1);
-    window._loadObjectsFromSupabase && window._loadObjectsFromSupabase();
-    return () => { window._reactRefresh = null; };
-  }, []);
+  // No localStorage / cookies here on purpose — the intro is meant to show on every visit
+  const [introOpen, setIntroOpen] = useState(true);
+  // Бампается после входа/выхода из админки, чтобы перечитать window._isAdmin() и перерисовать страницу
+  const [authTick, setAuthTick] = useState(0);
 
   useEffect(() => {
     const onResize = () => setIsMobile(window.matchMedia('(max-width: 768px)').matches);
@@ -3981,31 +4661,67 @@ function App() {
 
   useEffect(() => {location.hash = route;}, [route]);
 
-  // Если пытаемся зайти в /admin без пароля — показываем экран входа
-  if (route === 'admin' && !window._isAdmin()) {
-    return <AdminLoginScreen onSuccess={() => setDataVersion(v => v + 1)} />;
-  }
-
   return (
     <div data-screen-label={`Дом вдали · ${route}`}>
-      <Header route={route} setRoute={setRoute}
+      {introOpen && <IntroOverlay onClose={() => setIntroOpen(false)} />}
+
+      <Header route={route} setRoute={(r)=>{setRoute(r);setAuthTick(t=>t+1);}}
       onAdd={() => setAddOpen(true)}
       mobileMenuOpen={mobileMenuOpen}
       setMobileMenuOpen={setMobileMenuOpen} />
 
       <MobileMenu open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)}
-      route={route} setRoute={setRoute} onAdd={() => setAddOpen(true)} />
+      route={route} setRoute={(r)=>{setRoute(r);setAuthTick(t=>t+1);}} onAdd={() => setAddOpen(true)} />
 
       {route === 'catalog' && (
       isMobile ?
       <MobileCatalog onOpen={setOpenObj} /> :
       <Catalog onOpen={setOpenObj} viewMode={viewMode} setViewMode={setViewMode} />)
       }
-      {route === 'admin' && <AdminPanel />}
+      {route === 'saved' && <SavedTab onOpen={setOpenObj}/>}
+      {route === 'admin' && (
+        window._isAdmin()
+          ? <AdminPanel/>
+          : <AdminLoginScreen onSuccess={()=>setAuthTick(t=>t+1)}/>
+      )}
       {route === 'ds' && <DesignSystemPage />}
 
       {openObj && <DetailModal obj={openObj} onClose={() => setOpenObj(null)} />}
       {addOpen && <AddObjectModal onClose={() => setAddOpen(false)} />}
+    </div>);
+
+}
+
+/* ── Intro overlay: shown on every visit, no localStorage/cookies ── */
+function IntroOverlay({ onClose }) {
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, []);
+
+  return (
+    <div className="intro-overlay" onClick={onClose}>
+      <div className="intro-card scroll-y" onClick={(e) => e.stopPropagation()}>
+        <button onClick={onClose} className="intro-close" aria-label="Закрыть">
+          <I name="close" className="ic-sm" />
+        </button>
+
+        <h2 className="h-title intro-title">Привет!</h2>
+
+        <div className="intro-body">
+          <p>Здесь мы собрали бизнесы — отели, рестораны, креативные кластеры и не только, которые работают в старинных домах по всей России. Мы — это команда агрегатора исторической недвижимости в продаже «Дом вдали». Своей миссией мы видим возвращение старинных домов в экономику, а для этого надо показывать успешные примеры.</p>
+          <p>Бизнесы мы отбираем сами, руководствуясь не только временем постройки здания, где они работают, но ещё и бережностью проекта по отношению к истории места, качеством продукта и уровнем сервиса. Вы можете предложить свой проект к публикации {' '}
+            <a href="#feedback" className="intro-link" onClick={(e) => e.stopPropagation()}>через форму обратной связи</a>.
+          </p>
+          <p>Используйте каталог, чтобы планировать путешествия по небанальным местам, выбирать самый красивый ресторан, или погрузиться в бизнес-аналитику (и эти показатели мы тоже даём!).</p>
+          <p className="intro-sign">Ваши,<br/>Дом вдали</p>
+        </div>
+      </div>
     </div>);
 
 }
