@@ -1817,14 +1817,16 @@ function _attachFinance(objects, financeRows) {
   const byId = {};
   financeRows.forEach(row => {
     const id = _pick(row, ['IDОбъекта', 'ID', 'id']);
-    const year = Number(_pick(row, ['Год', 'year']));
+    const yearRaw = _pick(row, ['Год', 'year']);
+    const year = Math.round(_num(yearRaw) || 0);
     const value = _num(_pick(row, ['Выручка', 'revenue', 'value']));
     if (!id || !year || value === null) return;
     if (!byId[id]) byId[id] = [];
-    byId[id].push({ year, v: value });
+    byId[id].push({ year, v: value, source: 'google-sheets' });
   });
   objects.forEach(o => {
     const hist = (byId[o.id] || []).sort((a, b) => a.year - b.year);
+    o._financeSource = hist.length ? 'google-sheets' : 'none';
     if (!hist.length) return;
     o.revHist = hist;
     const last = hist[hist.length - 1];
@@ -1857,6 +1859,15 @@ window._loadRemoteData = async () => {
     const objects = _parseCSV(objectsText).map(_mapObjectRow).filter(o => o.id && o.name);
     const financeRows = _parseCSV(financeText);
     _attachFinance(objects, financeRows);
+    window.DV_REMOTE.objectsCount = objects.length;
+    window.DV_REMOTE.financeRowsCount = financeRows.length;
+    window.DV_REMOTE.financeObjectsCount = Object.keys(window.DV_FINANCE || {}).length;
+    console.info('[Дом вдали] Google Sheets загружены:', {
+      objects: objects.length,
+      financeRows: financeRows.length,
+      financeObjects: Object.keys(window.DV_FINANCE || {}).length,
+      sampleFinance: window.DV_FINANCE && window.DV_FINANCE.o1
+    });
     if (objects.length) {
       window.DV_DATA.objects = objects;
       window.DV_DATA.cities = [...new Set(objects.map(o => o.city).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'ru'));
@@ -2668,17 +2679,12 @@ function RatingScale({ value }) {
   );
 }
 
-/* revenue history: реальные строки из листа «Финансы», fallback — старая имитация */
+/* revenue history: только реальные строки из листа «Финансы».
+   Если по объекту нет строк в Google Sheets, график не строим — так проще проверить,
+   что сайт не показывает сгенерированные или встроенные финансовые данные. */
 function getRevenueHistory(obj){
   if (obj?.revHist && obj.revHist.length) return obj.revHist;
-  const seed = obj.id.split('').reduce((a,c)=>a+c.charCodeAt(0),0);
-  const base = revBase(obj.revenue);
-  if (!base) return null;
-  return [2021,2022,2023,2024,2025].map((y,i)=>{
-    const noise = ((seed * (i+1)) % 23) / 100 - 0.1;
-    const trend = 1 + i*0.07 + noise;
-    return { year:y, v: Math.round(base * trend / (1 + 4*0.07)) };
-  });
+  return null;
 }
 function revBase(r){
   if (!r || r === '—') return 0;
