@@ -1764,8 +1764,6 @@ const I = ({ name, className = 'ic', stroke = 'currentColor', fill = 'none', str
     case 'upload':  return <svg {...props}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>;
     case 'filter':  return <svg {...props}><path d="M3 4h18l-7 9v6l-4 2v-8z"/></svg>;
     case 'star':    return <svg {...props}><path d="m12 3 2.7 5.7 6.3.9-4.5 4.4 1 6.3L12 17.3 6.5 20.3l1-6.3L3 9.6l6.3-.9z"/></svg>;
-    case 'cup':     return <svg {...props}><path d="M4 8h14v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8Z"/><path d="M18 9h2a3 3 0 0 1 0 6h-2M4 21h14"/></svg>;
-    case 'bed':     return <svg {...props}><path d="M3 18V8M3 14h18v4M21 18v-4a2 2 0 0 0-2-2H10v-2H3"/><circle cx="6" cy="10" r="1.5"/></svg>;
     case 'museum':  return <svg {...props}><path d="M3 21h18M3 10h18M12 3 3 8h18Z"/><path d="M6 10v11M10 10v11M14 10v11M18 10v11"/></svg>;
     case 'sparkles':return <svg {...props}><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.5 5.5l2.8 2.8M15.7 15.7l2.8 2.8M5.5 18.5l2.8-2.8M15.7 8.3l2.8-2.8"/></svg>;
     case 'shop':    return <svg {...props}><path d="M3 9 5 4h14l2 5M3 9v11h18V9M3 9h18M9 13h6"/></svg>;
@@ -2674,7 +2672,7 @@ function DetailBody({ obj, onClose }) {
       </div>
 
       <div style={{ padding:'0 32px 32px' }}>
-        <a href="https://t.me/domvdalybot" target="_blank" rel="noopener" className="btn btn-primary" style={{ width:'100%', justifyContent:'center' }}>
+        <a href="feedback.html" className="btn btn-primary" style={{ width:'100%', justifyContent:'center' }}>
           <I name="send" className="ic-sm"/>Связаться с нами
         </a>
       </div>
@@ -2743,7 +2741,6 @@ function PhotoLightbox({ labels, srcs, index, onClose, onIndexChange }) {
         <div className="lightbox-fallback"><I name="camera" className="ic-lg"/><span>Фото скоро появится</span></div> :
         <img src={currentSrc} alt={labels[index]} className="lightbox-img" onError={()=>setImgFailed(true)}/>}
         <figcaption className="lightbox-caption">
-          <span>{labels[index]}</span>
           {total > 1 && <span className="lightbox-counter">{index + 1} / {total}</span>}
         </figcaption>
       </figure>
@@ -3212,16 +3209,16 @@ function Step3({ data, set, errors }) {
       <div style={{marginTop:28}}>
         <div className="step3-2col" style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:24}}>
           <FormField label="Сайт">
-            <input className="input" placeholder="https://"
+            <input className="input" autoComplete="url" placeholder="https://"
               value={data.site} onChange={e=>set('site', e.target.value)}/>
           </FormField>
           <FormField label="Телефон">
-            <input className="input" placeholder="+7 (___) ___-__-__"
+            <input className="input" type="tel" autoComplete="tel" placeholder="+7 (___) ___-__-__"
               value={data.phone} onChange={e=>set('phone', e.target.value)}/>
           </FormField>
         </div>
         <FormField label="Email" required error={errors.email}>
-          <input className="input" type="email" placeholder="info@example.ru"
+          <input className="input" type="email" autoComplete="email" placeholder="info@example.ru"
             value={data.email} onChange={e=>set('email', e.target.value)}/>
         </FormField>
         <FormField label="Выручка за последний год" hint="Опционально, в рублях. Данные публикуются обезличенно">
@@ -3565,7 +3562,7 @@ function Header({ route, setRoute, onAdd, mobileMenuOpen, setMobileMenuOpen }) {
             {savedCount > 0 &&
             <span className="mono" style={{ fontSize:11, color:'#fff' }}>{savedCount}</span>}
           </button>}
-          <a href="https://t.me/domvdalybot" target="_blank" rel="noopener" className="btn btn-primary btn-sm" style={{ backgroundColor: "rgb(3, 27, 37)" }}>
+          <a href="feedback.html" className="btn btn-primary btn-sm" style={{ backgroundColor: "rgb(3, 27, 37)" }}>
             <I name="send" className="ic-sm" />Связаться с нами
           </a>
           {isMobile &&
@@ -3615,7 +3612,7 @@ function MobileMenu({ open, onClose, route, setRoute, onAdd }) {
             </button>
           )}
         </div>
-        <a href="https://t.me/domvdalybot" target="_blank" rel="noopener" className="btn btn-primary" style={{ marginTop: 24, width: '100%' }}>
+        <a href="feedback.html" className="btn btn-primary" style={{ marginTop: 24, width: '100%' }}>
           <I name="send" className="ic-sm" />Связаться с нами
         </a>
       </div>
@@ -3882,10 +3879,44 @@ function App() {
       {route === 'saved' && <SavedTab onOpen={setOpenObj}/>}
       {route === 'ds' && <DesignSystemPage />}
 
+      <SiteFooter/>
+
       {openObj && <DetailModal obj={openObj} onClose={() => setOpenObj(null)} />}
       {addOpen && <AddObjectModal onClose={() => setAddOpen(false)} />}
     </div>);
 
+}
+
+/* ── Подвал сайта — реквизиты компании, ссылка на политику конфиденциальности ── */
+function SiteFooter() {
+  return (
+    <footer style={{ background:'#0A0A0A', color:'#fff', padding:'72px 32px 48px' }}>
+      <div style={{ maxWidth:1280, margin:'0 auto' }}>
+        <a href="https://dal.team/" target="_blank" rel="noopener" style={{
+          display:'inline-block', color:'#fff', textDecoration:'none',
+          fontStyle:'italic', fontWeight:700, fontSize:48, letterSpacing:'-.02em',
+          lineHeight:1, marginBottom:96,
+        }}>ДАЛЬ</a>
+        <div style={{ display:'flex', flexWrap:'wrap', gap:64 }}>
+          <div style={{ fontSize:14, lineHeight:1.7, color:'rgba(255,255,255,.82)' }}>
+            <div>ООО «Даль»</div>
+            <div>127015, город Москва,</div>
+            <div>Новодмитровская ул, д. 2 к. 6, помещ. 215</div>
+          </div>
+          <div style={{ fontSize:14, lineHeight:1.9, color:'rgba(255,255,255,.82)' }}>
+            <div>ИНН: 9715406319</div>
+            <div>ОГРН: 1217700438779</div>
+            <div>
+              <a href="https://dal.team/politica" target="_blank" rel="noopener" style={{
+                color:'rgba(255,255,255,.82)', textDecoration:'underline',
+                textDecorationColor:'rgba(255,255,255,.32)',
+              }}>Политика конфиденциальности</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
 }
 
 /* ── Intro overlay: shown on every visit, no localStorage/cookies ── */
