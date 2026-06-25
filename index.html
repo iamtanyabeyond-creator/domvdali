@@ -2506,7 +2506,7 @@ function DetailBody({ obj, onClose }) {
       <div className="detail-hero" style={{display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gridTemplateRows:'160px 160px', gap:6, height: 326}}>
         {heroTiles.map((pos, i) => (
           <div key={i} className="detail-hero-tile" style={{...pos, position:'relative'}} onClick={()=>setLightboxIndex(i)}>
-            <Photo obj={obj} src={obj.photos && obj.photos[i]} fill label={galleryLabels[i]}/>
+            <Photo obj={obj} src={obj.photos && obj.photos[i]} fill/>
             <span className="hero-tile-hint"><I name="search" className="ic-sm"/></span>
             {i === heroTiles.length - 1 && photoCount > 5 &&
             <div style={{
@@ -2536,10 +2536,6 @@ function DetailBody({ obj, onClose }) {
             <span style={{display:'inline-flex', alignItems:'center', gap:6, minWidth:0, overflowWrap:'anywhere'}}>
               <I name="pin" className="ic-sm" style={{flexShrink:0}}/>{[obj.city, obj.addr].filter(Boolean).join(', ') || '—'}
             </span>
-            {obj.url &&
-            <a href={obj.url} target="_blank" rel="noopener" style={{display:'inline-flex', alignItems:'center', gap:6, textDecoration:'none', color:'var(--ink-2)', borderBottom:'1px dotted var(--rule-strong)'}}>
-              <I name="ext" className="ic-sm"/>сайт объекта
-            </a>}
           </div>
         </div>
         <div style={{display:'flex', gap:10}}>
@@ -2637,7 +2633,7 @@ function DetailBody({ obj, onClose }) {
                   background:'var(--bg-soft)', borderRadius:'var(--r)',
                 }}>
                   На этой странице пока пусто, но мы работаем над её наполнением. Если вы готовы поделиться показателями своего проекта — свяжитесь с нами {' '}
-                  <a href="#feedback" style={{color:'var(--accent)', fontWeight:600, textDecoration:'underline', textDecorationColor:'var(--accent-soft)'}}>через форму обратной связи</a>.
+                  <a href="feedback.html" style={{color:'var(--accent)', fontWeight:600, textDecoration:'underline', textDecorationColor:'var(--accent-soft)'}}>через форму обратной связи</a>.
                 </div>
                 }
               </div>
@@ -2654,9 +2650,6 @@ function DetailBody({ obj, onClose }) {
               <ContactRow icon="globe" label={obj.url.replace(/^https?:\/\//,'').replace(/\/$/,'')} href={obj.url}/> :
               <ContactRow icon="globe" label="Ссылка пока не указана"/>}
             </div>
-            <button className="btn btn-primary" style={{marginTop:18, width:'100%'}}>
-              <I name="send" className="ic-sm"/>Связаться
-            </button>
           </div>
 
           <div style={{
@@ -2678,6 +2671,12 @@ function DetailBody({ obj, onClose }) {
             </div>}
           </div>
         </aside>
+      </div>
+
+      <div style={{ padding:'0 32px 32px' }}>
+        <a href="https://t.me/domvdalybot" target="_blank" rel="noopener" className="btn btn-primary" style={{ width:'100%', justifyContent:'center' }}>
+          <I name="send" className="ic-sm"/>Связаться с нами
+        </a>
       </div>
 
       {lightboxIndex !== null &&
@@ -3544,7 +3543,7 @@ function Header({ route, setRoute, onAdd, mobileMenuOpen, setMobileMenuOpen }) {
   return (
     <header className="hdr">
       <div className="hdr-inner" style={isMobile ? { padding: '0 16px', gap: 14 } : {}}>
-        <a className="brand" onClick={() => setRoute('catalog')} style={{ cursor: 'pointer' }}>
+        <a className="brand" href="https://dom.dal.team/" style={{ cursor: 'pointer' }}>
           <img src={(window.__resources && window.__resources.logoMain) || "assets/logo.svg"} alt="Дом вдали" style={{ height: 28, display: 'block' }} />
         </a>
 
@@ -3913,7 +3912,7 @@ function IntroOverlay({ onClose }) {
         <div className="intro-body">
           <p>Здесь мы собрали бизнесы — отели, рестораны, креативные кластеры и не только, которые работают в старинных домах по всей России. Мы — это команда агрегатора исторической недвижимости в продаже «Дом вдали». Своей миссией мы видим возвращение старинных домов в экономику, а для этого надо показывать успешные примеры.</p>
           <p>Бизнесы мы отбираем сами, руководствуясь не только временем постройки здания, где они работают, но ещё и бережностью проекта по отношению к истории места, качеством продукта и уровнем сервиса. Вы можете предложить свой проект к публикации {' '}
-            <a href="#feedback" className="intro-link" onClick={(e) => e.stopPropagation()}>через форму обратной связи</a>.
+            <a href="feedback.html" className="intro-link" onClick={(e) => e.stopPropagation()}>через форму обратной связи</a>.
           </p>
           <p>Используйте каталог, чтобы планировать путешествия по небанальным местам, выбирать самый красивый ресторан, или погрузиться в бизнес-аналитику (и эти показатели мы тоже даём!).</p>
           <p className="intro-sign">Ваши,<br/>Дом вдали</p>
