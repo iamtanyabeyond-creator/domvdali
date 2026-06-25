@@ -2253,10 +2253,12 @@ function iconSvgPath(name) {
 function popupHtml(o) {
   const T = window.DV_DATA.types[o.type];
   const S = window.DV_DATA.statuses[o.status];
+  const photo = o.photos && o.photos[0];
   return `
     <div style="display:flex; gap:0; flex-direction:column; font-family:var(--f-sans); color:var(--ink); cursor:pointer">
-      <div style="height:80px; background: linear-gradient(135deg, oklch(0.86 0.025 60), oklch(0.78 0.035 60)); position:relative; display:flex; align-items:center; justify-content:center; color: rgba(3,27,37,.4); font-family: var(--f-mono); font-size: 10px; letter-spacing:.12em">
+      <div style="height:80px; background: linear-gradient(135deg, oklch(0.86 0.025 60), oklch(0.78 0.035 60)); position:relative; display:flex; align-items:center; justify-content:center; color: rgba(3,27,37,.4); font-family: var(--f-mono); font-size: 10px; letter-spacing:.12em; overflow:hidden">
         <span>${(T ? T.label : 'ОБЪЕКТ').toUpperCase()}</span>
+        ${photo ? `<img src="${photo}" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover" onerror="this.remove()">` : ''}
       </div>
       <div style="padding:10px 12px 12px">
         <div style="font-family:var(--f-serif); font-size:15px; line-height:1.2; margin-bottom:4px">${o.name}</div>
