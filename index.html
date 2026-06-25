@@ -3541,7 +3541,7 @@ function Header({ route, setRoute, onAdd, mobileMenuOpen, setMobileMenuOpen }) {
     <header className="hdr">
       <div className="hdr-inner" style={isMobile ? { padding: '0 16px', gap: 14 } : {}}>
         <a className="brand" href="https://dom.dal.team/" style={{ cursor: 'pointer' }}>
-          <img src={(window.__resources && window.__resources.logoMain) || "assets/logo.svg"} alt="Дом вдали" style={{ height: 28, display: 'block' }} />
+          <img src={(window.__resources && window.__resources.logoMain) || "assets/logo.svg"} alt="Дом вдали" style={{ height: 44, display: 'block' }} />
         </a>
 
         {!isMobile &&
@@ -3892,11 +3892,9 @@ function SiteFooter() {
   return (
     <footer style={{ background:'#0A0A0A', color:'#fff', padding:'72px 32px 48px' }}>
       <div style={{ maxWidth:1280, margin:'0 auto' }}>
-        <a href="https://dal.team/" target="_blank" rel="noopener" style={{
-          display:'inline-block', color:'#fff', textDecoration:'none',
-          fontStyle:'italic', fontWeight:700, fontSize:48, letterSpacing:'-.02em',
-          lineHeight:1, marginBottom:96,
-        }}>ДАЛЬ</a>
+        <a href="https://dal.team/" target="_blank" rel="noopener" style={{ display:'inline-block', marginBottom:96 }}>
+          <img src="https://optim.tildacdn.com/tild3530-6639-4564-a662-323338373931/-/resize/200x/-/format/webp/noroot.png.webp" alt="Даль" style={{ height:48, display:'block' }} />
+        </a>
         <div style={{ display:'flex', flexWrap:'wrap', gap:64 }}>
           <div style={{ fontSize:14, lineHeight:1.7, color:'rgba(255,255,255,.82)' }}>
             <div>ООО «Даль»</div>
