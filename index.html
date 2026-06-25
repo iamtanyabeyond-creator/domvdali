@@ -1564,43 +1564,13 @@ window.DV_DATA = {
     none:  { label: 'Без статуса',  cls: 'badge-none',  full: 'Без охранного статуса' },
   },
 
-  cities: ["Абрау", "Вельск", "Верея", "Владимир", "Волгоград", "Вологда", "Гаврилов Посад", "Галич", "Гороховец", "ДСК-Мичуринец", "Евпатория", "Калининград", "Кострома", "Красное село", "Ливадия", "Махачкала", "Мичуринск", "Москва", "Новоузенск", "Ростов Великий", "Рыбинск", "Самара", "Санкт-Петербург", "Серпухов", "Сестрорецк", "Смоленск", "Суздаль", "Сысерть", "Таганрог", "Тамбов", "Таруса", "Тюмень", "Уфа", "деревня Волосово", "деревня Осташово", "деревня Петрушово", "деревня Пустынь", "поселок Железнодорожный", "р. п. Измайлово", "село Алексино", "село Заозерное", "село Заполицы", "село Пустоша", "село Сапроново", "село Сенницы-2", "село Скорняково", "село Унал", "станица Старочеркасская", "хутор Старозолотовский"],
-
   groups: {
     live: { label: "Жить", types: ["hotel"] },
     eat: { label: "Есть", types: ["rest", "cafe", "bar"] },
     see: { label: "Смотреть", types: ["museum", "gallery", "edu", "cluster", "ethno", "event", "shop", "office"] },
   },
 
-  regions: [
-    { id: "msk", name: "Москва и Московская область", cities: ["Верея", "ДСК-Мичуринец", "Москва", "Серпухов", "село Пустоша", "село Сапроново", "село Сенницы-2"] },
-    { id: "r32687", name: "Архангельская область", cities: ["Вельск"] },
-    { id: "r31341", name: "Владимирская область", cities: ["Владимир", "Гороховец", "Суздаль", "село Заполицы"] },
-    { id: "r26739", name: "Волгоградская область", cities: ["Волгоград"] },
-    { id: "r70457", name: "Вологодская область", cities: ["Вологда"] },
-    { id: "r68162", name: "Ивановская область", cities: ["Гаврилов Посад"] },
-    { id: "r2434", name: "Калининградская область", cities: ["Калининград", "поселок Железнодорожный"] },
-    { id: "r33580", name: "Калужская область", cities: ["Таруса"] },
-    { id: "r42459", name: "Костромская область", cities: ["Галич", "Кострома", "деревня Осташово", "деревня Пустынь"] },
-    { id: "r6459", name: "Краснодарский край", cities: ["Абрау"] },
-    { id: "r84227", name: "Ленинградская область", cities: ["Красное село", "Сестрорецк"] },
-    { id: "r29146", name: "Липецкая область", cities: ["село Скорняково"] },
-    { id: "r95839", name: "Республика Башкортостан", cities: ["Уфа"] },
-    { id: "r15394", name: "Республика Дагестан", cities: ["Махачкала"] },
-    { id: "r35729", name: "Республика Крым", cities: ["Евпатория", "Ливадия"] },
-    { id: "r69324", name: "Ростовская область", cities: ["Таганрог", "станица Старочеркасская", "хутор Старозолотовский"] },
-    { id: "r60598", name: "Рязанская область", cities: ["деревня Петрушово"] },
-    { id: "r15445", name: "Самарская область", cities: ["Самара"] },
-    { id: "spb", name: "Санкт-Петербург", cities: ["Санкт-Петербург"] },
-    { id: "r40150", name: "Саратовская область", cities: ["Новоузенск"] },
-    { id: "r92357", name: "Свердловская область", cities: ["Сысерть"] },
-    { id: "r91420", name: "Северная Осетия", cities: ["село Унал"] },
-    { id: "r15562", name: "Смоленская область", cities: ["Смоленск", "село Алексино"] },
-    { id: "r24948", name: "Тамбовская область", cities: ["Мичуринск", "Тамбов", "деревня Волосово"] },
-    { id: "r48524", name: "Тюменьская область", cities: ["Тюмень"] },
-    { id: "r85535", name: "Ульяновская область", cities: ["р. п. Измайлово"] },
-    { id: "r7058", name: "Ярославская область", cities: ["Ростов Великий", "Рыбинск", "село Заозерное"] },
-  ],
+  regions: [],   // ← строится автоматически из загруженных объектов, см. buildRegionsFromObjects() ниже
 
   objects: [],   // ← заполняется асинхронно из Google Sheets, см. loadCatalogData() ниже
   finance: {},   // ← { [id объекта]: [{year, v}, ...] }, заполняется из листа «Финансы»
@@ -1692,6 +1662,7 @@ async function loadCatalogData() {
         city: (row['Город'] || '').trim(),
         addr: (row['Адрес'] || '').trim(),
         region: (row['КодРегиона'] || '').trim(),
+        regionName: (row['Область'] || '').trim(),
         built: (row['Датировка'] || '').trim(),
         period: (row['Период'] || '').trim(),
         status: (row['ОхранныйСтатус'] || '').trim() || 'none',
@@ -1710,7 +1681,24 @@ async function loadCatalogData() {
 
   window.DV_DATA.objects = objects;
   window.DV_DATA.finance = financeByObject;
+  window.DV_DATA.regions = buildRegionsFromObjects(objects);
   return objects;
+}
+
+// Список регионов для фильтра-дерева слева строится из самих объектов, а не хранится отдельно —
+// появится новый регион или город в таблице «Объекты», и здесь он подхватится сам по себе,
+// без единой правки кода.
+function buildRegionsFromObjects(objects) {
+  const byId = {};
+  objects.forEach(o => {
+    if (!o.region) return;
+    if (!byId[o.region]) byId[o.region] = { id: o.region, name: o.regionName || o.region, citySet: new Set() };
+    if (!byId[o.region].name && o.regionName) byId[o.region].name = o.regionName;
+    if (o.city) byId[o.region].citySet.add(o.city);
+  });
+  return Object.values(byId)
+    .map(r => ({ id: r.id, name: r.name, cities: Array.from(r.citySet).sort((a, b) => a.localeCompare(b, 'ru')) }))
+    .sort((a, b) => a.name.localeCompare(b.name, 'ru'));
 }
 
 // Запускаем загрузку сразу при разборе страницы, не дожидаясь рендера React —
@@ -2480,44 +2468,58 @@ function DetailBody({ obj, onClose }) {
   const activeTab = tabs.some(([k]) => k === tab) ? tab : 'building';
   // Подписи плиток главной галереи. Показываем до 5 реальных фото объекта (см. колонки «ФотоN» в таблице);
   // если фото нет — Photo сама покажет красивую заглушку с иконкой типа объекта.
-  const galleryLabels = ['Фото 1', 'Фото 2', 'Фото 3', 'Фото 4', 'Фото 5'];
+  // Сколько у объекта реальных фото — столько и подписей (для счётчика в полноэкранном просмотре).
+  const photoCount = (obj.photos && obj.photos.length) || 0;
+  const galleryLabels = Array.from({ length: Math.max(photoCount, 1) }, (_, i) => `Фото ${i + 1}`);
+  // В самой плитке-галерее показываем не больше 5 ячеек (остальные доступны через полноэкранный
+  // просмотр со стрелками) — расположение ячеек подстраивается под то, сколько фото есть на самом деле.
+  const heroTileCount = Math.min(Math.max(photoCount, 1), 5);
+  const heroLayouts = {
+    1: [{ gridColumn: '1 / 4', gridRow: '1 / 3' }],
+    2: [{ gridColumn: '1 / 3', gridRow: '1 / 3' }, { gridColumn: '3 / 4', gridRow: '1 / 3' }],
+    3: [
+      { gridColumn: '1 / 3', gridRow: '1 / 3' },
+      { gridColumn: '3 / 4', gridRow: '1 / 2' },
+      { gridColumn: '3 / 4', gridRow: '2 / 3' },
+    ],
+    4: [
+      { gridColumn: '1 / 2', gridRow: '1 / 3' },
+      { gridColumn: '2 / 3', gridRow: '1 / 3' },
+      { gridColumn: '3 / 4', gridRow: '1 / 2' },
+      { gridColumn: '3 / 4', gridRow: '2 / 3' },
+    ],
+    5: [
+      { gridColumn: '1 / 2', gridRow: '1 / 3' },
+      { gridColumn: '2 / 3', gridRow: '1 / 2' },
+      { gridColumn: '3 / 4', gridRow: '1 / 2' },
+      { gridColumn: '2 / 3', gridRow: '2 / 3' },
+      { gridColumn: '3 / 4', gridRow: '2 / 3' },
+    ],
+  };
+  const heroTiles = heroLayouts[heroTileCount];
 
   return (
     <div>
       {/* HERO */}
-      <div className="detail-hero" style={{display:'grid', gridTemplateColumns:'2fr 1fr 1fr', gridTemplateRows:'160px 160px', gap:6, height: 326}}>
-        <div className="detail-hero-tile" style={{gridRow:'1 / 3', position:'relative'}} onClick={()=>setLightboxIndex(0)}>
-          <Photo obj={obj} src={obj.photos && obj.photos[0]} fill label={galleryLabels[0]}/>
-          <span className="hero-tile-hint"><I name="search" className="ic-sm"/></span>
-        </div>
-        <div className="detail-hero-tile" style={{position:'relative'}} onClick={()=>setLightboxIndex(1)}>
-          <Photo obj={obj} src={obj.photos && obj.photos[1]} fill label={galleryLabels[1]}/>
-          <span className="hero-tile-hint"><I name="search" className="ic-sm"/></span>
-        </div>
-        <div className="detail-hero-tile" style={{position:'relative'}} onClick={()=>setLightboxIndex(2)}>
-          <Photo obj={obj} src={obj.photos && obj.photos[2]} fill label={galleryLabels[2]}/>
-          <span className="hero-tile-hint"><I name="search" className="ic-sm"/></span>
-        </div>
-        <div className="detail-hero-tile" style={{position:'relative'}} onClick={()=>setLightboxIndex(3)}>
-          <Photo obj={obj} src={obj.photos && obj.photos[3]} fill label={galleryLabels[3]}/>
-          <span className="hero-tile-hint"><I name="search" className="ic-sm"/></span>
-        </div>
-        <div className="detail-hero-tile" style={{position:'relative'}} onClick={()=>setLightboxIndex(4)}>
-          <Photo obj={obj} src={obj.photos && obj.photos[4]} fill label={galleryLabels[4]}/>
-          <span className="hero-tile-hint"><I name="search" className="ic-sm"/></span>
-          {obj.photos && obj.photos.length > 5 &&
-          <div style={{
-            position:'absolute', right:8, bottom:8,
-            background:'rgba(255,255,255,.9)',
-            borderRadius:'var(--r)',
-            padding:'4px 10px',
-            fontFamily:'var(--f-mono)', fontSize:11,
-            display:'flex', alignItems:'center', gap:6,
-          }}>
-            <I name="camera" className="ic-sm"/>
-            +{obj.photos.length - 5} фото
-          </div>}
-        </div>
+      <div className="detail-hero" style={{display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gridTemplateRows:'160px 160px', gap:6, height: 326}}>
+        {heroTiles.map((pos, i) => (
+          <div key={i} className="detail-hero-tile" style={{...pos, position:'relative'}} onClick={()=>setLightboxIndex(i)}>
+            <Photo obj={obj} src={obj.photos && obj.photos[i]} fill label={galleryLabels[i]}/>
+            <span className="hero-tile-hint"><I name="search" className="ic-sm"/></span>
+            {i === heroTiles.length - 1 && photoCount > 5 &&
+            <div style={{
+              position:'absolute', right:8, bottom:8,
+              background:'rgba(255,255,255,.9)',
+              borderRadius:'var(--r)',
+              padding:'4px 10px',
+              fontFamily:'var(--f-mono)', fontSize:11,
+              display:'flex', alignItems:'center', gap:6,
+            }}>
+              <I name="camera" className="ic-sm"/>
+              +{photoCount - 5} фото
+            </div>}
+          </div>
+        ))}
       </div>
 
       {/* TITLE */}
