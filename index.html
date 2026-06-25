@@ -34,6 +34,7 @@
   <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
   <style>
 /* ============================================
    ДОМ ВДАЛИ — Design tokens & base styles
@@ -1601,345 +1602,124 @@ window.DV_DATA = {
     { id: "r7058", name: "Ярославская область", cities: ["Ростов Великий", "Рыбинск", "село Заозерное"] },
   ],
 
-  objects: [
-    { id:"o1", name:"Кухня-бар Прачка", type:"rest", city:"Тамбов", addr:"улица Гоголя, 1/ Набережная 22", region:"r24948", year:1905, period:"e20", built:"Начало ХХ века", status:'none', lat:52.7572, lng:41.4283, revenue:"12 млн ₽/год", group:'—', url:"https://kuhnybarprachka.ru/" },
-    { id:"o2", name:"Фабрикант", type:"rest", city:"Серпухов", addr:"Тульская, 5", region:"msk", year:1850, period:"c19", built:"Конец XIX века", status:'none', lat:54.8786, lng:37.3997, revenue:"15 млн ₽/год", group:'—', url:"https://fabricant.rest/" },
-    { id:"o3", name:"Kitchen-Market", type:"rest", city:"Серпухов", addr:"ул. Ворошилова, 5/22", region:"msk", year:1850, period:"c19", built:"Конец XIX века", status:'none', lat:54.8906, lng:37.3997, revenue:"143 млн ₽/год", group:'—', url:"https://grig-group.ru/restorani/kitchen-market/" },
-    { id:"o4", name:"Родовая башня Цаллаговых", type:"ethno", city:"село Унал", addr:"село Нижний Унал, 63", region:"r91420", year:1880, period:"", built:"—", status:'none', lat:42.788, lng:44.238, revenue:"—", group:'—', url:"" },
-    { id:"o5", name:"Усадьба Степановское-Волосово, Зубцовский район Тверской области", type:"rest", city:"деревня Волосово", addr:"", region:"r24948", year:1750, period:"c18", built:"XVIII век", status:'none', lat:56.2667, lng:34.3713, revenue:"—", group:'—', url:"https://xn----7sbgbanc3bmolcdbabc8agif.xn--p1ai/" },
-    { id:"o6", name:"На Заводе", type:"museum", city:"Сысерть", addr:"ул. Быкова, 29/4", region:"r92357", year:1750, period:"c18", built:"XVIII век", status:'none', lat:56.5128, lng:60.8066, revenue:"—", group:'—', url:"https://nazavode.space/" },
-    { id:"o7", name:"Усадьба Сенницы", type:"rest", city:"село Сенницы-2", addr:"село Сенницы-2, ул. Луговая, д. 63", region:"msk", year:1750, period:"c18", built:"XVIII век", status:'none', lat:54.874, lng:38.588, revenue:"—", group:'—', url:"https://usadba-sennitsy.ru/" },
-    { id:"o8", name:"Терем Асташово", type:"hotel", city:"деревня Осташово", addr:"", region:"r42459", year:1850, period:"c19", built:"Конец ХIХ века", status:'none', lat:58.736, lng:42.688, revenue:"—", group:'—', url:"https://astashovo.com/" },
-    { id:"o9", name:"Отель \"Ида\"", type:"hotel", city:"Таганрог", addr:"Тургеневский переулок, 22", region:"r69324", year:1850, period:"c19", built:"Середина ХIХ века", status:'none', lat:47.2002, lng:38.8969, revenue:"—", group:'—', url:"https://idahotel.ru/" },
-    { id:"o10", name:"Скандинавия", type:"hotel", city:"Сестрорецк", addr:"Сестрорецк, Парковая улица, 16.", region:"r84227", year:1905, period:"e20", built:"Начало ХХ века", status:'none', lat:60.1199, lng:29.9407, revenue:"488 млн ₽/год", group:'—', url:"https://skandinavia.ru/" },
-    { id:"o11", name:"Villa 7", type:"hotel", city:"Ливадия", addr:"", region:"r35729", year:1880, period:"", built:"—", status:'none', lat:44.5038, lng:34.1193, revenue:"—", group:'—', url:"" },
-    { id:"o12", name:"O’27.Silvuplé", type:"hotel", city:"Ростов Великий", addr:"Ростов Великий, Окружная улица, 27", region:"r7058", year:1850, period:"c19", built:"Вторая половина XIX века", status:'none', lat:57.1497, lng:39.4023, revenue:"—", group:'—', url:"https://www.o27silvuple.com/" },
-    { id:"o13", name:"«Птицы»", type:"rest", city:"Уфа", addr:"", region:"r95839", year:1880, period:"", built:"—", status:'none', lat:54.7148, lng:55.9601, revenue:"150 млн ₽/год", group:'—', url:"" },
-    { id:"o14", name:"SketchHotel", type:"hotel", city:"Владимир", addr:"ул. 2-я Никольская, 9/2", region:"r31341", year:1850, period:"c19", built:"Вторая половина XIX века", status:'none', lat:56.117, lng:40.395, revenue:"—", group:'—', url:"https://sketchhotel.ru/" },
-    { id:"o15", name:"Музей русских национальных напитков в Гавриловом Посаде", type:"museum", city:"Гаврилов Посад", addr:"Суздальское шоссе, 13", region:"r68162", year:1880, period:"", built:"—", status:'none', lat:56.5566, lng:40.1066, revenue:"25.5 млн ₽/год", group:'—', url:"https://gavrilovposad.com/museum" },
-    { id:"o16", name:"«ИМПЕРИАЛ»", type:"hotel", city:"Абрау", addr:"", region:"r6459", year:1880, period:"", built:"—", status:'none', lat:44.7109, lng:37.5899, revenue:"—", group:'—', url:"" },
-    { id:"o17", name:"Кельи", type:"hotel", city:"Смоленск", addr:"ул. Маршала Жукова, д. 18", region:"r15562", year:1750, period:"c18", built:"XVIII век", status:'none', lat:54.8058, lng:32.0281, revenue:"—", group:'—', url:"https://vk.com/kellii1770" },
-    { id:"o18", name:"«Темп»", type:"rest", city:"Махачкала", addr:"ул. Буйнакского, 2", region:"r15394", year:1850, period:"c19", built:"Вторая половина XIX века", status:'none', lat:43.0209, lng:47.4927, revenue:"—", group:'—', url:"https://www.instagram.com/temp_mhk/" },
-    { id:"o19", name:"Рихтер", type:"hotel", city:"Москва", addr:"Пятницкая, 42", region:"msk", year:1850, period:"c19", built:"Вторая половина XIX века", status:'none', lat:55.7198, lng:37.6173, revenue:"—", group:'—', url:"https://richterhotel.com/" },
-    { id:"o20", name:"Лофт 1890", type:"cluster", city:"Волгоград", addr:"ул. 10-й Дивизии НКВД, 5а", region:"r26739", year:1850, period:"c19", built:"Вторая половина XIX века", status:'none', lat:48.744, lng:44.4893, revenue:"55 млн ₽/год", group:'—', url:"https://loft1890.ru/" },
-    { id:"o21", name:"Дом Николая Ракицкого", type:"museum", city:"Таруса", addr:"ул. Шмидта, 38", region:"r33580", year:1905, period:"c20", built:"Первая половина ХХ века", status:'none', lat:54.6876, lng:37.1594, revenue:"—", group:'—', url:"https://tarusagarden.ru/" },
-    { id:"o22", name:"Музей марципана", type:"museum", city:"Калининград", addr:"", region:"r2434", year:1880, period:"", built:"—", status:'none', lat:54.6864, lng:20.4402, revenue:"—", group:'—', url:"" },
-    { id:"o23", name:"Переделкино", type:"hotel", city:"ДСК-Мичуринец", addr:"ул. Погодина, 4, корп. 2", region:"msk", year:1905, period:"c20", built:"Первая половина ХХ века", status:'none', lat:55.64, lng:37.33, revenue:"—", group:'—', url:"https://pro-peredelkino.org/" },
-    { id:"o24", name:"Дом русского чаепития", type:"cafe", city:"Суздаль", addr:"ул. Старая, д. 6", region:"r31341", year:1850, period:"c19", built:"XIX век", status:'none', lat:56.4283, lng:40.437, revenue:"250 млн ₽/год", group:'—', url:"https://suzdal-dvor.ru/restorany/dom-russkogo-chaepitiya" },
-    { id:"o25", name:"Зуррахмат", type:"cafe", city:"Уфа", addr:"", region:"r95839", year:1880, period:"", built:"—", status:'none', lat:54.7508, lng:55.9601, revenue:"6 млн ₽/год", group:'—', url:"" },
-    { id:"o26", name:"Сыровар", type:"rest", city:"Кострома", addr:"пр. Мира, 4", region:"r42459", year:1850, period:"c19", built:"XIX век", status:'none', lat:57.7917, lng:40.9145, revenue:"63 млн ₽/год", group:'—', url:"https://syrovar-kostroma.ru/" },
-    { id:"o27", name:"Патефон", type:"cafe", city:"поселок Железнодорожный", addr:"ул. Коммунистическая, 1", region:"r2434", year:1880, period:"", built:"—", status:'none', lat:54.396, lng:21.298, revenue:"7.2 млн ₽/год", group:'—', url:"https://geardhouse.ru/#rec648587570" },
-    { id:"o28", name:"Старая мельница", type:"cafe", city:"поселок Железнодорожный", addr:"ул. Черняховского, 31Б", region:"r2434", year:1905, period:"e20", built:"Начало ХХ века", status:'none', lat:54.324, lng:21.31, revenue:"4.7 млн ₽/год", group:'—', url:"" },
-    { id:"o29", name:"Место", type:"shop", city:"Вологда", addr:"Кремлёвская площадь, 4", region:"r70457", year:1850, period:"c19", built:"XIX век", status:'none', lat:59.1965, lng:39.8915, revenue:"—", group:'—', url:"https://vk.com/mesto.valkeda" },
-    { id:"ox29", name:"Дом с добром", type:"cluster", city:"Вологда", addr:"Кремлёвская площадь, 4", region:"r70457", year:1850, period:"c19", built:"XIX век", status:'none', lat:59.2085, lng:39.9275, revenue:"—", group:'—', url:"https://vk.com/domsdobrom4" },
-    { id:"o30", name:"Станкозавод", type:"cluster", city:"Самара", addr:"ул. Куйбышева, 128/1", region:"r15445", year:1850, period:"c19", built:"XIX век", status:'none', lat:53.1599, lng:50.0882, revenue:"—", group:'—', url:"https://stzv.ru/" },
-    { id:"o31", name:"«Дом77»", type:"cluster", city:"Самара", addr:"", region:"r15445", year:1880, period:"", built:"—", status:'none', lat:53.1719, lng:50.0882, revenue:"—", group:'—', url:"" },
-    { id:"o32", name:"Посольство", type:"bar", city:"Самара", addr:"ул. Фрунзе, 113", region:"r15445", year:1850, period:"c19", built:"XIX век", status:'none', lat:53.1839, lng:50.0882, revenue:"6 млн ₽/год", group:'—', url:"https://posolstvo-bar.ru/" },
-    { id:"o33", name:"Рюмочка", type:"bar", city:"Самара", addr:"", region:"r15445", year:1880, period:"", built:"—", status:'none', lat:53.1959, lng:50.0882, revenue:"106 млн ₽/год", group:'—', url:"" },
-    { id:"o34", name:"Вечно молодой", type:"bar", city:"Самара", addr:"", region:"r15445", year:1880, period:"", built:"—", status:'none', lat:53.2079, lng:50.0882, revenue:"74 млн ₽/год", group:'—', url:"" },
-    { id:"o35", name:"Оффенбахер", type:"hotel", city:"Санкт-Петербург", addr:"", region:"spb", year:1880, period:"", built:"—", status:'none', lat:59.9583, lng:30.3231, revenue:"53 млн ₽/год", group:'—', url:"" },
-    { id:"o36", name:"Дом Ершова", type:"hotel", city:"Гороховец", addr:"", region:"r31341", year:1880, period:"", built:"—", status:'none', lat:56.2377, lng:42.6819, revenue:"—", group:'—', url:"" },
-    { id:"o37", name:"Twelve Reasons", type:"hotel", city:"Москва", addr:"", region:"msk", year:1880, period:"", built:"—", status:'none', lat:55.7198, lng:37.6173, revenue:"—", group:'—', url:"" },
-    { id:"o38", name:"Хутор Старозолотовский", type:"ethno", city:"хутор Старозолотовский", addr:"", region:"r69324", year:1880, period:"", built:"—", status:'none', lat:47.576, lng:41.3, revenue:"—", group:'—', url:"" },
-    { id:"o39", name:"Усадьба Гребнево", type:"rest", city:"", addr:"", region:"msk", year:1880, period:"", built:"—", status:'none', lat:55.95, lng:38.134, revenue:"—", group:'—', url:"" },
-    { id:"o40", name:"офис Брусники", type:"office", city:"Тюмень", addr:"", region:"r48524", year:1880, period:"", built:"—", status:'none', lat:57.129, lng:65.5223, revenue:"271 млн ₽/год", group:'—', url:"" },
-    { id:"o41", name:"Флигель Барышникова", type:"cafe", city:"Тюмень", addr:"", region:"r48524", year:1880, period:"", built:"—", status:'none', lat:57.141, lng:65.5223, revenue:"271 млн ₽/год", group:'—', url:"" },
-    { id:"o42", name:"Дом с Лилиями", type:"shop", city:"Вологда", addr:"", region:"r70457", year:1880, period:"", built:"—", status:'none', lat:59.2205, lng:39.8795, revenue:"—", group:'—', url:"" },
-    { id:"o43", name:"Дом Пановых", type:"shop", city:"Вологда", addr:"", region:"r70457", year:1880, period:"", built:"—", status:'none', lat:59.2325, lng:39.8795, revenue:"—", group:'—', url:"" },
-    { id:"o44", name:"Дом Извощикова", type:"shop", city:"Вологда", addr:"", region:"r70457", year:1880, period:"", built:"—", status:'none', lat:59.2445, lng:39.8795, revenue:"—", group:'—', url:"" },
-    { id:"o45", name:"Бюро", type:"cafe", city:"Вологда", addr:"", region:"r70457", year:1880, period:"", built:"—", status:'none', lat:59.2565, lng:39.8795, revenue:"—", group:'—', url:"" },
-    { id:"o46", name:"Ларец", type:"gallery", city:"Суздаль", addr:"", region:"r31341", year:1880, period:"", built:"—", status:'none', lat:56.3923, lng:40.449, revenue:"12.9 млн ₽/год", group:'—', url:"" },
-    { id:"o47", name:"Мира Центр", type:"gallery", city:"Суздаль", addr:"", region:"r31341", year:1880, period:"", built:"—", status:'none', lat:56.4043, lng:40.449, revenue:"12.9 млн ₽/год", group:'—', url:"" },
-    { id:"o48", name:"ГЭС НА НЕРЛИ", type:"cluster", city:"село Заполицы", addr:"", region:"r31341", year:1880, period:"", built:"—", status:'none', lat:56.238, lng:40.0, revenue:"12.9 млн ₽/год", group:'—', url:"" },
-    { id:"o49", name:"Гостиный двор", type:"hotel", city:"Мичуринск", addr:"", region:"r24948", year:1880, period:"", built:"—", status:'none', lat:52.891, lng:40.5039, revenue:"400 млн ₽/год", group:'—', url:"" },
-    { id:"o50", name:"Усадьба Золотой Лев", type:"event", city:"село Сапроново", addr:"", region:"msk", year:1880, period:"", built:"—", status:'none', lat:55.288, lng:37.888, revenue:"—", group:'—', url:"" },
-    { id:"o51", name:"Усадьба Скорняково-Архангельское", type:"event", city:"село Скорняково", addr:"", region:"r29146", year:1880, period:"", built:"—", status:'none', lat:52.45, lng:38.688, revenue:"7.7 млн ₽/год", group:'—', url:"" },
-    { id:"o52", name:"Кезлев къавеси", type:"cafe", city:"Евпатория", addr:"", region:"r35729", year:1880, period:"", built:"—", status:'none', lat:45.202, lng:33.3549, revenue:"—", group:'—', url:"" },
-    { id:"o53", name:"Джеваль", type:"hotel", city:"Евпатория", addr:"", region:"r35729", year:1880, period:"", built:"—", status:'none', lat:45.214, lng:33.3549, revenue:"—", group:'—', url:"" },
-    { id:"o54", name:"Подворье Рязановых", type:"cafe", city:"станица Старочеркасская", addr:"", region:"r69324", year:1880, period:"", built:"—", status:'none', lat:47.276, lng:40.038, revenue:"—", group:'—', url:"" },
-    { id:"o55", name:"Казачий Дон", type:"ethno", city:"станица Старочеркасская", addr:"", region:"r69324", year:1880, period:"", built:"—", status:'none', lat:47.204, lng:40.05, revenue:"—", group:'—', url:"" },
-    { id:"o56", name:"Заречный квартал 1840", type:"rest", city:"Вологда", addr:"", region:"r70457", year:1880, period:"", built:"—", status:'none', lat:59.1965, lng:39.8915, revenue:"—", group:'—', url:"" },
-    { id:"o57", name:"Усадьба Петрушево", type:"hotel", city:"деревня Петрушово", addr:"", region:"r60598", year:1880, period:"", built:"—", status:'none', lat:54.888, lng:41.3, revenue:"—", group:'—', url:"" },
-    { id:"o58", name:"Дом Легкодумова", type:"museum", city:"деревня Пустынь", addr:"", region:"r42459", year:1880, period:"", built:"—", status:'none', lat:57.8, lng:41.5, revenue:"—", group:'—', url:"" },
-    { id:"o59", name:"Дом Смодора", type:"museum", city:"Галич", addr:"", region:"r42459", year:1880, period:"", built:"—", status:'none', lat:58.3948, lng:42.3486, revenue:"—", group:'—', url:"" },
-    { id:"o60", name:"Дом инженеров", type:"museum", city:"р. п. Измайлово", addr:"", region:"r85535", year:1880, period:"", built:"—", status:'none', lat:53.35, lng:47.188, revenue:"—", group:'—', url:"" },
-    { id:"o61", name:"Дом со щуками", type:"hotel", city:"село Заозерное", addr:"", region:"r7058", year:1880, period:"", built:"—", status:'none', lat:57.512, lng:39.488, revenue:"—", group:'—', url:"" },
-    { id:"o62", name:"Усадьба Иконниковых", type:"cluster", city:"Рыбинск", addr:"", region:"r7058", year:1880, period:"", built:"—", status:'none', lat:58.0686, lng:38.8467, revenue:"—", group:'—', url:"" },
-    { id:"o63", name:"Арт-усадьба Рафаила Астафьева", type:"museum", city:"Вельск", addr:"", region:"r32687", year:1880, period:"", built:"—", status:'none', lat:61.1027, lng:42.088, revenue:"—", group:'—', url:"" },
-    { id:"o64", name:"Усадьба Гридино", type:"cluster", city:"село Пустоша", addr:"", region:"msk", year:1880, period:"", built:"—", status:'none', lat:55.464, lng:39.9, revenue:"—", group:'—', url:"" },
-    { id:"o65", name:"Мельница Червова", type:"cluster", city:"Новоузенск", addr:"", region:"r40150", year:1880, period:"", built:"—", status:'none', lat:50.4346, lng:48.1419, revenue:"—", group:'—', url:"" },
-    { id:"o66", name:"Усадьба Барышниковых", type:"event", city:"село Алексино", addr:"", region:"r15562", year:1880, period:"", built:"—", status:'none', lat:54.738, lng:33.5, revenue:"—", group:'—', url:"" },
-    { id:"o67", name:"Домик на Севере", type:"cluster", city:"", addr:"", region:"r32687", year:1880, period:"", built:"—", status:'none', lat:64.54, lng:40.52, revenue:"—", group:'—', url:"" },
-    { id:"o68", name:"Дворец великого князя Михаила Павловича", type:"edu", city:"Красное село", addr:"", region:"r84227", year:1880, period:"", built:"—", status:'none', lat:59.7453, lng:30.0833, revenue:"8 млн ₽/год", group:'—', url:"" },
-    { id:"o69", name:"Дом с душой", type:"event", city:"Верея", addr:"", region:"msk", year:1880, period:"", built:"—", status:'none', lat:55.3679, lng:36.1819, revenue:"—", group:'—', url:"" },
-  ],
-
-  /* ── Заявки для админки ──────────────── */
-  applications: [
-    { id:2847, name:'Усадьба Голицыных',       city:'Подмосковье',     type:'cluster', date:'12.05.2026', status:'new',  email:'info@golitsyn.ru', desc:'Реставрируем усадебный комплекс XVIII века, открываем арт-резиденцию и небольшое кафе.' },
-    { id:2846, name:'Кофейня в доходном доме', city:'Санкт-Петербург', type:'rest',    date:'12.05.2026', status:'new',  email:'hello@dohod.cafe', desc:'Спешелти-кофейня на 1-м этаже дохода 1903 года, сохранили лепнину и метлахскую плитку.' },
-    { id:2845, name:'Бутик-отель «Ляхово»',    city:'Ярославль',       type:'hotel',   date:'11.05.2026', status:'rev',  email:'stay@lyahovo.ru',  desc:'8 номеров в купеческом особняке. Нужно уточнить охранный статус — комментарий модератора.' },
-    { id:2844, name:'Галерея «Старая аптека»', city:'Иваново',         type:'museum',  date:'10.05.2026', status:'ok',   email:'gallery@stara.art',desc:'Частная галерея современного искусства в здании аптеки 1908 года.' },
-    { id:2843, name:'Лофт «Депо»',             city:'Екатеринбург',    type:'cluster', date:'09.05.2026', status:'ok',   email:'depo@loft.ekb',    desc:'Локомотивное депо 1878 года переоборудовано под коворкинг и резидентов.' },
-    { id:2842, name:'Шапка-невидимка',         type:'shop', city:'Москва',           date:'08.05.2026', status:'rej',  email:'shapka@example.com', desc:'Магазин головных уборов в типовой новостройке — не подошло по тематике.' },
-    { id:2841, name:'Винотека «Подвал»',       city:'Калининград',     type:'shop',    date:'07.05.2026', status:'new',  email:'vino@podval.kld',  desc:'Винотека в подвалах кирхи XIX века.' },
-  ],
+  objects: [],   // ← заполняется асинхронно из Google Sheets, см. loadCatalogData() ниже
+  finance: {},   // ← { [id объекта]: [{year, v}, ...] }, заполняется из листа «Финансы»
 };
 
 // ============================================
-// LIVE DATA — Google Sheets CSV
-// Публичный каталог и финансы подтягиваются из опубликованных листов.
-// Если загрузка не удалась, сайт остаётся на встроенных данных выше.
+// ДАННЫЕ — загружаются из Google Таблицы (CSV-публикация листов)
+// Модерация заявок и редактирование карточек происходит прямо в таблице,
+// отдельной страницы администратора на сайте больше нет.
 // ============================================
-window.DV_REMOTE = {
-  objectsCsv: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRoY4nboqc2A9Rz7JriVK1Wk-LvrbF7LYeHUAHvITMFST9LkTiQg1Izp6o141d_kHdU7teNq03DoVp9/pub?gid=917766017&single=true&output=csv',
-  financeCsv: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRoY4nboqc2A9Rz7JriVK1Wk-LvrbF7LYeHUAHvITMFST9LkTiQg1Izp6o141d_kHdU7teNq03DoVp9/pub?gid=1909204435&single=true&output=csv',
-  status: 'idle',
-  loadedAt: null,
-  error: null,
+
+// Вставьте сюда ссылки, которые Google Таблица даёт через
+// «Файл → Поделиться → Опубликовать в интернете» (формат — CSV) для листов «Объекты» и «Финансы».
+const SHEET_CSV_URLS = {
+  objects: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRoY4nboqc2A9Rz7JriVK1Wk-LvrbF7LYeHUAHvITMFST9LkTiQg1Izp6o141d_kHdU7teNq03DoVp9/pub?gid=917766017&single=true&output=csv',
+  finance: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRoY4nboqc2A9Rz7JriVK1Wk-LvrbF7LYeHUAHvITMFST9LkTiQg1Izp6o141d_kHdU7teNq03DoVp9/pub?gid=1909204435&single=true&output=csv',
 };
 
-function _csvDelimiter(line) {
-  const commas = (line.match(/,/g) || []).length;
-  const semis = (line.match(/;/g) || []).length;
-  return semis > commas ? ';' : ',';
+// Ссылка на развёрнутый Apps Script (заканчивается на /exec) — туда уходит форма «Добавить объект».
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyVTY6SUSuJAYIvDD_PPawLTIz2wzMIqhO0n4oIrXc0LMJIaRiDgMke89TBHm_5Rx_T/exec';
+
+// Достаёт ID файла из любой ссылки на Google Диск: /file/d/ID/view, open?id=ID, uc?id=ID или просто голый ID.
+function extractDriveId(url) {
+  if (!url) return null;
+  const s = String(url).trim();
+  let m = s.match(/\/d\/([a-zA-Z0-9_-]{10,})/);
+  if (m) return m[1];
+  m = s.match(/[?&]id=([a-zA-Z0-9_-]{10,})/);
+  if (m) return m[1];
+  if (/^[a-zA-Z0-9_-]{10,}$/.test(s)) return s;
+  return null;
+}
+function driveImageUrl(url, size) {
+  const id = extractDriveId(url);
+  return id ? `https://drive.google.com/thumbnail?id=${id}&sz=${size || 'w1600'}` : null;
 }
 
-function _parseCSV(text) {
-  const src = (text || '').replace(/^\uFEFF/, '');
-  const delim = _csvDelimiter(src.split(/\r?\n/, 1)[0] || ',');
-  const rows = [];
-  let row = [], cell = '', q = false;
-  for (let i = 0; i < src.length; i++) {
-    const ch = src[i];
-    if (q) {
-      if (ch === '"') {
-        if (src[i + 1] === '"') { cell += '"'; i++; }
-        else q = false;
-      } else cell += ch;
-    } else {
-      if (ch === '"') q = true;
-      else if (ch === delim) { row.push(cell); cell = ''; }
-      else if (ch === '\n') { row.push(cell); rows.push(row); row = []; cell = ''; }
-      else if (ch !== '\r') cell += ch;
-    }
-  }
-  row.push(cell); rows.push(row);
-  const headers = (rows.shift() || []).map(h => (h || '').trim());
-  return rows
-    .filter(r => r.some(c => String(c || '').trim() !== ''))
-    .map(r => Object.fromEntries(headers.map((h, i) => [h, (r[i] || '').trim()])));
-}
-
-function _num(v) {
-  if (v === null || v === undefined) return null;
-  const n = parseFloat(String(v).replace(',', '.').replace(/[^0-9.\-]/g, ''));
-  return Number.isFinite(n) ? n : null;
-}
-
-function _pick(row, names) {
-  for (const name of names) {
-    if (row[name] !== undefined && row[name] !== '') return row[name];
-  }
-  return '';
-}
-
-function _periodToYear(period, built) {
-  const p = (period || '').trim();
-  if (p === 'pre18') return 1650;
-  if (p === 'c18') return 1750;
-  if (p === 'c19') return 1850;
-  if (p === 'e20') return 1905;
-  if (p === 'c20') return 1950;
-  const m = String(built || '').match(/(1[5-9]\d{2}|20\d{2})/);
-  return m ? Number(m[1]) : 1880;
-}
-
-function _photosFromCell(cell) {
-  return String(cell || '')
-    .split(/[\n,; ]+/)
-    .map(x => x.trim())
-    .filter(Boolean)
-    .map(x => {
-      const m = x.match(/[-\w]{25,}/);
-      return m ? m[0] : x;
+function fetchSheetRows(url) {
+  return new Promise((resolve, reject) => {
+    if (!url || url.indexOf('СЮДА_') === 0) { resolve([]); return; }
+    Papa.parse(url, {
+      download: true,
+      header: true,
+      skipEmptyLines: true,
+      complete: (res) => resolve(res.data || []),
+      error: (err) => reject(err),
     });
-}
-
-function _driveThumb(idOrUrl, size = 1200) {
-  if (!idOrUrl) return '';
-  if (/^https?:\/\//i.test(idOrUrl) && !idOrUrl.includes('drive.google.com')) return idOrUrl;
-  const m = String(idOrUrl).match(/[-\w]{25,}/);
-  const id = m ? m[0] : idOrUrl;
-  return `https://drive.google.com/thumbnail?id=${encodeURIComponent(id)}&sz=w${size}`;
-}
-window._driveThumb = _driveThumb;
-
-function _mapObjectRow(row) {
-  const id = _pick(row, ['ID', 'id']) || `o-${Math.random().toString(36).slice(2, 8)}`;
-  const typeRaw = (_pick(row, ['Тип', 'type']) || '').trim();
-  const type = window.DV_DATA.types[typeRaw] ? typeRaw : 'cluster';
-  const period = _pick(row, ['Период', 'period']) || '';
-  const built = _pick(row, ['Датировка', 'built']) || '—';
-  const statusRaw = _pick(row, ['ОхранныйСтатус', 'Статус', 'status']) || 'none';
-  const status = window.DV_DATA.statuses[statusRaw] ? statusRaw : 'none';
-  const photos = _photosFromCell(_pick(row, ['Фото', 'photos', 'photo']));
-  const lat = _num(_pick(row, ['Широта', 'lat', 'latitude']));
-  const lng = _num(_pick(row, ['Долгота', 'lng', 'longitude']));
-  return {
-    id,
-    name: _pick(row, ['Название', 'name']) || 'Без названия',
-    type,
-    specialization: _pick(row, ['Специализация', 'specialization']) || '',
-    city: _pick(row, ['Город', 'city']) || '',
-    addr: _pick(row, ['Адрес', 'address', 'addr']) || '',
-    oblast: _pick(row, ['Область', 'regionName']) || '',
-    district: _pick(row, ['Округ', 'district']) || '',
-    region: _pick(row, ['КодРегиона', 'region']) || '',
-    year: _periodToYear(period, built),
-    period,
-    built,
-    status,
-    lat,
-    lng,
-    revenue: '—',
-    group: _pick(row, ['ГруппаКомпаний', 'Группа', 'group']) || '—',
-    url: _pick(row, ['Сайт', 'url']) || '',
-    photos,
-    photo: photos[0] || '',
-    source: _pick(row, ['Источник', 'source']) || '',
-    _editedAt: _pick(row, ['ПоследнееИзменение', '_editedAt']) || '',
-    _editedBy: _pick(row, ['КтоИзменил', '_editedBy']) || '',
-  };
-}
-
-function _attachFinance(objects, financeRows) {
-  const byId = {};
-  financeRows.forEach(row => {
-    const id = _pick(row, ['IDОбъекта', 'ID', 'id']);
-    const yearRaw = _pick(row, ['Год', 'year']);
-    const year = Math.round(_num(yearRaw) || 0);
-    const value = _num(_pick(row, ['Выручка', 'revenue', 'value']));
-    if (!id || !year || value === null) return;
-    if (!byId[id]) byId[id] = [];
-    byId[id].push({ year, v: value, source: 'google-sheets' });
   });
-  objects.forEach(o => {
-    const hist = (byId[o.id] || []).sort((a, b) => a.year - b.year);
-    o._financeSource = hist.length ? 'google-sheets' : 'none';
-    if (!hist.length) return;
-    o.revHist = hist;
-    const last = hist[hist.length - 1];
-    o.revenue = `${last.v.toLocaleString('ru-RU')} млн ₽/год`;
-  });
-  window.DV_FINANCE = byId;
 }
 
-window._applyLocalEdits = () => {
-  const edits = window._getLocalEdits ? window._getLocalEdits() : {};
-  window.DV_DATA.objects.forEach(obj => {
-    const patch = edits[obj.id];
-    if (patch) Object.assign(obj, patch);
-  });
-};
+function parseNumber(v) {
+  if (v === undefined || v === null || v === '') return null;
+  const n = parseFloat(String(v).replace(',', '.').replace(/\s/g, ''));
+  return isNaN(n) ? null : n;
+}
 
-window._loadRemoteData = async () => {
-  window.DV_REMOTE.status = 'loading';
-  try {
-    const [objectsText, financeText] = await Promise.all([
-      fetch(window.DV_REMOTE.objectsCsv, { cache: 'no-store' }).then(r => {
-        if (!r.ok) throw new Error(`objects CSV: ${r.status}`);
-        return r.text();
-      }),
-      fetch(window.DV_REMOTE.financeCsv, { cache: 'no-store' }).then(r => {
-        if (!r.ok) throw new Error(`finance CSV: ${r.status}`);
-        return r.text();
-      }),
-    ]);
-    const objects = _parseCSV(objectsText).map(_mapObjectRow).filter(o => o.id && o.name);
-    const financeRows = _parseCSV(financeText);
-    _attachFinance(objects, financeRows);
-    window.DV_REMOTE.objectsCount = objects.length;
-    window.DV_REMOTE.financeRowsCount = financeRows.length;
-    window.DV_REMOTE.financeObjectsCount = Object.keys(window.DV_FINANCE || {}).length;
-    console.info('[Дом вдали] Google Sheets загружены:', {
-      objects: objects.length,
-      financeRows: financeRows.length,
-      financeObjects: Object.keys(window.DV_FINANCE || {}).length,
-      sampleFinance: window.DV_FINANCE && window.DV_FINANCE.o1
+async function loadCatalogData() {
+  const [objRows, finRows] = await Promise.all([
+    fetchSheetRows(SHEET_CSV_URLS.objects),
+    fetchSheetRows(SHEET_CSV_URLS.finance),
+  ]);
+
+  // Группируем строки листа «Финансы» по ID объекта — один объект может иметь много строк (по году).
+  const financeByObject = {};
+  finRows.forEach(row => {
+    const id = (row['IDОбъекта'] || '').trim();
+    const year = parseNumber(row['Год']);
+    const v = parseNumber(row['Выручка']);
+    if (!id || year === null || v === null) return;
+    (financeByObject[id] = financeByObject[id] || []).push({ year, v });
+  });
+  Object.values(financeByObject).forEach(arr => arr.sort((a, b) => a.year - b.year));
+
+  const objects = objRows
+    .filter(row => (row['ID'] || '').trim() && (row['Название'] || '').trim())
+    .map(row => {
+      const id = row['ID'].trim();
+      // Любая колонка с названием, начинающимся на «Фото» (Фото1, Фото2, …) — отдельная ссылка на Google Диск.
+      // Можно добавлять сколько угодно таких колонок в таблице — код подхватит их сам, без правок кода.
+      const photos = Object.keys(row)
+        .filter(k => /^Фото/i.test(k.trim()) && row[k] && row[k].trim())
+        .map(k => driveImageUrl(row[k].trim()))
+        .filter(Boolean);
+
+      return {
+        id,
+        name: (row['Название'] || '').trim(),
+        type: (row['Тип'] || '').trim(),
+        city: (row['Город'] || '').trim(),
+        addr: (row['Адрес'] || '').trim(),
+        region: (row['КодРегиона'] || '').trim(),
+        built: (row['Датировка'] || '').trim(),
+        period: (row['Период'] || '').trim(),
+        status: (row['ОхранныйСтатус'] || '').trim() || 'none',
+        lat: parseNumber(row['Широта']),
+        lng: parseNumber(row['Долгота']),
+        group: (row['ГруппаКомпаний'] || '').trim() || '—',
+        url: (row['Сайт'] || '').trim(),
+        description: (row['Описание'] || '').trim(),
+        historyNote: (row['ИсторическаяСправка'] || '').trim(),
+        photos,
+        financeHistory: financeByObject[id] || [],
+        lastModified: (row['ПоследнееИзменение'] || '').trim(),
+        editedBy: (row['КтоИзменил'] || '').trim(),
+      };
     });
-    if (objects.length) {
-      window.DV_DATA.objects = objects;
-      window.DV_DATA.cities = [...new Set(objects.map(o => o.city).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'ru'));
-      window._applyLocalEdits();
-      window.DV_REMOTE.status = 'ready';
-      window.DV_REMOTE.loadedAt = new Date().toISOString();
-      window.DV_REMOTE.error = null;
-      window.dispatchEvent(new CustomEvent('dv:data-ready', { detail: { objects: objects.length } }));
-    }
-  } catch (err) {
-    console.warn('[Дом вдали] Не удалось загрузить CSV, используются встроенные данные:', err);
-    window.DV_REMOTE.status = 'fallback';
-    window.DV_REMOTE.error = String(err && err.message || err);
-    window.dispatchEvent(new CustomEvent('dv:data-ready', { detail: { fallback: true } }));
-  }
-};
 
-// ============================================
-// АДМИН-ДОСТУП — простой пароль, без базы данных
-// ============================================
-const ADMIN_PASSWORD = 'domvdali2026'; // ← можно сменить
-const ADMIN_KEY = 'dv_admin_ok';
-const ADMIN_NAME_KEY = 'dv_admin_name';
+  window.DV_DATA.objects = objects;
+  window.DV_DATA.finance = financeByObject;
+  return objects;
+}
 
-window._isAdmin = () => localStorage.getItem(ADMIN_KEY) === 'yes';
-window._adminLogin = (pwd) => {
-  if (pwd === ADMIN_PASSWORD) {
-    localStorage.setItem(ADMIN_KEY, 'yes');
-    return true;
-  }
-  return false;
-};
-window._adminLogout = () => {
-  localStorage.removeItem(ADMIN_KEY);
-  localStorage.removeItem(ADMIN_NAME_KEY); // на случай общего устройства — следующий человек укажет своё имя
-};
-
-// Имя редактора — только подпись "кто правил", без проверки личности (пароль общий на всех).
-window._getAdminName = () => localStorage.getItem(ADMIN_NAME_KEY) || '';
-window._setAdminName = (name) => {
-  const trimmed = (name || '').trim();
-  if (trimmed) localStorage.setItem(ADMIN_NAME_KEY, trimmed);
-  return trimmed;
-};
-
-// ============================================
-// ЛОКАЛЬНЫЕ ПРАВКИ — без базы данных
-// Правки сохраняются в localStorage этого браузера и накладываются на объекты при загрузке.
-// Важно: это НЕ общее хранилище — правки видны только на этом устройстве,
-// другие админы и посетители сайта их не увидят, пока вы не перенесёте их в данные вручную.
-// ============================================
-const LOCAL_EDITS_KEY = 'dv_local_edits';
-
-window._getLocalEdits = () => {
-  try { return JSON.parse(localStorage.getItem(LOCAL_EDITS_KEY) || '{}'); }
-  catch (e) { return {}; }
-};
-window._saveLocalEdit = (id, patch) => {
-  const all = window._getLocalEdits();
-  all[id] = {
-    ...(all[id] || {}),
-    ...patch,
-    _editedAt: new Date().toISOString(),
-    _editedBy: window._getAdminName() || null,
-  };
-  localStorage.setItem(LOCAL_EDITS_KEY, JSON.stringify(all));
-  return all[id];
-};
-
-// Накладываем сохранённые локальные правки на исходные данные при старте
-window._applyLocalEdits();
-window._loadRemoteData();
+// Запускаем загрузку сразу при разборе страницы, не дожидаясь рендера React —
+// App() в конце файла дожидается этого промиса и показывает загрузочный экран, пока данных нет.
+window._catalogReady = loadCatalogData().catch(err => {
+  console.error('Не удалось загрузить каталог из Google Таблицы:', err);
+  window._catalogLoadError = err;
+  return [];
+});
 
 // ============================================
 // «СОХРАНЁННОЕ» — для обычных посетителей, без логина и личного кабинета
@@ -2060,7 +1840,7 @@ function StatusBadge({ s }) {
 /* ── Photo: real cover image (same for every object for now), falls back to a generated placeholder ── */
 const COVER_PHOTO_SRC = (window.__resources && window.__resources.coverPhoto) || 'assets/cover.png';
 
-function Photo({ obj, ratio = '3 / 2', label, fill, variant = 'pattern' }) {
+function Photo({ obj, src, ratio = '3 / 2', label, fill, variant = 'pattern' }) {
   const [imgFailed, setImgFailed] = useState(false);
   // Vary stripe color subtly by object id hash (used only by the fallback placeholder below)
   const h = (obj?.id || 'x').split('').reduce((a, c) => a + c.charCodeAt(0), 0) % 360;
@@ -2069,13 +1849,11 @@ function Photo({ obj, ratio = '3 / 2', label, fill, variant = 'pattern' }) {
   { width: '100%', height: '100%' } :
   { aspectRatio: ratio };
 
-  const photoSrc = obj?.photo ? window._driveThumb(obj.photo) : (obj?.photos && obj.photos[0] ? window._driveThumb(obj.photos[0]) : COVER_PHOTO_SRC);
-
-  if (!imgFailed) {
+  if (src && !imgFailed) {
     return (
       <div className="ph-img ph-img--photo" style={{ ...sizeStyle, position: 'relative', overflow: 'hidden' }}>
         <img
-          src={photoSrc}
+          src={src}
           alt={obj?.name || 'Фото объекта'}
           loading="lazy"
           onError={() => setImgFailed(true)}
@@ -2152,7 +1930,7 @@ function ObjectCard({ obj, onOpen, highlighted, onHover }) {
       onMouseEnter={() => onHover && onHover(obj.id)}
       onMouseLeave={() => onHover && onHover(null)}>
       <div className="estate-card-media">
-        <Photo obj={obj} fill variant="gradient" />
+        <Photo obj={obj} src={obj.photos && obj.photos[0]} fill variant="gradient" />
         <div className="estate-card-scrim" />
         <button className="estate-card-save" onClick={toggleSaved} aria-label={saved ? 'Убрать из сохранённого' : 'Сохранить'}>
           <I name="heart" className="ic-sm" fill={saved ? 'var(--accent)' : 'none'} stroke={saved ? 'var(--accent)' : 'var(--ink)'}/>
@@ -2383,13 +2161,16 @@ function MapPane({ objects, hoverId, setHoverId, onOpen, onBoundsChange }) {
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
+    // Объекты без координат (например, пока не геокодированный адрес) на карту не ставим —
+    // они всё равно видны в списке/каталоге, просто без точки на карте.
+    const geocoded = objects.filter((o) => o.lat != null && o.lng != null && !isNaN(o.lat) && !isNaN(o.lng));
     // remove markers not in list
-    const ids = new Set(objects.map((o) => o.id));
+    const ids = new Set(geocoded.map((o) => o.id));
     Object.entries(markersRef.current).forEach(([id, m]) => {
       if (!ids.has(id)) {map.removeLayer(m);delete markersRef.current[id];}
     });
     // add new
-    objects.forEach((o) => {
+    geocoded.forEach((o) => {
       if (markersRef.current[o.id]) return;
       const iconName = TYPE_ICONS[o.type] || 'columns';
       const html = `<div class="dv-marker" data-id="${o.id}">
@@ -2413,13 +2194,13 @@ function MapPane({ objects, hoverId, setHoverId, onOpen, onBoundsChange }) {
       markersRef.current[o.id] = m;
     });
     // Zoom tightly to whatever objects are currently shown (the active filter group)
-    if (objects.length > 0) {
-      const b = L.latLngBounds(objects.map((o) => [o.lat, o.lng]));
+    if (geocoded.length > 0) {
+      const b = L.latLngBounds(geocoded.map((o) => [o.lat, o.lng]));
       const fit = () => {
         map.invalidateSize();
         map.fitBounds(b, {
           padding: [48, 48],
-          maxZoom: objects.length === 1 ? 14 : 13,
+          maxZoom: geocoded.length === 1 ? 14 : 13,
           animate: true
         });
       };
@@ -2679,41 +2460,10 @@ function RatingScale({ value }) {
   );
 }
 
-/* revenue history: только реальные строки из листа «Финансы».
-   Если по объекту нет строк в Google Sheets, график не строим — так проще проверить,
-   что сайт не показывает сгенерированные или встроенные финансовые данные. */
+/* Реальная история выручки объекта — из листа «Финансы» (по строке на год). */
 function getRevenueHistory(obj){
-  if (obj?.revHist && obj.revHist.length) return obj.revHist;
-  return null;
+  return (obj.financeHistory && obj.financeHistory.length) ? obj.financeHistory : null;
 }
-function revBase(r){
-  if (!r || r === '—') return 0;
-  const m = r.match(/([\d.]+)\s*(млн|млрд)/);
-  if (!m) return 0;
-  return Math.round(parseFloat(m[1]) * (m[2]==='млрд'?1000:1));
-}
-
-/* Hist note generator (fictional) */
-const HIST = {
-  puskin:  'Здание построено в 1830-х в стиле русского классицизма. Долгое время здесь располагался доходный дом, в начале XX века — букинистический салон. Реставрация конца 1990-х вернула фасадам исторический облик.',
-  metrop:  'Гостиница «Метрополь» — один из первых в России отелей в стиле модерн. Авторы проекта — В. Валькот и Л. Кекушев. Здание сохранило панно «Принцесса Грёза», авторские лестницы и историческое лобби.',
-  ges2:    'Бывшая Трамвайная электростанция, спроектированная В. Башкировым. Реставрация архитектурного бюро Renzo Piano Building Workshop завершилась в 2021 году — сохранён каркас, четыре трубы и фасадные кладки.',
-  winery:  'Винный комбинат «Московская Бавария», основанный в конце XIX века. С 2007 года — арт-кластер: галереи, мастерские, лекторий. Многие корпуса сохранили чугунные колонны и кирпичные своды Монье.',
-  kadbn:   'Палаты XVIII века в Замоскворечье, перестроены в общественные бани в XIX веке. Восстановлены своды нижнего этажа, исторические дымоходы, банный двор.',
-  palkin:  'Ресторан «Палкинъ» работает с 1874 года в собственном здании на Невском. Сохранены ампирные интерьеры верхних залов, витражная лестница и историческая кухня в подвале.',
-  astor:   'Гостиница, открытая в 1912 году по проекту Ф. Лидваля. Жемчужина петербургского модерна — мраморный вестибюль, гранитная отделка цоколя, лестница в стиле северного романтизма.',
-  sevcab:  'Кабельный завод «Сименс и Гальске», 1879. С 2017 года — общественное пространство Севкабель Порт: 90 000 кв.м реконструированных корпусов на берегу Финского залива.',
-  newhol:  'Уникальный остров-арсенал петровской эпохи. Архитекторы С. Чевакинский и Ж.-Б. Валлен-Деламот. Реставрация Iris Foundation возвращает доступ к историческим складам.',
-  nikry:   'Торговые ряды конца XVIII века по проекту Дж. Кваренги. После реставрации 2016—2022 — общественное пространство с двором, кафе и культурными резидентами.',
-  erarta:  'Бывший НИИ синтетического каучука, неоклассическое здание начала XX в. Сегодня — крупнейший частный музей современного искусства в России.',
-  rozhd:   'Доходный дом купца Бугрова, 1879. Сохранена белокаменная лестница, чугунные перила, лепнина парадных залов. Здание входит в ансамбль Рождественской улицы.',
-  pokrov:  'Купеческие палаты на главной пешеходной улице города, перестроены из жилого дома XVIII века. Открытая кладка, изразцовые печи, исторические окна.',
-  shamil:  'Особняк купца Ибрагима Апакова, 1903. С 1986 года — литературно-мемориальный музей. Здание — пример татарской городской усадьбы начала XX века.',
-  cherem:  'Усадебный флигель в Казанском Кремле, кирпичная кладка XIX века. Реконструкция 2014 г. — в здании работает чайная и галерея фарфора.',
-  volgna:  'Особняк купца Иванова на Волжской набережной, 1856. Один из последних сохранившихся образцов поздней ампирной застройки Ярославля.',
-  kranz:   'Здание бывшего курзала Кранца (Зеленоградска), 1900. Эклектика с элементами немецкого фахверка. Сегодня — частный музей курортной истории.',
-  irkdom:  'Каменный особняк купца Файнберга, 1893. Один из лучших примеров иркутской эклектики. После реставрации 2019 года — креативный кластер «Дом Европы».',
-};
 
 /* Detail body — shared by modal & page */
 function DetailBody({ obj, onClose }) {
@@ -2727,105 +2477,34 @@ function DetailBody({ obj, onClose }) {
   const [lightboxIndex, setLightboxIndex] = useState(null);
   const tabs = [['building', 'Здание'], ['business', 'Бизнес'], ['finance', 'Финансы']];
   const activeTab = tabs.some(([k]) => k === tab) ? tab : 'building';
-  // Labels for the 5 hero tiles — all point at the same cover photo for now (see Photo component),
-  // but the gallery/lightbox is already wired up for when real per-object photos exist.
-  const galleryLabels = ['PRIMARY', 'INTERIOR', 'FACADE', 'DETAIL', 'ARCHIVE'];
-
-  // ── Редактирование (локально, без базы данных) ──
-  // Правки сохраняются прямо в объект в памяти + в localStorage (см. window._saveLocalEdit).
-  // Это НЕ общее хранилище: правки видны только в этом браузере.
-  const isAdmin = window._isAdmin();
-  const [editing, setEditing] = useState(false);
-  const [editData, setEditData] = useState({});
-  const [saveMsg, setSaveMsg] = useState('');
-
-  const startEdit = () => {
-    setEditData({
-      name:  obj.name  || '',
-      city:  obj.city  || '',
-      addr:  obj.addr  || '',
-      built: obj.built || '',
-      url:   obj.url   || '',
-      group: obj.group !== '—' ? (obj.group || '') : '',
-    });
-    setEditing(true);
-    setSaveMsg('');
-  };
-
-  const cancelEdit = () => { setEditing(false); setSaveMsg(''); };
-
-  const saveEdit = () => {
-    const patch = {
-      name:  editData.name,
-      city:  editData.city,
-      addr:  editData.addr,
-      built: editData.built,
-      url:   editData.url,
-      group: editData.group || '—',
-    };
-    const saved = window._saveLocalEdit(obj.id, patch); // патч + _editedAt/_editedBy
-
-    // Обновляем объект в памяти, чтобы карточка и каталог сразу показали новые данные
-    Object.assign(obj, patch, { _editedAt: saved._editedAt, _editedBy: saved._editedBy });
-    const idx = window.DV_DATA.objects.findIndex(o => o.id === obj.id);
-    if (idx !== -1) Object.assign(window.DV_DATA.objects[idx], obj);
-
-    setSaveMsg('✓ Сохранено в этом браузере');
-    setEditing(false);
-  };
-
-  // bare=true — не рисовать собственную колонку-подпись (нужно для строк, где подпись уже стоит снаружи)
-  const F = ({ label, field, multiline, bare }) => (
-    <>
-      {!bare && <span className="eyebrow" style={{paddingTop:2}}>{label}</span>}
-      {multiline ? (
-        <textarea
-          value={editData[field] || ''}
-          onChange={e => setEditData(d => ({...d, [field]: e.target.value}))}
-          rows={3}
-          style={{
-            padding:'7px 10px', border:'1px solid var(--rule-strong)',
-            borderRadius:'var(--r)', fontSize:14, fontFamily:'inherit',
-            resize:'vertical', lineHeight:1.5,
-          }}
-        />
-      ) : (
-        <input
-          type="text"
-          value={editData[field] || ''}
-          onChange={e => setEditData(d => ({...d, [field]: e.target.value}))}
-          style={{
-            padding:'7px 10px', border:'1px solid var(--rule-strong)',
-            borderRadius:'var(--r)', fontSize:14, fontFamily:'inherit',
-          }}
-        />
-      )}
-    </>
-  );
+  // Подписи плиток главной галереи. Показываем до 5 реальных фото объекта (см. колонки «ФотоN» в таблице);
+  // если фото нет — Photo сама покажет красивую заглушку с иконкой типа объекта.
+  const galleryLabels = ['Фото 1', 'Фото 2', 'Фото 3', 'Фото 4', 'Фото 5'];
 
   return (
     <div>
       {/* HERO */}
       <div className="detail-hero" style={{display:'grid', gridTemplateColumns:'2fr 1fr 1fr', gridTemplateRows:'160px 160px', gap:6, height: 326}}>
         <div className="detail-hero-tile" style={{gridRow:'1 / 3', position:'relative'}} onClick={()=>setLightboxIndex(0)}>
-          <Photo obj={obj} fill label="PRIMARY"/>
+          <Photo obj={obj} src={obj.photos && obj.photos[0]} fill label={galleryLabels[0]}/>
           <span className="hero-tile-hint"><I name="search" className="ic-sm"/></span>
         </div>
         <div className="detail-hero-tile" style={{position:'relative'}} onClick={()=>setLightboxIndex(1)}>
-          <Photo obj={{...obj, id: obj.id + '_2'}} fill label="INTERIOR"/>
+          <Photo obj={obj} src={obj.photos && obj.photos[1]} fill label={galleryLabels[1]}/>
           <span className="hero-tile-hint"><I name="search" className="ic-sm"/></span>
         </div>
         <div className="detail-hero-tile" style={{position:'relative'}} onClick={()=>setLightboxIndex(2)}>
-          <Photo obj={{...obj, id: obj.id + '_3'}} fill label="FACADE"/>
+          <Photo obj={obj} src={obj.photos && obj.photos[2]} fill label={galleryLabels[2]}/>
           <span className="hero-tile-hint"><I name="search" className="ic-sm"/></span>
         </div>
         <div className="detail-hero-tile" style={{position:'relative'}} onClick={()=>setLightboxIndex(3)}>
-          <Photo obj={{...obj, id: obj.id + '_4'}} fill label="DETAIL"/>
+          <Photo obj={obj} src={obj.photos && obj.photos[3]} fill label={galleryLabels[3]}/>
           <span className="hero-tile-hint"><I name="search" className="ic-sm"/></span>
         </div>
         <div className="detail-hero-tile" style={{position:'relative'}} onClick={()=>setLightboxIndex(4)}>
-          <Photo obj={{...obj, id: obj.id + '_5'}} fill label="ARCHIVE"/>
+          <Photo obj={obj} src={obj.photos && obj.photos[4]} fill label={galleryLabels[4]}/>
           <span className="hero-tile-hint"><I name="search" className="ic-sm"/></span>
+          {obj.photos && obj.photos.length > 5 &&
           <div style={{
             position:'absolute', right:8, bottom:8,
             background:'rgba(255,255,255,.9)',
@@ -2835,8 +2514,8 @@ function DetailBody({ obj, onClose }) {
             display:'flex', alignItems:'center', gap:6,
           }}>
             <I name="camera" className="ic-sm"/>
-            +12 фото
-          </div>
+            +{obj.photos.length - 5} фото
+          </div>}
         </div>
       </div>
 
@@ -2864,25 +2543,8 @@ function DetailBody({ obj, onClose }) {
             {saved ? 'Сохранено' : 'Сохранить'}
           </button>
           <button className="btn btn-ghost btn-sm"><I name="share" className="ic-sm"/>Поделиться</button>
-          {isAdmin && !editing &&
-          <button className="btn btn-ghost btn-sm" onClick={startEdit}>
-            <I name="edit" className="ic-sm"/>Редактировать
-          </button>}
-          {isAdmin && editing &&
-          <>
-            <button className="btn btn-primary btn-sm" onClick={saveEdit}>✓ Сохранить</button>
-            <button className="btn btn-ghost btn-sm" onClick={cancelEdit}>Отмена</button>
-          </>}
         </div>
       </div>
-
-      {saveMsg &&
-      <div style={{
-        margin:'14px 32px 0', padding:'10px 16px', borderRadius:'var(--r-sm)',
-        background:'var(--st-ok-bg)', color:'var(--st-ok)', fontSize:13,
-      }}>
-        {saveMsg}
-      </div>}
 
       {/* TABS */}
       <div className="detail-tabs-bar" style={{padding:'24px 32px 14px', borderBottom:'1px solid var(--rule)', display:'flex', gap:8, marginTop:24}}>
@@ -2903,8 +2565,7 @@ function DetailBody({ obj, onClose }) {
             <SectionHeader icon="building" title="Об историческом здании"/>
             <div style={{display:'grid', gridTemplateColumns:'auto 1fr', gap:'14px 24px', marginTop:18, fontSize:14}}>
               <span className="eyebrow" style={{paddingTop:2}}>Период</span>
-              {editing ? <F label="" field="built" bare/> :
-              <span><strong className="serif" style={{fontWeight:500, fontSize:16}}>{obj.built}</strong>{obj.year && <span style={{color:'var(--ink-2)', marginLeft:8}}>· {labelForPeriod(obj.period)}</span>}</span>}
+              <span><strong className="serif" style={{fontWeight:500, fontSize:16}}>{obj.built || '—'}</strong>{obj.period && <span style={{color:'var(--ink-2)', marginLeft:8}}>· {labelForPeriod(obj.period)}</span>}</span>
 
               <span className="eyebrow" style={{paddingTop:2}}>Статус</span>
               <span style={{display:'flex', alignItems:'center', gap:10}}>
@@ -2914,7 +2575,7 @@ function DetailBody({ obj, onClose }) {
 
               <span className="eyebrow" style={{paddingTop:2}}>Справка</span>
               <p className="serif" style={{margin:0, fontSize:15, lineHeight:1.6, color:'var(--ink-2)'}}>
-                {HIST[obj.id] || 'Историческая справка по объекту готовится.'}
+                {obj.historyNote || 'Историческая справка по объекту готовится.'}
               </p>
             </div>
           </section>}
@@ -2924,35 +2585,20 @@ function DetailBody({ obj, onClose }) {
           <section>
             <SectionHeader icon={TYPE_ICONS[obj.type]} title="О бизнесе"/>
             <div style={{display:'grid', gridTemplateColumns:'auto 1fr', gap:'14px 24px', marginTop:18, fontSize:14}}>
-              {editing ? (
+              <span className="eyebrow" style={{paddingTop:2}}>Тип</span>
+              <span><strong style={{fontWeight:500}}>{T?.label || '—'}</strong></span>
+
+              {obj.group && obj.group !== '—' && (
                 <>
-                  <F label="Название" field="name"/>
-                  <F label="Город" field="city"/>
-                  <F label="Адрес" field="addr"/>
-                  <F label="Группа компаний" field="group"/>
-                  <F label="Сайт" field="url"/>
-                </>
-              ) : (
-                <>
-                  <span className="eyebrow" style={{paddingTop:2}}>Тип</span>
-                  <span><strong style={{fontWeight:500}}>{T.label}</strong></span>
-
-                  <span className="eyebrow" style={{paddingTop:2}}>В здании с</span>
-                  <span className="mono" style={{fontSize:14}}>{2000 + (obj.year % 25)} г.</span>
-
-                  {obj.group && obj.group !== '—' && (
-                    <>
-                      <span className="eyebrow" style={{paddingTop:2}}>Группа</span>
-                      <span>{obj.group}</span>
-                    </>
-                  )}
-
-                  <span className="eyebrow" style={{paddingTop:2}}>Описание</span>
-                  <p style={{margin:0, fontSize:14, color:'var(--ink-2)', lineHeight:1.6}}>
-                    Действующий {T.label.toLowerCase()} в историческом здании. Сохранены исторические интерьеры, работа ведётся в режиме «бережной интеграции» — все капитальные работы согласованы с органами охраны памятников.
-                  </p>
+                  <span className="eyebrow" style={{paddingTop:2}}>Группа</span>
+                  <span>{obj.group}</span>
                 </>
               )}
+
+              <span className="eyebrow" style={{paddingTop:2}}>Описание</span>
+              <p style={{margin:0, fontSize:14, color:'var(--ink-2)', lineHeight:1.6}}>
+                {obj.description || 'Описание объекта пока не добавлено.'}
+              </p>
             </div>
           </section>}
 
@@ -3014,16 +2660,16 @@ function DetailBody({ obj, onClose }) {
           }}>
             <div style={{display:'flex', justifyContent:'space-between', marginBottom:8}}>
               <span>КООРДИНАТЫ</span>
-              <span style={{color:'var(--ink-2)'}}>{obj.lat.toFixed(4)}, {obj.lng.toFixed(4)}</span>
+              <span style={{color:'var(--ink-2)'}}>{(obj.lat != null && obj.lng != null) ? `${obj.lat.toFixed(4)}, ${obj.lng.toFixed(4)}` : '—'}</span>
             </div>
-            <div style={{display:'flex', justifyContent:'space-between', marginBottom: isAdmin ? 8 : 0}}>
+            <div style={{display:'flex', justifyContent:'space-between', marginBottom: obj.editedBy ? 8 : 0}}>
               <span>ОБНОВЛЕНО</span>
-              <span style={{color:'var(--ink-2)'}}>{formatDateTime(obj._editedAt) || '—'}</span>
+              <span style={{color:'var(--ink-2)'}}>{obj.lastModified || '—'}</span>
             </div>
-            {isAdmin &&
+            {obj.editedBy &&
             <div style={{display:'flex', justifyContent:'space-between'}}>
               <span>ПРАВИЛ(А)</span>
-              <span style={{color:'var(--ink-2)'}}>{obj._editedBy || '—'}</span>
+              <span style={{color:'var(--ink-2)'}}>{obj.editedBy}</span>
             </div>}
           </div>
         </aside>
@@ -3032,6 +2678,7 @@ function DetailBody({ obj, onClose }) {
       {lightboxIndex !== null &&
       <PhotoLightbox
         labels={galleryLabels}
+        srcs={obj.photos}
         index={lightboxIndex}
         onClose={()=>setLightboxIndex(null)}
         onIndexChange={setLightboxIndex}
@@ -3055,8 +2702,9 @@ function labelForPeriod(id){
 }
 
 /* ── Lightbox: fullscreen photo viewer with prev/next ── */
-function PhotoLightbox({ labels, index, onClose, onIndexChange }) {
+function PhotoLightbox({ labels, srcs, index, onClose, onIndexChange }) {
   const total = labels.length;
+  const currentSrc = srcs && srcs[index];
   const [imgFailed, setImgFailed] = useState(false);
   const goPrev = () => { setImgFailed(false); onIndexChange((index - 1 + total) % total); };
   const goNext = () => { setImgFailed(false); onIndexChange((index + 1) % total); };
@@ -3087,9 +2735,9 @@ function PhotoLightbox({ labels, index, onClose, onIndexChange }) {
       </button>}
 
       <figure className="lightbox-figure" onClick={(e)=>e.stopPropagation()}>
-        {imgFailed ?
+        {(!currentSrc || imgFailed) ?
         <div className="lightbox-fallback"><I name="camera" className="ic-lg"/><span>Фото скоро появится</span></div> :
-        <img src={COVER_PHOTO_SRC} alt={labels[index]} className="lightbox-img" onError={()=>setImgFailed(true)}/>}
+        <img src={currentSrc} alt={labels[index]} className="lightbox-img" onError={()=>setImgFailed(true)}/>}
         <figcaption className="lightbox-caption">
           <span>{labels[index]}</span>
           {total > 1 && <span className="lightbox-counter">{index + 1} / {total}</span>}
@@ -3198,6 +2846,9 @@ function AddObjectForm({ onClose }) {
   });
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const [submissionId, setSubmissionId] = useState(null);
 
   const set = (k, v) => setData(d => ({...d, [k]: v}));
 
@@ -3223,9 +2874,61 @@ function AddObjectForm({ onClose }) {
 
   const next = () => { if (validate(step)) setStep(s=>s+1); };
   const prev = () => setStep(s => Math.max(1, s-1));
-  const submit = () => { if (validate(3)) setSubmitted(true); };
 
-  if (submitted) return <SuccessScreen onClose={onClose}/>;
+  // Превращает выбранный файл в base64 (без префикса data:...;base64,) для отправки в Apps Script
+  const fileToBase64 = (file) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result).split(',')[1] || '');
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+
+  const submit = async () => {
+    if (!validate(3)) return;
+    setSubmitting(true);
+    setSubmitError('');
+    try {
+      const photosPayload = await Promise.all(
+        data.photos.map(async (p) => ({
+          filename: p.file.name,
+          mimeType: p.file.type || 'image/jpeg',
+          base64: await fileToBase64(p.file),
+        }))
+      );
+
+      const res = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        // text/plain — чтобы браузер не слал предварительный CORS-запрос (OPTIONS),
+        // который Apps Script Web App не обрабатывает; тело всё равно обычный JSON.
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          action: 'submitObject',
+          name: data.name,
+          type: data.type,
+          address: data.addr,
+          desc: data.desc,
+          period: data.period,
+          status: data.status,
+          history: data.history,
+          site: data.site,
+          phone: data.phone,
+          email: data.email,
+          revenue: data.revenue,
+          photos: photosPayload,
+        }),
+      });
+      const json = await res.json();
+      if (!json.ok) throw new Error(json.error || 'Не удалось отправить заявку');
+      setSubmissionId(json.submissionId);
+      setSubmitted(true);
+    } catch (err) {
+      setSubmitError('Не получилось отправить заявку. Проверьте интернет-соединение и попробуйте ещё раз. (' + err.message + ')');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (submitted) return <SuccessScreen onClose={onClose} submissionId={submissionId}/>;
 
   return (
     <div style={{maxWidth:680, margin:'0 auto', padding:'40px 24px 80px'}}>
@@ -3280,8 +2983,13 @@ function AddObjectForm({ onClose }) {
         {step === 3 && <Step3 data={data} set={set} errors={errors}/>}
       </div>
 
+      {submitError &&
+      <div style={{marginTop:24, padding:'12px 16px', borderRadius:'var(--r)', background:'var(--st-rej-bg)', color:'var(--st-rej)', fontSize:13}}>
+        {submitError}
+      </div>}
+
       <div style={{display:'flex', justifyContent:'space-between', marginTop:40, paddingTop:24, borderTop:'1px solid var(--rule)'}}>
-        <button className="btn btn-ghost" onClick={step === 1 ? onClose : prev}>
+        <button className="btn btn-ghost" onClick={step === 1 ? onClose : prev} disabled={submitting}>
           <I name="chevron-left" className="ic-sm"/>
           {step === 1 ? 'Отмена' : 'Назад'}
         </button>
@@ -3290,8 +2998,8 @@ function AddObjectForm({ onClose }) {
             Далее<I name="chevron-right" className="ic-sm"/>
           </button>
         ) : (
-          <button className="btn btn-primary" onClick={submit}>
-            <I name="send" className="ic-sm"/>Отправить заявку
+          <button className="btn btn-primary" onClick={submit} disabled={submitting}>
+            <I name="send" className="ic-sm"/>{submitting ? 'Отправляем…' : 'Отправить заявку'}
           </button>
         )}
       </div>
@@ -3367,8 +3075,24 @@ function Step1({ data, set, errors }) {
 }
 
 function Step2({ data, set, errors }) {
-  const [showUpload, setShowUpload] = useState(false);
-  const addPhoto = () => set('photos', [...data.photos, `Фото ${data.photos.length + 1}`]);
+  const fileInputRef = useRef(null);
+  const MAX_PHOTOS = 6;
+  const MAX_SIZE_MB = 10;
+
+  const handleFiles = (fileList) => {
+    const incoming = Array.from(fileList || [])
+      .filter(f => f.type.startsWith('image/'))
+      .filter(f => f.size <= MAX_SIZE_MB * 1024 * 1024)
+      .slice(0, Math.max(0, MAX_PHOTOS - data.photos.length))
+      .map(file => ({ file, previewUrl: URL.createObjectURL(file) }));
+    if (incoming.length) set('photos', [...data.photos, ...incoming]);
+  };
+
+  const removePhoto = (i) => {
+    URL.revokeObjectURL(data.photos[i].previewUrl);
+    set('photos', data.photos.filter((_, j) => j !== i));
+  };
+
   return (
     <div>
       <SectionHeader eyebrow="02" title="Об историческом здании" icon="building"/>
@@ -3420,9 +3144,20 @@ function Step2({ data, set, errors }) {
             value={data.history} onChange={e=>set('history', e.target.value)}/>
         </FormField>
 
-        <FormField label="Фотографии">
+        <FormField label="Фотографии" hint={data.photos.length >= MAX_PHOTOS ? `Максимум ${MAX_PHOTOS} фото` : null}>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            multiple
+            style={{display:'none'}}
+            onChange={e => { handleFiles(e.target.files); e.target.value = ''; }}
+          />
+          {data.photos.length < MAX_PHOTOS &&
           <div
-            onClick={addPhoto}
+            onClick={() => fileInputRef.current && fileInputRef.current.click()}
+            onDragOver={e => e.preventDefault()}
+            onDrop={e => { e.preventDefault(); handleFiles(e.dataTransfer.files); }}
             style={{
               marginTop:8,
               border:'1.5px dashed var(--rule-strong)',
@@ -3439,14 +3174,14 @@ function Step2({ data, set, errors }) {
               <I name="camera" className="ic-lg"/>
             </div>
             <div style={{fontSize:14, color:'var(--ink-2)'}}>Перетащите файлы сюда или нажмите для выбора</div>
-            <div className="mono" style={{fontSize:11, color:'var(--ink-3)'}}>JPG, PNG · до 10 МБ</div>
-          </div>
+            <div className="mono" style={{fontSize:11, color:'var(--ink-3)'}}>JPG, PNG · до {MAX_SIZE_MB} МБ, максимум {MAX_PHOTOS} фото</div>
+          </div>}
           {data.photos.length > 0 && (
             <div style={{display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap:10, marginTop:12}}>
               {data.photos.map((p, i) => (
                 <div key={i} style={{aspectRatio:'1', position:'relative'}}>
-                  <Photo obj={{id:`up${i}`, type:'museum'}} ratio="1" label={p}/>
-                  <button onClick={(e)=>{ e.stopPropagation(); set('photos', data.photos.filter((_, j)=>j!==i)); }}
+                  <Photo obj={{id:`up${i}`, type:data.type}} src={p.previewUrl} ratio="1"/>
+                  <button onClick={(e)=>{ e.stopPropagation(); removePhoto(i); }}
                     style={{
                       position:'absolute', top:6, right:6,
                       width:24, height:24, borderRadius:'50%',
@@ -3508,8 +3243,8 @@ function Step3({ data, set, errors }) {
   );
 }
 
-function SuccessScreen({ onClose }) {
-  const num = Math.floor(2800 + Math.random() * 200);
+function SuccessScreen({ onClose, submissionId }) {
+  const today = new Date().toLocaleDateString('ru-RU', { day:'2-digit', month:'2-digit', year:'numeric' });
   return (
     <div style={{
       maxWidth:560, margin:'0 auto', padding:'80px 24px',
@@ -3525,10 +3260,10 @@ function SuccessScreen({ onClose }) {
       </div>
       <h1 className="h-title" style={{fontSize:34, margin:'0 0 14px'}}>Спасибо!</h1>
       <p style={{fontSize:16, color:'var(--ink-2)', margin:'0 0 8px'}}>
-        Ваша заявка <span className="mono" style={{color:'var(--ink)'}}>#{num}</span> отправлена на модерацию.
+        Ваша заявка <span className="mono" style={{color:'var(--ink)'}}>#{submissionId}</span> отправлена на модерацию.
       </p>
       <p style={{fontSize:14, color:'var(--ink-3)', margin:'0 0 32px'}}>
-        Мы проверим информацию и свяжемся с вами в течение 3&nbsp;рабочих дней.
+        Мы проверим информацию и, если нужно, свяжемся с вами по указанному email.
       </p>
       <button className="btn btn-primary btn-lg" onClick={onClose}>
         <I name="chevron-left" className="ic-sm"/>Вернуться в каталог
@@ -3541,15 +3276,11 @@ function SuccessScreen({ onClose }) {
       }}>
         <div>
           <div>ЗАЯВКА</div>
-          <div style={{color:'var(--ink-2)', marginTop:4}}>#{num} от 14.05.2026</div>
+          <div style={{color:'var(--ink-2)', marginTop:4}}>#{submissionId} от {today}</div>
         </div>
         <div>
           <div>СТАТУС</div>
           <div style={{color:'var(--ink-2)', marginTop:4}}>На модерации</div>
-        </div>
-        <div>
-          <div>СРОК</div>
-          <div style={{color:'var(--ink-2)', marginTop:4}}>до 17.05.2026</div>
         </div>
       </div>
     </div>
@@ -3557,410 +3288,6 @@ function SuccessScreen({ onClose }) {
 }
 
 Object.assign(window, { AddObjectForm });
-
-  </script>
-  <script type="text/babel">
-/* ============================================
-   Admin — заявки и объекты
-   ============================================ */
-/* eslint-disable */
-
-const APP_STATUSES = {
-  new: { label:'Новая',       cls:'st-new',  color:'var(--st-new)',  bg:'var(--st-new-bg)' },
-  ok:  { label:'Одобрена',    cls:'st-ok',   color:'var(--st-ok)',   bg:'var(--st-ok-bg)' },
-  rej: { label:'Отклонена',   cls:'st-rej',  color:'var(--st-rej)',  bg:'var(--st-rej-bg)' },
-  rev: { label:'На доработке',cls:'st-rev',  color:'var(--st-rev)',  bg:'var(--st-rev-bg)' },
-};
-
-function StPill({ s }) {
-  const def = APP_STATUSES[s];
-  return (
-    <span style={{
-      display:'inline-flex', alignItems:'center', gap:6,
-      height:22, padding:'0 10px', borderRadius:999,
-      background: def.bg, color: def.color,
-      fontFamily:'var(--f-mono)', fontSize:11, letterSpacing:'.04em',
-    }}>
-      <span style={{width:6, height:6, borderRadius:'50%', background:def.color}}/>
-      {def.label}
-    </span>
-  );
-}
-
-function AdminPanel({ onClose }) {
-  const [tab, setTab] = useState('apps');
-  const [apps, setApps] = useState(window.DV_DATA.applications);
-  const [statusFilter, setStatusFilter] = useState('all');
-  const [openApp, setOpenApp] = useState(null);
-
-  const filteredApps = useMemo(() => {
-    if (statusFilter === 'all') return apps;
-    return apps.filter(a => a.status === statusFilter);
-  }, [apps, statusFilter]);
-
-  const updateApp = (id, patch) => {
-    setApps(xs => xs.map(a => a.id === id ? {...a, ...patch} : a));
-    if (openApp && openApp.id === id) setOpenApp({...openApp, ...patch});
-  };
-
-  return (
-    <div style={{background:'#fff', minHeight:'calc(100vh - var(--header-h))'}}>
-      <div className="admin-header" style={{
-        padding:'24px 32px 0',
-        borderBottom:'1px solid var(--rule)',
-        background:'#fff',
-      }}>
-        <div style={{display:'flex', alignItems:'baseline', justifyContent:'space-between'}}>
-          <div>
-            <span className="eyebrow">Внутренняя панель</span>
-            <h1 className="h-title" style={{margin:'4px 0 0', fontSize:30}}>Администрирование</h1>
-          </div>
-          <div style={{display:'flex', alignItems:'center', gap:14, color:'var(--ink-3)', fontSize:13}}>
-            <span className="mono" style={{overflowWrap:'anywhere', wordBreak:'break-word'}}>moderator@dom.dal.team</span>
-            <span style={{width:32, height:32, borderRadius:'50%', background:'var(--accent-soft)', color:'var(--accent)', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--f-serif)', flexShrink:0}}>М</span>
-          </div>
-        </div>
-        <div style={{display:'flex', gap:24, marginTop:20, overflowX:'auto', whiteSpace:'nowrap'}}>
-          {[['apps', `Заявки`, apps.filter(a=>a.status==='new').length],
-            ['objs', 'Объекты', window.DV_DATA.objects.length]].map(([k, l, n]) => (
-            <button key={k}
-              onClick={()=>setTab(k)}
-              style={{
-                background:'none', border:'none', padding:'10px 0',
-                fontSize:15, color: tab===k ? 'var(--ink)' : 'var(--ink-3)',
-                borderBottom:`2px solid ${tab===k ? 'var(--ink)' : 'transparent'}`,
-                cursor:'pointer', display:'inline-flex', alignItems:'center', gap:8,
-                fontWeight: tab===k ? 500 : 300,
-                marginBottom:-1,
-              }}>
-              {l}
-              <span style={{
-                fontFamily:'var(--f-mono)', fontSize:11,
-                color: tab===k ? 'var(--accent)' : 'var(--ink-3)',
-                background: tab===k ? 'var(--accent-soft)' : 'var(--bg-soft)',
-                padding:'2px 8px', borderRadius:999,
-              }}>{n}</span>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {tab === 'apps' ? (
-        <AppsTab
-          apps={filteredApps} allApps={apps}
-          statusFilter={statusFilter} setStatusFilter={setStatusFilter}
-          onOpen={setOpenApp}/>
-      ) : (
-        <ObjectsTab/>
-      )}
-
-      {openApp && <AppDrawer app={openApp} onClose={()=>setOpenApp(null)} update={updateApp}/>}
-    </div>
-  );
-}
-
-function AppsTab({ apps, allApps, statusFilter, setStatusFilter, onOpen }) {
-  const stats = useMemo(() => {
-    const c = (s) => allApps.filter(a => a.status === s).length;
-    return { new: c('new'), ok: c('ok'), rev: c('rev'), rej: c('rej'), all: allApps.length };
-  }, [allApps]);
-
-  return (
-    <div className="apps-tab-container" style={{padding:'24px 32px'}}>
-      <div className="apps-tab-toolbar" style={{display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:18}}>
-        <div style={{display:'flex', gap:6}}>
-          {[
-            ['all', `Все · ${stats.all}`],
-            ['new', `Новые · ${stats.new}`],
-            ['rev', `На доработке · ${stats.rev}`],
-            ['ok',  `Одобрено · ${stats.ok}`],
-            ['rej', `Отклонено · ${stats.rej}`],
-          ].map(([k, l])=>(
-            <button key={k}
-              onClick={()=>setStatusFilter(k)}
-              style={{
-                height:30, padding:'0 12px', borderRadius:'var(--r-sm)',
-                background: statusFilter===k ? 'var(--ink)' : 'transparent',
-                color: statusFilter===k ? '#fff' : 'var(--ink-2)',
-                border:'1px solid', borderColor: statusFilter===k ? 'var(--ink)' : 'var(--rule)',
-                fontSize:13, cursor:'pointer', whiteSpace:'nowrap', flexShrink:0,
-              }}>{l}</button>
-          ))}
-        </div>
-        <div style={{display:'flex', gap:10}}>
-          <div style={{position:'relative'}}>
-            <I name="search" className="ic-sm" style={{position:'absolute', left:10, top:9, color:'var(--ink-3)'}}/>
-            <input style={{
-              height:32, paddingLeft:30, paddingRight:14,
-              border:'1px solid var(--rule)',
-              borderRadius:'var(--r-sm)', background:'#fff',
-              fontSize:13, width:220,
-            }} placeholder="Поиск по названию"/>
-          </div>
-          <button className="btn btn-ghost btn-sm">
-            <I name="upload" className="ic-sm"/>Экспорт CSV
-          </button>
-        </div>
-      </div>
-
-      {/* Desktop table */}
-      <div className="admin-table-desktop" style={{border:'1px solid var(--rule)', borderRadius:'var(--r)', overflow:'hidden'}}>
-        <table style={{width:'100%', borderCollapse:'collapse', fontSize:14}}>
-          <thead>
-            <tr style={{background:'var(--bg-soft)'}}>
-              {[' #', 'Название', 'Город', 'Тип', 'Дата подачи', 'Статус', ''].map((h,i)=>(
-                <th key={i} style={{
-                  textAlign:'left', padding:'12px 16px',
-                  fontFamily:'var(--f-mono)', fontSize:10, letterSpacing:'.14em',
-                  textTransform:'uppercase', color:'var(--ink-3)', fontWeight:500,
-                  borderBottom:'1px solid var(--rule)',
-                }}>{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {apps.map(a => (
-              <tr key={a.id}
-                onClick={()=>onOpen(a)}
-                style={{cursor:'pointer', borderBottom:'1px solid var(--rule)', transition:'background .15s'}}
-                onMouseEnter={e=>e.currentTarget.style.background='var(--bg-soft)'}
-                onMouseLeave={e=>e.currentTarget.style.background=''}>
-                <td style={{padding:'14px 16px', fontFamily:'var(--f-mono)', fontSize:12, color:'var(--ink-3)'}}>#{a.id}</td>
-                <td style={{padding:'14px 16px', fontWeight:400}}>{a.name}</td>
-                <td style={{padding:'14px 16px', color:'var(--ink-2)'}}>{a.city}</td>
-                <td style={{padding:'14px 16px'}}>
-                  <span style={{display:'inline-flex', alignItems:'center', gap:6, color:'var(--ink-2)', fontSize:13}}>
-                    <I name={TYPE_ICONS[a.type]} className="ic-sm"/>
-                    {window.DV_DATA.types[a.type]?.label}
-                  </span>
-                </td>
-                <td style={{padding:'14px 16px', fontFamily:'var(--f-mono)', fontSize:12, color:'var(--ink-3)'}}>{a.date}</td>
-                <td style={{padding:'14px 16px'}}><StPill s={a.status}/></td>
-                <td style={{padding:'14px 16px', textAlign:'right', color:'var(--ink-3)'}}>
-                  <I name="chevron-right" className="ic-sm"/>
-                </td>
-              </tr>
-            ))}
-            {apps.length === 0 && (
-              <tr><td colSpan={7} style={{padding:'40px', textAlign:'center', color:'var(--ink-3)', fontFamily:'var(--f-serif)'}}>Заявок не найдено</td></tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Mobile card view */}
-      <div className="admin-cards-mobile" style={{display:'none', flexDirection:'column', gap:12}}>
-        {apps.map(a => (
-          <div key={a.id} className="card" onClick={()=>onOpen(a)} style={{cursor:'pointer', padding:'14px 16px'}}>
-            <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:8}}>
-              <span className="mono" style={{fontSize:11, color:'var(--ink-3)'}}>#{a.id}</span>
-              <StPill s={a.status}/>
-            </div>
-            <h3 style={{margin:'0 0 6px', fontSize:16, fontWeight:500}}>{a.name}</h3>
-            <div style={{display:'flex', gap:12, flexWrap:'wrap', fontSize:13, color:'var(--ink-2)'}}>
-              <span style={{display:'inline-flex', alignItems:'center', gap:4}}>
-                <I name="pin" className="ic-sm"/>{a.city}
-              </span>
-              <span style={{display:'inline-flex', alignItems:'center', gap:4}}>
-                <I name={TYPE_ICONS[a.type]} className="ic-sm"/>{window.DV_DATA.types[a.type]?.label}
-              </span>
-              <span className="mono" style={{fontSize:12}}>{a.date}</span>
-            </div>
-          </div>
-        ))}
-        {apps.length === 0 && (
-          <div className="card" style={{padding:'36px', textAlign:'center', color:'var(--ink-3)'}}>Заявок не найдено</div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function AppDrawer({ app, onClose, update }) {
-  const [comment, setComment] = useState('');
-  const T = window.DV_DATA.types[app.type];
-  useEffect(() => {
-    const h = (e) => { if (e.key === 'Escape') onClose(); };
-    window.addEventListener('keydown', h);
-    return () => window.removeEventListener('keydown', h);
-  }, []);
-
-  return (
-    <div style={{position:'fixed', inset:0, zIndex:9000, background:'rgba(3,27,37,.32)', display:'flex', justifyContent:'flex-end', animation:'fadeIn .15s'}} onClick={onClose}>
-      <div className="app-drawer-inner scroll-y" style={{
-        width:'min(540px, 96vw)', height:'100vh',
-        background:'#fff', boxShadow:'var(--sh-3)', overflowY:'auto',
-        animation:'slideRight .2s ease',
-      }} onClick={e=>e.stopPropagation()}>
-        <div style={{
-          padding:'16px 24px', borderBottom:'1px solid var(--rule)',
-          paddingTop:'calc(16px + env(safe-area-inset-top, 0px))',
-          position:'sticky', top:0, background:'#fff', zIndex:5,
-          display:'flex', alignItems:'center', justifyContent:'space-between',
-        }}>
-          <div style={{minWidth:0}}>
-            <span className="mono" style={{fontSize:11, color:'var(--ink-3)', letterSpacing:'.04em'}}>ЗАЯВКА · #{app.id}</span>
-            <h2 className="h-title" style={{margin:'2px 0 0', fontSize:22, overflowWrap:'anywhere'}}>{app.name}</h2>
-          </div>
-          <button onClick={onClose} className="btn btn-ghost btn-sm" style={{height:30, padding:'0 10px'}}><I name="close" className="ic-sm"/></button>
-        </div>
-
-        <div style={{padding:'20px 24px'}}>
-          <div style={{display:'flex', gap:8, marginBottom:18}}>
-            <StPill s={app.status}/>
-            <span style={{display:'inline-flex', alignItems:'center', gap:5, height:22, padding:'0 10px', borderRadius:999, background:'var(--bg-soft)', color:'var(--ink-2)', fontSize:12}}>
-              <I name={TYPE_ICONS[app.type]} className="ic-sm"/>{T?.label}
-            </span>
-          </div>
-
-          <Photo obj={{id:`app-${app.id}`, type: app.type}} ratio="3 / 2" label="ПРЕВЬЮ"/>
-
-          <div style={{marginTop:20, display:'grid', gridTemplateColumns:'auto 1fr', gap:'14px 18px', fontSize:14}}>
-            <span className="eyebrow" style={{paddingTop:2}}>Город</span>
-            <span>{app.city}</span>
-            <span className="eyebrow" style={{paddingTop:2}}>Тип</span>
-            <span>{T?.label}</span>
-            <span className="eyebrow" style={{paddingTop:2}}>Дата подачи</span>
-            <span className="mono">{app.date}</span>
-            <span className="eyebrow" style={{paddingTop:2}}>Email</span>
-            <span className="mono">{app.email}</span>
-            <span className="eyebrow" style={{paddingTop:2}}>Описание</span>
-            <p className="serif" style={{margin:0, fontSize:14, color:'var(--ink-2)', lineHeight:1.6}}>{app.desc}</p>
-          </div>
-
-          <div style={{marginTop:24, paddingTop:18, borderTop:'1px solid var(--rule)'}}>
-            <span className="eyebrow">Комментарий модератора</span>
-            <textarea className="textarea" rows={3} placeholder="Например: пришлите более качественные фотографии..."
-              value={comment} onChange={e=>setComment(e.target.value)} style={{marginTop:8}}/>
-          </div>
-        </div>
-
-        <div className="app-drawer-actions" style={{
-          position:'sticky', bottom:0, background:'#fff',
-          padding:'14px 24px', borderTop:'1px solid var(--rule)',
-          display:'flex', gap:10, justifyContent:'flex-end',
-          paddingBottom:'calc(14px + env(safe-area-inset-bottom, 0px))',
-        }}>
-          <button className="btn btn-ghost btn-sm" style={{color:'var(--st-rej)'}} onClick={()=>update(app.id,{status:'rej'})}>
-            <I name="close" className="ic-sm"/>Отклонить
-          </button>
-          <button className="btn btn-ghost btn-sm" onClick={()=>update(app.id,{status:'rev'})}>
-            На доработку
-          </button>
-          <button className="btn btn-primary btn-sm" onClick={()=>update(app.id,{status:'ok'})}>
-            <I name="check" className="ic-sm"/>Одобрить
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ObjectsTab() {
-  const [items, setItems] = useState(window.DV_DATA.objects);
-  const [search, setSearch] = useState('');
-  const [dragIdx, setDragIdx] = useState(null);
-
-  const filtered = items.filter(o => {
-    const q = search.toLowerCase();
-    return !q || o.name.toLowerCase().includes(q) || o.city.toLowerCase().includes(q);
-  });
-
-  const onDragStart = (i) => setDragIdx(i);
-  const onDragOver  = (e, i) => {
-    e.preventDefault();
-    if (dragIdx === null || dragIdx === i) return;
-    setItems(xs => {
-      const next = xs.slice();
-      const [moved] = next.splice(dragIdx, 1);
-      next.splice(i, 0, moved);
-      setDragIdx(i);
-      return next;
-    });
-  };
-  const onDragEnd = () => setDragIdx(null);
-
-  return (
-    <div className="objects-tab-container" style={{padding:'24px 32px'}}>
-      <div className="objects-tab-toolbar" style={{display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:18}}>
-        <div style={{position:'relative', minWidth:0, flex:'1 1 auto'}}>
-          <I name="search" className="ic-sm" style={{position:'absolute', left:10, top:9, color:'var(--ink-3)'}}/>
-          <input
-            value={search} onChange={e=>setSearch(e.target.value)}
-            style={{
-              height:32, paddingLeft:30, paddingRight:14,
-              border:'1px solid var(--rule)',
-              borderRadius:'var(--r-sm)', background:'#fff',
-              fontSize:13, width:280, maxWidth:'100%',
-            }} placeholder="Поиск по названию или городу"/>
-        </div>
-        <button className="btn btn-primary btn-sm" style={{whiteSpace:'nowrap', flexShrink:0}}>
-          <I name="plus" className="ic-sm"/>Добавить вручную
-        </button>
-      </div>
-
-      <div style={{border:'1px solid var(--rule)', borderRadius:'var(--r)', overflow:'hidden', overflowX:'auto'}}>
-        <div className="objects-tab-grid-header" style={{
-          display:'grid', gridTemplateColumns:'40px 60px 1fr 180px 130px 100px 90px 80px',
-          padding:'10px 16px', background:'var(--bg-soft)',
-          fontFamily:'var(--f-mono)', fontSize:10, letterSpacing:'.14em',
-          textTransform:'uppercase', color:'var(--ink-3)',
-          borderBottom:'1px solid var(--rule)',
-          minWidth:760,
-        }}>
-          <span/><span/><span>Название / адрес</span><span>Город</span><span>Тип</span><span>Год</span><span>Статус</span><span style={{textAlign:'right'}}>Правка</span>
-        </div>
-        {filtered.map((o, i) => (
-          <div key={o.id}
-            draggable
-            onDragStart={()=>onDragStart(i)}
-            onDragOver={(e)=>onDragOver(e, i)}
-            onDragEnd={onDragEnd}
-            className="objects-tab-row"
-            style={{
-              display:'grid', gridTemplateColumns:'40px 60px 1fr 180px 130px 100px 90px 80px',
-              padding:'10px 16px', alignItems:'center',
-              borderBottom:'1px solid var(--rule)', fontSize:14,
-              background: dragIdx === i ? 'var(--bg-soft)' : '#fff',
-              opacity: dragIdx === i ? .7 : 1,
-              cursor:'grab',
-              transition:'background .15s',
-              minWidth:760,
-            }}
-            onMouseEnter={e=> dragIdx === null && (e.currentTarget.style.background='var(--bg)')}
-            onMouseLeave={e=> dragIdx === null && (e.currentTarget.style.background='#fff')}>
-            <span style={{color:'var(--ink-3)'}}><I name="drag" className="ic-sm"/></span>
-            <div style={{width:44, height:32, borderRadius:4, overflow:'hidden'}}>
-              <Photo obj={o} ratio="44/32" label=""/>
-            </div>
-            <div>
-              <div style={{fontWeight:400}}>{o.name}</div>
-              <div style={{fontSize:12, color:'var(--ink-3)'}}>{o.addr}</div>
-            </div>
-            <span style={{color:'var(--ink-2)'}}>{o.city}</span>
-            <span style={{color:'var(--ink-2)', display:'inline-flex', alignItems:'center', gap:6, fontSize:13}}>
-              <I name={TYPE_ICONS[o.type]} className="ic-sm"/>
-              {window.DV_DATA.types[o.type].label}
-            </span>
-            <span className="mono" style={{fontSize:13, color:'var(--ink-2)'}}>{o.year}</span>
-            <StatusBadge s={o.status}/>
-            <div style={{textAlign:'right', display:'flex', justifyContent:'flex-end', alignItems:'center', gap:8}}>
-              <button style={{background:'none', border:'none', cursor:'pointer', color:'var(--ink-3)', padding:4}}>
-                <I name="edit" className="ic-sm"/>
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-      <p style={{marginTop:14, fontSize:12, color:'var(--ink-3)'}}>
-        <I name="drag" className="ic-sm" style={{verticalAlign:'middle', marginRight:4}}/>
-        Перетащите строки для изменения порядка отображения в каталоге.
-      </p>
-    </div>
-  );
-}
-
-Object.assign(window, { AdminPanel, AppDrawer, StPill });
 
   </script>
   <script type="text/babel">
@@ -4082,9 +3409,6 @@ function DesignSystemPage() {
         <div style={{display:'flex', gap:10, flexWrap:'wrap', marginBottom:18}}>
           {Object.keys(window.DV_DATA.statuses).map(s => <StatusBadge key={s} s={s}/>)}
         </div>
-        <div style={{display:'flex', gap:10, flexWrap:'wrap'}}>
-          {Object.keys(APP_STATUSES).map(s => <StPill key={s} s={s}/>)}
-        </div>
       </DSSection>
 
       <DSSection num="05" title="Карточка объекта">
@@ -4202,129 +3526,8 @@ Object.assign(window, { DesignSystemPage });
 const { useState, useEffect, useMemo, useRef, useCallback } = React;
 const { FilterChip, RegionPicker, MoreFilters } = window;
 
-// Форма входа в админку: пароль → (если имя ещё не сохранено на устройстве) имя
-function AdminLoginScreen({ onSuccess }) {
-  const [step, setStep] = useState(window._isAdmin() && !window._getAdminName() ? 'name' : 'password');
-  const [pwd, setPwd] = useState('');
-  const [name, setName] = useState('');
-  const [error, setError] = useState('');
-
-  const handlePasswordSubmit = () => {
-    if (window._adminLogin(pwd)) {
-      setError('');
-      if (window._getAdminName()) {
-        onSuccess();
-      } else {
-        setStep('name');
-      }
-    } else {
-      setError('Неверный пароль');
-      setPwd('');
-    }
-  };
-
-  const handleNameSubmit = () => {
-    if (!window._setAdminName(name)) {
-      setError('Введите имя');
-      return;
-    }
-    onSuccess();
-  };
-
-  return (
-    <div style={{
-      minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center',
-      background:'#f5f4f0',
-    }}>
-      <div style={{
-        background:'#fff', borderRadius:12, padding:40, width:360,
-        boxShadow:'0 4px 24px rgba(0,0,0,.10)',
-      }}>
-        {step === 'password' ? (
-          <>
-            <h2 style={{margin:'0 0 8px', fontSize:22, fontWeight:500, color:'#031B25'}}>
-              Административная панель
-            </h2>
-            <p style={{margin:'0 0 28px', fontSize:14, color:'#6B7A87'}}>Дом вдали</p>
-            <div style={{display:'flex', flexDirection:'column', gap:14}}>
-              <div>
-                <div style={{fontSize:11, fontWeight:500, letterSpacing:'.08em', textTransform:'uppercase', color:'#6B7A87', marginBottom:6}}>Пароль</div>
-                <input
-                  type="password"
-                  value={pwd}
-                  onChange={e => setPwd(e.target.value)}
-                  onKeyDown={e => e.key === 'Enter' && handlePasswordSubmit()}
-                  autoFocus
-                  style={{
-                    display:'block', width:'100%', boxSizing:'border-box',
-                    padding:'10px 12px', border:'1px solid #C9D3DD',
-                    borderRadius:6, fontSize:15, fontFamily:'inherit',
-                    background:'#fff', color:'#031B25', outline:'none',
-                  }}
-                  placeholder="••••••••"
-                />
-              </div>
-              {error && <div style={{color:'#D94F3B', fontSize:13}}>{error}</div>}
-              <button
-                onClick={handlePasswordSubmit}
-                style={{
-                  padding:'10px 0', background:'#031B25', color:'#fff',
-                  border:'none', borderRadius:6, fontSize:14, fontFamily:'inherit',
-                  cursor:'pointer', fontWeight:500,
-                }}
-              >
-                Войти
-              </button>
-            </div>
-          </>
-        ) : (
-          <>
-            <h2 style={{margin:'0 0 8px', fontSize:22, fontWeight:500, color:'#031B25'}}>
-              Как вас зовут?
-            </h2>
-            <p style={{margin:'0 0 28px', fontSize:14, color:'#6B7A87'}}>
-              Имя будет видно у правок — чтобы понимать, кто что поменял. Спросим только один раз на этом устройстве.
-            </p>
-            <div style={{display:'flex', flexDirection:'column', gap:14}}>
-              <div>
-                <div style={{fontSize:11, fontWeight:500, letterSpacing:'.08em', textTransform:'uppercase', color:'#6B7A87', marginBottom:6}}>Имя</div>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={e => setName(e.target.value)}
-                  onKeyDown={e => e.key === 'Enter' && handleNameSubmit()}
-                  autoFocus
-                  style={{
-                    display:'block', width:'100%', boxSizing:'border-box',
-                    padding:'10px 12px', border:'1px solid #C9D3DD',
-                    borderRadius:6, fontSize:15, fontFamily:'inherit',
-                    background:'#fff', color:'#031B25', outline:'none',
-                  }}
-                  placeholder="Например, Таня"
-                />
-              </div>
-              {error && <div style={{color:'#D94F3B', fontSize:13}}>{error}</div>}
-              <button
-                onClick={handleNameSubmit}
-                style={{
-                  padding:'10px 0', background:'#031B25', color:'#fff',
-                  border:'none', borderRadius:6, fontSize:14, fontFamily:'inherit',
-                  cursor:'pointer', fontWeight:500,
-                }}
-              >
-                Продолжить
-              </button>
-            </div>
-          </>
-        )}
-      </div>
-    </div>
-  );
-}
-
 function Header({ route, setRoute, onAdd, mobileMenuOpen, setMobileMenuOpen }) {
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
-  const isAdmin = window._isAdmin();
   const [savedCount, setSavedCount] = useState(() => window._getSavedIds().length);
 
   useEffect(() => {
@@ -4333,15 +3536,10 @@ function Header({ route, setRoute, onAdd, mobileMenuOpen, setMobileMenuOpen }) {
     return () => window.removeEventListener('dv:saved-changed', onChange);
   }, []);
 
-  const handleLogout = () => {
-    window._adminLogout();
-    setRoute('catalog');
-  };
-
   return (
     <header className="hdr">
       <div className="hdr-inner" style={isMobile ? { padding: '0 16px', gap: 14 } : {}}>
-        <a className="brand" href="https://dom.dal.team/" aria-label="Перейти на сайт ДАЛЬ" style={{ cursor: 'pointer' }}>
+        <a className="brand" onClick={() => setRoute('catalog')} style={{ cursor: 'pointer' }}>
           <img src={(window.__resources && window.__resources.logoMain) || "assets/logo.svg"} alt="Дом вдали" style={{ height: 28, display: 'block' }} />
         </a>
 
@@ -4349,8 +3547,6 @@ function Header({ route, setRoute, onAdd, mobileMenuOpen, setMobileMenuOpen }) {
         <nav className="nav">
             <a onClick={() => setRoute('catalog')} className={route === 'catalog' ? 'is-active' : ''} style={{ cursor: 'pointer' }}>Каталог</a>
             <a onClick={onAdd} style={{ cursor: 'pointer' }}>Добавить объект</a>
-            {isAdmin &&
-            <a onClick={() => setRoute('admin')} className={route === 'admin' ? 'is-active' : ''} style={{ cursor: 'pointer' }}>Админ</a>}
           </nav>
         }
 
@@ -4368,12 +3564,6 @@ function Header({ route, setRoute, onAdd, mobileMenuOpen, setMobileMenuOpen }) {
           <a href="https://t.me/domvdalybot" target="_blank" rel="noopener" className="btn btn-primary btn-sm" style={{ backgroundColor: "rgb(3, 27, 37)" }}>
             <I name="send" className="ic-sm" />Связаться с нами
           </a>
-          {isAdmin &&
-          <>
-            {window._getAdminName() &&
-            <span className="mono" style={{ fontSize: 12, color: 'var(--ink-3)' }}>{window._getAdminName()}</span>}
-            <button className="btn btn-ghost btn-sm" onClick={handleLogout}>Выйти</button>
-          </>}
           {isMobile &&
           <button className="btn btn-ghost btn-sm" style={{ padding: '0 8px' }} onClick={() => setMobileMenuOpen(true)}>
               <I name="menu" className="ic" />
@@ -4387,15 +3577,12 @@ function Header({ route, setRoute, onAdd, mobileMenuOpen, setMobileMenuOpen }) {
 
 function MobileMenu({ open, onClose, route, setRoute, onAdd }) {
   if (!open) return null;
-  const isAdmin = window._isAdmin();
   const savedCount = window._getSavedIds().length;
   const go = (r) => {setRoute(r);onClose();};
-  const handleLogout = () => { window._adminLogout(); go('catalog'); };
   const items = [
     ['catalog', 'Каталог', 'list'],
     ['add', 'Добавить объект', 'plus'],
     ['saved', savedCount > 0 ? `Сохранённое · ${savedCount}` : 'Сохранённое', 'heart'],
-    ...(isAdmin ? [['admin', 'Админ', 'building']] : []),
   ];
   return (
     <div style={{ position: 'fixed', inset: 0, zIndex: 9000, background: 'rgba(3,27,37,.32)', animation: 'fadeIn .15s' }} onClick={onClose}>
@@ -4423,17 +3610,6 @@ function MobileMenu({ open, onClose, route, setRoute, onAdd }) {
               <I name={ic} className="ic-sm" />{l}
             </button>
           )}
-          {isAdmin &&
-          <button onClick={handleLogout}
-          style={{
-            display: 'flex', alignItems: 'center', gap: 12,
-            padding: '14px 12px', background: 'none', border: 'none',
-            borderBottom: '1px solid var(--rule)',
-            cursor: 'pointer', textAlign: 'left',
-            color: 'var(--ink-3)', fontSize: 15
-          }}>
-            {window._getAdminName() ? `Выйти (${window._getAdminName()})` : 'Выйти'}
-          </button>}
         </div>
         <a href="https://t.me/domvdalybot" target="_blank" rel="noopener" className="btn btn-primary" style={{ marginTop: 24, width: '100%' }}>
           <I name="send" className="ic-sm" />Связаться с нами
@@ -4638,16 +3814,9 @@ function FilterGroup({ title, children }) {
    App root
    ============================================ */
 function App() {
-  const [dataVersion, setDataVersion] = useState(0);
-  useEffect(() => {
-    const onReady = () => setDataVersion(v => v + 1);
-    window.addEventListener('dv:data-ready', onReady);
-    return () => window.removeEventListener('dv:data-ready', onReady);
-  }, []);
-
   const [route, setRoute] = useState(() => {
     const h = location.hash.replace('#', '');
-    return ['catalog', 'admin', 'ds', 'saved'].includes(h) ? h : 'catalog';
+    return ['catalog', 'ds', 'saved'].includes(h) ? h : 'catalog';
   });
   const [openObj, setOpenObj] = useState(null);
   const [addOpen, setAddOpen] = useState(false);
@@ -4656,8 +3825,16 @@ function App() {
   const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 768px)').matches);
   // No localStorage / cookies here on purpose — the intro is meant to show on every visit
   const [introOpen, setIntroOpen] = useState(true);
-  // Бампается после входа/выхода из админки, чтобы перечитать window._isAdmin() и перерисовать страницу
-  const [authTick, setAuthTick] = useState(0);
+  // Каталог теперь грузится из Google Таблицы асинхронно — ждём, пока данные подъедут.
+  const [dataReady, setDataReady] = useState(false);
+  const [dataError, setDataError] = useState(null);
+
+  useEffect(() => {
+    window._catalogReady.then(() => {
+      setDataReady(true);
+      setDataError(window._catalogLoadError || null);
+    });
+  }, []);
 
   useEffect(() => {
     const onResize = () => setIsMobile(window.matchMedia('(max-width: 768px)').matches);
@@ -4667,17 +3844,31 @@ function App() {
 
   useEffect(() => {location.hash = route;}, [route]);
 
+  if (!dataReady) {
+    return (
+      <div style={{ minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', flexDirection:'column', gap:14 }}>
+        <div className="mono" style={{ fontSize:12, letterSpacing:'.08em', color:'var(--ink-3)' }}>ДОМ ВДАЛИ</div>
+        <div style={{ fontSize:15, color:'var(--ink-2)' }}>Загружаем каталог…</div>
+      </div>
+    );
+  }
+
   return (
     <div data-screen-label={`Дом вдали · ${route}`}>
       {introOpen && <IntroOverlay onClose={() => setIntroOpen(false)} />}
 
-      <Header route={route} setRoute={(r)=>{setRoute(r);setAuthTick(t=>t+1);}}
+      {dataError &&
+      <div style={{ background:'var(--st-rej-bg)', color:'var(--st-rej)', padding:'10px 20px', fontSize:13, textAlign:'center' }}>
+        Не получилось загрузить данные из Google Таблицы. Проверьте, что ссылки на CSV в коде сайта правильные и лист опубликован.
+      </div>}
+
+      <Header route={route} setRoute={setRoute}
       onAdd={() => setAddOpen(true)}
       mobileMenuOpen={mobileMenuOpen}
       setMobileMenuOpen={setMobileMenuOpen} />
 
       <MobileMenu open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)}
-      route={route} setRoute={(r)=>{setRoute(r);setAuthTick(t=>t+1);}} onAdd={() => setAddOpen(true)} />
+      route={route} setRoute={setRoute} onAdd={() => setAddOpen(true)} />
 
       {route === 'catalog' && (
       isMobile ?
@@ -4685,11 +3876,6 @@ function App() {
       <Catalog onOpen={setOpenObj} viewMode={viewMode} setViewMode={setViewMode} />)
       }
       {route === 'saved' && <SavedTab onOpen={setOpenObj}/>}
-      {route === 'admin' && (
-        window._isAdmin()
-          ? <AdminPanel/>
-          : <AdminLoginScreen onSuccess={()=>setAuthTick(t=>t+1)}/>
-      )}
       {route === 'ds' && <DesignSystemPage />}
 
       {openObj && <DetailModal obj={openObj} onClose={() => setOpenObj(null)} />}
