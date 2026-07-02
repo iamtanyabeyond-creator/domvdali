@@ -1,0 +1,14 @@
+<svg width="840" height="840" viewBox="0 0 840 840" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M420 825.5C643.951 825.5 825.5 643.951 825.5 420C825.5 196.049 643.951 14.5 420 14.5C196.049 14.5 14.5 196.049 14.5 420C14.5 643.951 196.049 825.5 420 825.5Z" fill="white"/>
+<rect x="248.5" y="220.5" width="343" height="399" rx="22.5" stroke="black" stroke-width="45"/>
+<path d="M356 611V541C356 516.147 376.147 496 401 496H438C462.853 496 483 516.147 483 541V611" stroke="black" stroke-width="45"/>
+<rect x="316" y="288" width="45" height="45" rx="15" fill="black"/>
+<rect x="397" y="288" width="45" height="45" rx="15" fill="black"/>
+<rect x="478" y="288" width="45" height="45" rx="15" fill="black"/>
+<rect x="316" y="343" width="45" height="45" rx="15" fill="black"/>
+<rect x="316" y="398" width="45" height="45" rx="15" fill="black"/>
+<rect x="397" y="343" width="45" height="45" rx="15" fill="black"/>
+<rect x="397" y="399" width="45" height="45" rx="15" fill="black"/>
+<rect x="478" y="343" width="45" height="45" rx="15" fill="black"/>
+<rect x="478" y="399" width="45" height="45" rx="15" fill="black"/>
+</svg>
