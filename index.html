@@ -2674,10 +2674,6 @@ function DetailBody({ obj, onClose }) {
               <span>КООРДИНАТЫ</span>
               <span style={{color:'var(--ink-2)'}}>{(obj.lat != null && obj.lng != null) ? `${obj.lat.toFixed(4)}, ${obj.lng.toFixed(4)}` : '—'}</span>
             </div>
-            <div style={{display:'flex', justifyContent:'space-between', marginBottom: obj.editedBy ? 8 : 0}}>
-              <span>ОБНОВЛЕНО</span>
-              <span style={{color:'var(--ink-2)'}}>{obj.lastModified || '—'}</span>
-            </div>
             {obj.editedBy &&
             <div style={{display:'flex', justifyContent:'space-between'}}>
               <span>ПРАВИЛ(А)</span>
