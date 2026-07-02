@@ -2670,18 +2670,11 @@ function DetailBody({ obj, onClose }) {
             border:'1px solid var(--rule)', borderRadius:'var(--r)', padding:16,
             fontFamily:'var(--f-mono)', fontSize:11, color:'var(--ink-3)', letterSpacing:'.04em',
           }}>
-            <div style={{display:'flex', justifyContent:'space-between', marginBottom:8}}>
+            <div style={{display:'flex', justifyContent:'space-between'}}>
               <span>КООРДИНАТЫ</span>
               <span style={{color:'var(--ink-2)'}}>{(obj.lat != null && obj.lng != null) ? `${obj.lat.toFixed(4)}, ${obj.lng.toFixed(4)}` : '—'}</span>
             </div>
-            {obj.editedBy &&
-            <div style={{display:'flex', justifyContent:'space-between'}}>
-              <span>ПРАВИЛ(А)</span>
-              <span style={{color:'var(--ink-2)'}}>{obj.editedBy}</span>
-            </div>}
           </div>
-        </aside>
-      </div>
 
       <div style={{ padding:'0 32px 32px' }}>
         <a href="feedback.html" className="btn btn-primary" style={{ width:'100%', justifyContent:'center' }}>
