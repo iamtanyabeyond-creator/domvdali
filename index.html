@@ -2775,7 +2775,7 @@ function DetailBody({ obj, onClose }) {
 
               {obj.group && obj.group !== '—' && (
                 <>
-                  <span className="eyebrow" style={{paddingTop:2}}>Группа</span>
+                  <span className="eyebrow" style={{paddingTop:2}}>Группа компаний</span>
                   <span>{obj.group}</span>
                 </>
               )}
@@ -3767,6 +3767,7 @@ function Header({ route, setRoute, onAdd, mobileMenuOpen, setMobileMenuOpen }) {
             {savedCount > 0 &&
             <span className="mono" style={{ fontSize:11, color:'#fff' }}>{savedCount}</span>}
           </button>}
+          {!isPhone &&
           <a href="feedback.html" className="btn btn-primary btn-sm" style={{ backgroundColor: "rgb(3, 27, 37)", whiteSpace: 'nowrap' }}>
             <I name="send" className="ic-sm" />Связаться с нами
           </a>
