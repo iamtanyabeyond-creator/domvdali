@@ -2717,8 +2717,8 @@ function DetailBody({ obj, onClose }) {
           </div>
           <h1 className="h-title" style={{margin:0, fontSize:42, marginBottom:8, overflowWrap:'anywhere'}}>{obj.name}</h1>
           <div style={{display:'flex', alignItems:'center', gap:18, color:'var(--ink-2)', fontSize:14, flexWrap:'wrap'}}>
-            <span style={{display:'inline-flex', alignItems:'center', gap:6, minWidth:0, overflowWrap:'anywhere'}}>
-              <I name="pin" className="ic-sm" style={{flexShrink:0}}/>{[obj.city, obj.addr].filter(Boolean).join(', ') || '—'}
+            <span style={{display:'inline-flex', alignItems:'flex-start', gap:6, minWidth:0, overflowWrap:'anywhere'}}>
+              <I name="pin" className="ic-sm" style={{flexShrink:0, marginTop:2}}/>{[obj.city, obj.addr].filter(Boolean).join(', ') || '—'}
             </span>
           </div>
         </div>
