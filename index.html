@@ -3767,9 +3767,11 @@ function Header({ route, setRoute, onAdd, mobileMenuOpen, setMobileMenuOpen }) {
             {savedCount > 0 &&
             <span className="mono" style={{ fontSize:11, color:'#fff' }}>{savedCount}</span>}
           </button>}
-          <a href="feedback.html" className="btn btn-primary btn-sm" style={{ backgroundColor: "rgb(3, 27, 37)", whiteSpace: 'nowrap' }}>
-            <I name="send" className="ic-sm" />Связаться с нами
-          </a>
+          {!isPhone && (
+            <a href="feedback.html" className="btn btn-primary btn-sm" style={{ backgroundColor: "rgb(3, 27, 37)", whiteSpace: 'nowrap' }}>
+              <I name="send" className="ic-sm" />Связаться с нами
+            </a>
+          )}
           {isNavCompact &&
           <button className="btn btn-ghost btn-sm" style={{ padding: '0 8px', flexShrink: 0 }} onClick={() => setMobileMenuOpen(true)}>
               <I name="menu" className="ic" />
