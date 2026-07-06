@@ -1240,7 +1240,7 @@ body{ font-family:var(--f-serif); background:var(--bg); color:var(--ink); }
   display:flex; align-items:flex-start; gap:6px;
   font-family:var(--f-serif); font-size:14px; color:rgba(246,241,231,.88);
 }
-.estate-card-loc svg{ flex-shrink:0; opacity:.85; margin-top:2px; }
+.estate-card-loc svg{ flex-shrink:0; opacity:.85; margin-top:3px; }
 
 .load-more-btn{ font-family:var(--f-serif); letter-spacing:.01em; padding:0 34px; }
 
@@ -2718,7 +2718,7 @@ function DetailBody({ obj, onClose }) {
           <h1 className="h-title" style={{margin:0, fontSize:42, marginBottom:8, overflowWrap:'anywhere'}}>{obj.name}</h1>
           <div style={{display:'flex', alignItems:'center', gap:18, color:'var(--ink-2)', fontSize:14, flexWrap:'wrap'}}>
             <span style={{display:'inline-flex', alignItems:'flex-start', gap:6, minWidth:0, overflowWrap:'anywhere'}}>
-              <I name="pin" className="ic-sm" style={{flexShrink:0, marginTop:2}}/>{[obj.city, obj.addr].filter(Boolean).join(', ') || '—'}
+              <I name="pin" className="ic-sm" style={{flexShrink:0, marginTop:3}}/>{[obj.city, obj.addr].filter(Boolean).join(', ') || '—'}
             </span>
           </div>
         </div>
