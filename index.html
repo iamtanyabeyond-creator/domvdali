@@ -38,10 +38,7 @@
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
   <style>
-/* ============================================
-   ДОМ ВДАЛИ — Design tokens & base styles
-   v2 · Graphik · #5482FF accent
-   ============================================ */
+
 
 :root {
   /* ── Palette ───────────────────────────── */
@@ -365,10 +362,7 @@ a { color: inherit; }
 .ic-lg { width: 20px; height: 20px; stroke-width: 1.5; flex-shrink: 0; }
 
 
-/* ============================================
-   Редизайн MVP: marketplace / map-first UI
-   Palette: bg #F6F6F6, text #031B25, interface accent #031B25, map accent #5482FF
-   ============================================ */
+
 :root{
   --bg:#F6F6F6;
   --bg-soft:#EEF2F7;
@@ -452,9 +446,7 @@ body{background:var(--bg); color:var(--ink); font-size:15px; letter-spacing:-.01
 
   
 
-/* ============================================
-   User corrections — May restyle pass
-   ============================================ */
+
 .hdr{background:#6281FF!important; color:#fff!important; border-bottom:1px solid rgba(255,255,255,.15)!important;}
 .hdr .brand{color:#fff!important;}
 .hdr .brand img{height:44px!important; width:auto!important; max-width:220px!important; object-fit:contain;}
@@ -494,9 +486,7 @@ body{background:var(--bg); color:var(--ink); font-size:15px; letter-spacing:-.01
 @media (max-width: 900px){.obj-card{grid-template-columns:140px 1fr!important; min-height:150px!important}.obj-card .ph-img{min-height:150px!important}.list-view{padding:18px 16px 32px!important}.list-view .list-view-grid{grid-template-columns:1fr!important; gap:18px!important}.list-view .obj-card{display:flex!important; flex-direction:column!important; grid-template-columns:none!important; min-height:0!important}.list-view .obj-card > div:first-child{height:250px!important}.list-view .obj-card .ph-img{min-height:250px!important}.list-view .market-card-body{padding:20px!important; grid-template-columns:1fr!important}.list-view .market-card-score{width:max-content!important; min-width:0!important; margin-top:0!important}}
 
 
-/* ============================================
-   Secondary blue accents — #5482FF
-   ============================================ */
+
 :root{
   --blue-accent:#5482FF;
   --blue-accent-soft:#EAF0FF;
@@ -573,7 +563,6 @@ body{background:var(--bg); color:var(--ink); font-size:15px; letter-spacing:-.01
   box-shadow:0 0 0 4px var(--blue-accent-soft)!important;
 }
 
-/* переключатель режима: активная иконка/состояние чуть более продуктовые */
 .view-switch .btn svg{
   transition:color .15s ease, stroke .15s ease;
 }
@@ -591,7 +580,6 @@ body{background:var(--bg); color:var(--ink); font-size:15px; letter-spacing:-.01
   box-shadow:0 10px 25px rgba(84,130,255,.35),0 0 0 5px rgba(84,130,255,.15)!important;
 }
 
-/* в режиме только список — синяя верхняя линия, как аккуратный акцент */
 .list-view .obj-card::before{
   left:24px!important;
   right:24px!important;
@@ -602,9 +590,7 @@ body{background:var(--bg); color:var(--ink); font-size:15px; letter-spacing:-.01
   border-radius:0 0 999px 999px!important;
 }
 
-/* ============================================
-   MOBILE RESPONSIVE OVERRIDES
-   ============================================ */
+
 html, body, #root { width: 100%; overflow-x: hidden; min-width: 0; }
 
 /* -- Mobile bottom toggle button -- */
@@ -635,10 +621,6 @@ html, body, #root { width: 100%; overflow-x: hidden; min-width: 0; }
 }
 .mobile-bottom-btn:active { transform: translate3d(-50%, 0, 0) scale(0.96) !important; }
 
-/* Обёртка иконки+текста внутри кнопки — принудительно схлопываем в один
-   композитный/paint-слой, отдельный от фона/тени кнопки. Именно рассинхрон
-   между слоем рамки (фон+box-shadow+border-radius) и слоем контента во время
-   инерционного скролла в Safari на iOS — вероятная причина «отслаивания». */
 .mobile-bottom-btn-content {
   display: inline-flex !important;
   align-items: center !important;
@@ -995,10 +977,7 @@ html, body, #root { width: 100%; overflow-x: hidden; min-width: 0; }
   .market-card-body h3 { font-size: 15px !important; }
 }
 
-/* ============================================
-   OLD-MONEY PASS — warm paper, serif display,
-   muted forest + brass (less «айтишность»)
-   ============================================ */
+
 :root{
   --bg:#F4EFE6;
   --bg-soft:#EAE3D5;
@@ -1285,7 +1264,7 @@ body{ font-family:var(--f-serif); background:var(--bg); color:var(--ink); }
 
 .load-more-btn{ font-family:var(--f-serif); letter-spacing:.01em; padding:0 34px; }
 
-/* «Исследования»: одна карточка в ряд, во всю ширину — без сетки в несколько колонок. */
+
 .research-grid{ display:grid; grid-template-columns:1fr; gap:26px; }
 .research-grid .estate-card-title{ font-size:50px; }
 .research-grid .estate-card-cap{ right: 120px; }
@@ -1316,15 +1295,9 @@ body{ font-family:var(--f-serif); background:var(--bg); color:var(--ink); }
 
 </style>
 
-<!-- ============================================
-     КЛИЕНТСКАЯ ПАЛИТРА — финальный оверрайд
-     Фон: #FFFFFF · Карточки: #EEF2FF
-     Мягкий акцент: #CEDEFF · Акцент: #6281FF
-     Текст: #000000 / #1a1a1a
-     ============================================ -->
 <style>
 :root {
-  /* ── Новая палитра ──────────────────────── */
+
   --bg:           #FFFFFF;
   --bg-soft:      #EEF2FF;
   --bg-card:      #EEF2FF;
@@ -1343,7 +1316,7 @@ body{ font-family:var(--f-serif); background:var(--bg); color:var(--ink); }
   --map-accent:      #6281FF;
   --map-accent-soft: #CEDEFF;
 
-  /* тэги — единообразно в новой палитре */
+  /* тэги */
   --tag-rest-bg:    #EEF2FF;  --tag-rest:    #6281FF;
   --tag-hotel-bg:   #EEF2FF;  --tag-hotel:   #6281FF;
   --tag-museum-bg:  #EEF2FF;  --tag-museum:  #6281FF;
@@ -1355,7 +1328,7 @@ body{ font-family:var(--f-serif); background:var(--bg); color:var(--ink); }
   --status-icgfo-bg: #CEDEFF; --status-icgfo: #3a5ad0;
   --status-none-bg:  #f0f0f0; --status-none:  #888888;
 
-  /* шрифты — сохраняем, но убираем warm serif */
+  /* шрифты */
   --f-sans:    'Graphik', -apple-system, 'Helvetica Neue', Arial, sans-serif;
   --f-serif:   'Graphik', -apple-system, 'Helvetica Neue', Arial, sans-serif;
   --f-display: 'Graphik', -apple-system, 'Helvetica Neue', Arial, sans-serif;
@@ -1596,10 +1569,6 @@ body {
   <div class="splash" id="splash"><div class="mark">Дом · Вдали</div></div>
   <div id="root"></div>
   <script>
-/* ============================================
-   ДОМ ВДАЛИ — sample data
-   18 объектов в исторической недвижимости РФ
-   ============================================ */
 
 window.DV_DATA = {
   types: {
@@ -1646,28 +1615,18 @@ window.DV_DATA = {
   finance: {},   // ← { [id объекта]: [{year, v}, ...] }, заполняется из листа «Финансы»
 };
 
-// ============================================
-// ДАННЫЕ — загружаются из Google Таблицы (CSV-публикация листов)
-// Модерация заявок и редактирование карточек происходит прямо в таблице,
-// отдельной страницы администратора на сайте больше нет.
-// ============================================
 
-// Вставьте сюда ссылки, которые Google Таблица даёт через
-// «Файл → Поделиться → Опубликовать в интернете» (формат — CSV) для листов «Объекты» и «Финансы».
 const SHEET_CSV_URLS = {
   objects: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSrx2bUkk-DoreRlgj0ennynZ9qOdrw0hXUAYER4YT2T_fa56mo_QPG5_9t72aDcYz43OGnr46EqABX/pub?gid=917766017&single=true&output=csv',
   finance: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSrx2bUkk-DoreRlgj0ennynZ9qOdrw0hXUAYER4YT2T_fa56mo_QPG5_9t72aDcYz43OGnr46EqABX/pub?gid=1909204435&single=true&output=csv',
   research: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSrx2bUkk-DoreRlgj0ennynZ9qOdrw0hXUAYER4YT2T_fa56mo_QPG5_9t72aDcYz43OGnr46EqABX/pub?gid=1323021803&single=true&output=csv',
 };
 
-// Ссылка на развёрнутый Apps Script (заканчивается на /exec) — туда уходят обе формы: «Добавить объект» и обратная связь.
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyBhTbccJrxM4G7cSdiPOhB1VYKR5JSxQyWkDIsWkRc6JxkdiBErhjP9RndVRKEtcdqHQ/exec';
-// Общая проверка формата email (name@service.xx) — без привязки к конкретной доменной зоне,
-// чтобы не отсекать реальные адреса на .net/.org/.io и корпоративных доменах.
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 window.DV_EMAIL_RE = EMAIL_RE;
 
-// Достаёт ID файла из любой ссылки на Google Диск: /file/d/ID/view, open?id=ID, uc?id=ID или просто голый ID.
 function extractDriveId(url) {
   if (!url) return null;
   const s = String(url).trim();
@@ -1696,9 +1655,6 @@ function fetchSheetRows(url) {
   });
 }
 
-// В таблице «ОхранныйСтатус» удобнее хранить человекочитаемое название (его показывают в выпадающем
-// списке), а весь остальной код сайта (фильтры, бейджи) работает с короткими кодами — этот словарь
-// переводит одно в другое. Понимает и код, если вдруг он же и записан в таблице напрямую.
 const STATUS_LABEL_TO_CODE = {
   'без статуса': 'none',
   'ицгфо': 'icgfo',
@@ -1726,7 +1682,6 @@ async function loadCatalogData() {
     fetchSheetRows(SHEET_CSV_URLS.finance),
   ]);
 
-  // Группируем строки листа «Финансы» по ID объекта — один объект может иметь много строк (по году).
   const financeByObject = {};
   finRows.forEach(row => {
     const id = (row['IDОбъекта'] || '').trim();
@@ -1741,15 +1696,11 @@ async function loadCatalogData() {
     .filter(row => (row['ID'] || '').trim() && (row['Название'] || '').trim())
     .map(row => {
       const id = row['ID'].trim();
-      // Любая колонка с названием, начинающимся на «Фото» (Фото1, Фото2, …) — отдельная ссылка на Google Диск.
-      // Можно добавлять сколько угодно таких колонок в таблице — код подхватит их сам, без правок кода.
       const photos = Object.keys(row)
         .filter(k => /^Фото/i.test(k.trim()) && row[k] && row[k].trim())
         .map(k => driveImageUrl(row[k].trim()))
         .filter(Boolean);
 
-      // «Тип» может содержать до 3 типов через запятую (например: «rest, bar») — первый считается главным
-      // и используется для иконки/фильтров по группам, остальные — просто доп. теги на карточке.
       const types = (row['Тип'] || '').split(',').map(s => s.trim()).filter(Boolean).slice(0, 3);
 
       return {
@@ -1784,9 +1735,7 @@ async function loadCatalogData() {
   return objects;
 }
 
-// Список регионов для фильтра-дерева слева строится из самих объектов, а не хранится отдельно —
-// появится новый регион или город в таблице «Объекты», и здесь он подхватится сам по себе,
-// без единой правки кода.
+
 function buildRegionsFromObjects(objects) {
   const byId = {};
   objects.forEach(o => {
@@ -1800,18 +1749,14 @@ function buildRegionsFromObjects(objects) {
     .sort((a, b) => a.name.localeCompare(b.name, 'ru'));
 }
 
-// Запускаем загрузку сразу при разборе страницы, не дожидаясь рендера React —
-// App() в конце файла дожидается этого промиса и показывает загрузочный экран, пока данных нет.
+
 window._catalogReady = loadCatalogData().catch(err => {
   console.error('Не удалось загрузить каталог из Google Таблицы:', err);
   window._catalogLoadError = err;
   return [];
 });
 
-// ============================================
-// «СОХРАНЁННОЕ» — для обычных посетителей, без логина и личного кабинета
-// Просто список id объектов в localStorage этого браузера.
-// ============================================
+
 const SAVED_KEY = 'dv_saved_objects';
 
 window._getSavedIds = () => {
@@ -1828,9 +1773,7 @@ window._toggleSaved = (id) => {
   return ids;
 };
 
-// Подчистка «призрачных» сохранённых ID — если объект был удалён/переименован
-// (например, старые записи с одинаковым ID «тест»), счётчик у сердечка в шапке
-// иначе продолжал бы показывать больше, чем реально есть на вкладке «Сохранённое».
+
 window._catalogReady.then((objects) => {
   const validIds = new Set((objects || []).map((o) => o.id));
   const saved = window._getSavedIds();
@@ -1879,7 +1822,6 @@ const I = ({ name, className = 'ic', stroke = 'currentColor', fill = 'none', str
     case 'museum':  return <svg {...props}><path d="M3 21h18M3 10h18M12 3 3 8h18Z"/><path d="M6 10v11M10 10v11M14 10v11M18 10v11"/></svg>;
     case 'sparkles':return <svg {...props}><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.5 5.5l2.8 2.8M15.7 15.7l2.8 2.8M5.5 18.5l2.8-2.8M15.7 8.3l2.8-2.8"/></svg>;
     case 'shop':    return <svg {...props}><path d="M3 9 5 4h14l2 5M3 9v11h18V9M3 9h18M9 13h6"/></svg>;
-    // ── Иконки заказчика ──────────────────────
     case 'fork':     return <img src="assets/icons/fork.svg" style={{width:28,height:28,display:'inline-block',verticalAlign:'middle'}} />;
     case 'cup':      return <img src="assets/icons/cup.svg" style={{width:28,height:28,display:'inline-block',verticalAlign:'middle'}} />;
     case 'cocktail': return <img src="assets/icons/cocktail.svg" style={{width:28,height:28,display:'inline-block',verticalAlign:'middle'}} />;
@@ -1919,9 +1861,7 @@ window.TYPE_ICONS = TYPE_ICONS;
 
   </script>
   <script type="text/babel">
-/* ============================================
-   Catalog — map + list, filters, view switch
-   ============================================ */
+
 /* eslint-disable */
 const { useState, useEffect, useMemo, useRef } = React;
 
@@ -1931,7 +1871,6 @@ function Tag({ t }) {
   if (!def) return null;
   return <span className={`tag ${def.cls}`}><I name={TYPE_ICONS[t]} className="ic-sm" />{def.label}</span>;
 }
-// До 3 типов у одного объекта — первый в списке считается главным.
 function TagList({ types }) {
   const list = (types && types.length ? types : []).slice(0, 3);
   if (!list.length) return null;
@@ -2210,7 +2149,6 @@ function FilterBar({ filters, setFilters, count, onReset }) {
       borderBottom: '1px solid var(--rule)'
     }}>
       <div style={{ padding: '16px 40px', display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
-        {/* Categories: Жить / Есть / Смотреть */}
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
           {Object.entries(G).map(([k, v]) =>
           <FilterChip key={k} active={filters.groups.includes(k)} onClick={() => toggle('groups', k)}>
@@ -2343,8 +2281,7 @@ function MapPane({ objects, hoverId, setHoverId, onOpen, onBoundsChange }) {
 }
 
 function iconSvgPath(name) {
-  // Оригинальные пути из SVG заказчика (viewBox 0 0 840 840)
-  // Маркер рендерит svg с viewBox="0 0 840 840"
+  
   const map = {
     // 616 — вилки (ресторан/кафе)
     fork: `<path d="M644.5 347.5C644.5 425.096 581.596 488 504 488V207C581.596 207 644.5 269.904 644.5 347.5Z" fill="currentColor"/>
@@ -2504,8 +2441,7 @@ function Catalog({ onOpen, viewMode, setViewMode }) {
 
 function revNum(r) {if (!r || r === '—') return 0;const m = r.match(/([\d.]+)\s*(млн|млрд)/);if (!m) return 0;return parseFloat(m[1]) * (m[2] === 'млрд' ? 1000 : 1);}
 
-/* ── «Сохранённое» — для всех посетителей, без логина и личного кабинета ──
-   Список id хранится в localStorage этого браузера (см. window._getSavedIds). */
+
 function SavedTab({ onOpen }) {
   const [ids, setIds] = useState(() => window._getSavedIds());
 
@@ -2535,8 +2471,7 @@ function SavedTab({ onOpen }) {
   );
 }
 
-/* ── «Исследования» — карточки картинка+подпись, тянутся из отдельного листа Google Таблицы ──
-   Колонки листа: «Подпись», «Картинка» (ссылка на Google Диск), «Ссылка» (PDF на Google Диске). */
+
 function useResearchData() {
   const [items, setItems] = useState(null); // null — ещё грузится
 
@@ -2683,9 +2618,6 @@ function DetailBody({ obj, onClose }) {
   const [lightboxIndex, setLightboxIndex] = useState(null);
   const tabs = [['building', 'Здание'], ['business', 'Бизнес'], ['finance', 'Финансы']];
   const activeTab = tabs.some(([k]) => k === tab) ? tab : 'building';
-  // Подписи плиток главной галереи. В самой сетке карточки показываем до 5 фото — так плитки остаются
-  // достаточно крупными и читаемыми; остальные фото (объектов может быть до 10) доступны через
-  // полноэкранный просмотр со стрелками (счётчик тоже считает все реальные фото, не только показанные).
   const photoCount = (obj.photos && obj.photos.length) || 0;
   const galleryLabels = Array.from({ length: Math.max(photoCount, 1) }, (_, i) => `Фото ${i + 1}`);
   const heroTileCount = Math.min(Math.max(photoCount, 1), 5);
@@ -3125,13 +3057,10 @@ function AddObjectForm({ onClose }) {
 
       const res = await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
-        // text/plain — чтобы браузер не слал предварительный CORS-запрос (OPTIONS),
-        // который Apps Script Web App не обрабатывает; тело всё равно обычный JSON.
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({
           action: 'submitObject',
           name: data.name,
-          // До 3 типов — сохраняются в ту же колонку «Тип» через запятую, первый считается главным.
           type: data.types.join(', '),
           address: data.addr,
           desc: data.desc,
@@ -3760,11 +3689,7 @@ const { useState, useEffect, useMemo, useRef, useCallback } = React;
 const { FilterChip, RegionPicker, MoreFilters } = window;
 
 function Header({ route, setRoute, onAdd, mobileMenuOpen, setMobileMenuOpen }) {
-  // isPhone — узкие телефоны, только точечная подгонка отступов в самой шапке.
-  // isNavCompact — порог пошире: как только пилюли навигации перестают помещаться
-  // в одну строку без переносов, переключаемся на гамбургер-меню. Специально отдельно
-  // от порога isMobile, который переключает Каталог/MobileCatalog в остальном приложении —
-  // иначе появление гамбургера пришлось бы привязывать к перестройке всей страницы.
+  
   const [isPhone, setIsPhone] = useState(() => window.matchMedia('(max-width: 768px)').matches);
   const [isNavCompact, setIsNavCompact] = useState(() => window.matchMedia('(max-width: 1080px)').matches);
   const [savedCount, setSavedCount] = useState(() => window._getSavedIds().length);
@@ -3898,8 +3823,6 @@ function MobileCatalog({ onOpen }) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // -- Кнопка «Карта/Список» прячется, когда в зоне видимости оказывается подвал сайта,
-  //    чтобы не перекрывать его содержимое.
   const [footerVisible, setFooterVisible] = useState(false);
   useEffect(() => {
     const footerEl = document.getElementById('site-footer');
@@ -3992,16 +3915,6 @@ function MobileCatalog({ onOpen }) {
         </div>
       }
 
-      {/* Плавающая кнопка переключения карта/список рендерится через портал прямо в
-          document.body — минуя всех родителей, включая overflow-x:hidden на html/body.
-          Настоящая причина «съезжающего» контента: у .mobile-bottom-btn была жёстко
-          зафиксирована height:50px, а padding-bottom был завязан на
-          env(safe-area-inset-bottom) — а это значение в Safari на iOS не константа,
-          оно пересчитывается при скрытии/появлении панели браузера во время скролла.
-          При фиксированной высоте меняющийся padding буквально сжимал/выталкивал
-          flex-контент внутри той же коробки. Теперь env(safe-area-inset-bottom) влияет
-          только на bottom (позицию кнопки целиком), а не на её внутренний padding —
-          раскладка внутри кнопки больше не пересчитывается на каждый кадр скролла. */}
       {ReactDOM.createPortal(
       <button
         className="mobile-bottom-btn"
@@ -4020,9 +3933,6 @@ function MobileCatalog({ onOpen }) {
       document.body
       )}
 
-      {/* Кнопка «наверх» — справа от переключателя карта/список, той же плавающей группы.
-          Появляется после скролла вниз, скрыта у самого верха страницы. Видимость в подвале
-          намеренно не скрываем (пользователю может понадобиться вернуться наверх именно оттуда). */}
       {ReactDOM.createPortal(
       <button
         className="mobile-scroll-top-btn"
@@ -4137,7 +4047,7 @@ function FilterGroup({ title, children }) {
 
 }
 
-/* ── Страница для несуществующего адреса (плохая/устаревшая ссылка) ── */
+
 function NotFoundPage({ onGoCatalog }) {
   return (
     <div style={{ minHeight: 'calc(100vh - var(--header-h) - 260px)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 18, padding: '80px 24px', textAlign: 'center' }}>
